@@ -1,0 +1,10 @@
+{
+  "isaac_lab_release": "2.2.1",
+  "isaac_lab_commit": "0f00ca2b4b2d54d5f90006a92abb1b00a72b2f20",
+  "isaac_sim": "5.0.0.0",
+  "gpu_test_target": "NVIDIA L4 23034 MiB",
+  "physics_dt_s": 0.008333333333333333,
+  "decimation": 8,
+  "policy_dt_s": 0.06666666666666667,
+  "upstream_task": "Isaac-Factory-PegInsert-Direct-v0"
+}

@@ -1,0 +1,11 @@
+# Compatible with Isaac Sim 5.0 / Isaac Lab 2.2.1 in /workspace/env_isaaclab.
+rl-games @ git+https://github.com/isaac-sim/rl_games.git@python3.11
+gym==0.23.1
+ray==2.45.0
+wandb==0.17.9
+tensorboard==2.18.0
+protobuf==5.29.6
+googleapis-common-protos==1.69.2
+packaging==23.0
+click==8.1.7
+sentry-sdk==1.43.0

@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# Local environments and editors
+.venv/
+venv/
+.idea/
+.vscode/
+.DS_Store
+
+# Simulation and training artifacts
+logs/
+results/
+videos/
+runs/
+*.pth
+*.pt
+*.onnx
+*.mp4
+*.webm
+*.npy
+*.npz
+
+# Runtime output
+*.log
+*.pid
