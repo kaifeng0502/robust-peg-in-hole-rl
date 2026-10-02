@@ -16,6 +16,7 @@ import json
 import math
 from pathlib import Path
 import platform
+import re
 import subprocess
 import sys
 import time
@@ -57,6 +58,48 @@ def parse_args(argv=None):
     elif args.checkpoint is not None or args.agent_config is not None:
         parser.error("Checkpoint and agent configuration apply only to PPO")
     return args
+
+
+def validate_cuda_device(device):
+    """Fail before simulator startup when a requested CUDA device is unusable."""
+    if not device.startswith("cuda"):
+        # CPU and any other device handling remain the simulator's responsibility.
+        return
+    match = re.fullmatch(r"cuda(?::([0-9]+))?", device)
+    if match is None:
+        raise ValueError(f"Invalid CUDA device {device!r}; use 'cuda' or 'cuda:N' with a nonnegative index")
+    try:
+        import torch
+    except ImportError as exc:
+        raise RuntimeError("CUDA preflight requires PyTorch; use the configured Isaac Lab Python environment") from exc
+
+    access_hint = (
+        "Check nvidia-smi and GPU access inside this container. "
+        "If access was lost after startup, restart the Pod/container."
+    )
+    try:
+        available = torch.cuda.is_available()
+        count = torch.cuda.device_count()
+    except (RuntimeError, AssertionError, OSError) as exc:
+        raise RuntimeError(f"CUDA preflight could not query GPU access for {device!r}. {access_hint}") from exc
+    if not available or count == 0:
+        raise RuntimeError(f"No accessible CUDA GPU for requested device {device!r}. {access_hint}")
+
+    requested_index = int(match[1]) if match[1] is not None else None
+    if requested_index is not None and requested_index >= count:
+        raise ValueError(
+            f"Invalid CUDA device index {requested_index}: {count} device(s) are visible; "
+            f"valid indices are 0 through {count - 1}"
+        )
+    try:
+        index = requested_index if requested_index is not None else torch.cuda.current_device()
+        # Availability queries can succeed without initializing CUDA. Exercise
+        # the requested device before paying for simulator/asset initialization.
+        torch.empty(1, device=f"cuda:{index}")
+    except (RuntimeError, AssertionError, OSError) as exc:
+        raise RuntimeError(
+            f"CUDA device {device!r} was reported available but could not allocate a tensor. {access_hint}"
+        ) from exc
 
 
 def file_sha256(path):
@@ -250,6 +293,7 @@ class SimulationAdapter:
 def main(argv=None):
     args = parse_args(argv)
     cases = read_case_set(args.cases)
+    validate_cuda_device(args.device)
     # AppLauncher must start before importing Isaac Sim task modules.
     from isaaclab.app import AppLauncher
     launcher = AppLauncher(headless=args.headless, device=args.device)

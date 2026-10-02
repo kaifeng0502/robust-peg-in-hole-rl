@@ -4,7 +4,7 @@ A contact-stage manipulation system built with Isaac Sim, Isaac Lab, and RL-Game
 
 The implemented system starts at a pre-insertion pose and handles the local contact-rich phase: alignment, contact search, insertion, success detection, and pose holding. ROS 2 / MoveIt 2 integration and retreat/retry recovery are the next system milestones.
 
-The unified evaluation pipeline is implemented and covered by local tests. GPU validation of this revision is pending; no new simulation success rate is claimed. See the [evaluation runbook](docs/EVALUATION.md).
+The unified evaluation pipeline is implemented and covered by regression tests. On 2026-10-02, the restarted NVIDIA L4 instance yielded the preserved 100-epoch continuation run and its checkpoints. Its best training-reward checkpoint has been selected before evaluating the new cases. GPU evaluation remains pending because the container lost access to its GPU during environment recovery; no new simulation success rate is claimed. See the [evaluation runbook](docs/EVALUATION.md).
 
 ## System architecture
 
@@ -61,6 +61,8 @@ All fixed-search rows use 128 trials with seed 42. These legacy rates use the cu
 Recorded PPO training diagnostics reached 96.9% on medium randomization, 98.4% peak on intermediate randomization, and 82.0% on the full pose-and-friction distribution. The pinned upstream Factory implementation logs current success geometry at training timeout; its cumulative `ep_succeeded` buffer is a separate metric. Earlier text incorrectly described the 82.0% scalar as necessarily counting transient success. Independent deterministic evaluation did not reproduce that training rate, and a nominal trace also demonstrated insertion followed by withdrawal. These observations require separate investigation.
 
 The hold correction previously passed one nominal deterministic check at 24.1 mm final depth. The new revision applies the same hold logic and final position-error bounds to all three benchmark methods. See [VERIFICATION.md](VERIFICATION.md) for evidence and limitations, and [experiment_matrix.md](experiment_matrix.md) for planned comparisons.
+
+The recovered continuation run `2026-09-17_11-39-10` completed epoch 100/100. Its original best training-reward checkpoint, `nn/LocalInsertion.pth` at epoch 93, is the selected candidate for the unified evaluation. Training completion and checkpoint reward do not establish terminal-hold success.
 
 ## Environment
 

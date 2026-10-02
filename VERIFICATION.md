@@ -73,7 +73,33 @@ On 2026-10-02, review of `_log_factory_metrics` at the pinned Isaac Lab commit c
 
 The trace showed that the policy could enter the success geometry briefly and then pull the peg back out. The RL environment now latches the first successful world pose, commands that stored pose on subsequent steps, and adds a 1.5 mm downward hold margin. A nominal deterministic check changed from 0/1 to 1/1 with 24.1 mm final depth.
 
-The full-randomization continuation was launched from the `07-47-07` checkpoint. Its final artifacts are unavailable in the checked local repository; the previous connection failure does not establish that persistent storage was lost. No terminal success claim is made from that continuation. Recovery of that run and new GPU evaluation remain pending.
+The full-randomization continuation was launched from the `07-47-07` checkpoint. Its artifacts were recovered from persistent storage on 2026-10-02 after the Pod restarted. The earlier connection failure did not indicate loss of the saved run.
+
+## Recovered continuation — 2026-10-02
+
+The restarted Pod reports an NVIDIA L4 with driver `570.195.03`. The recovered run directory is:
+
+```text
+/workspace/projects/baseline_rl/logs/rl_games/LocalInsertion/2026-09-17_11-39-10
+```
+
+The preserved training log confirms epoch `100/100`, logged frames `1622016`, reward `898.63434`, and the saved final checkpoint `nn/last_LocalInsertion_ep_100_rew_898.63434.pth`.
+
+Reading the original best training-reward checkpoint, `nn/LocalInsertion.pth`, recovered these fields:
+
+| Checkpoint field | Value |
+|---|---:|
+| `epoch` | 93 |
+| `frame` | 1523712 |
+| `last_mean_rewards` | 953.5416 |
+
+That original `LocalInsertion.pth` is selected for the upcoming integration check and unified evaluation **before observing results on the new cases**. The selection uses the saved training-reward checkpoint, not new evaluation outcomes. The checkpoint and original agent configuration will be hashed in evaluation metadata.
+
+The selected checkpoint SHA256 is `9811f2bfa13dab366531324fbab5bb758a7e031753a6378b5d318ad99d843721`; its original agent configuration SHA256 is `10cfe0b4e3974952b02b565054a47ebcc2cf68a5ff21ca5fa316f448f7dfbe7e`.
+
+These records establish that the continuation completed and its weights survived. They do not establish deterministic inference correctness or terminal-hold success. The pinned Isaac Sim 5.0 extension-cache packages were restored after a workspace-quota interruption. The subsequent simulation attempt stopped before evaluating any cases because the container lost GPU access: `nvidia-smi` reported `Failed to initialize NVML: Unknown Error`, PyTorch reported zero CUDA devices, and opening `/dev/nvidiactl`, `/dev/nvidia0`, and `/dev/nvidia-uvm` returned `EPERM`, despite the device nodes being present. The same session had successfully detected the L4 earlier.
+
+These observations are consistent with the container-update GPU-access failure documented by [NVIDIA](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/troubleshooting.html#containers-losing-access-to-gpus-with-error-failed-to-initialize-nvml-unknown-error); the precise host-side trigger was not established. Container GPU access must be restored before simulation integration can proceed. No new manipulation results have been produced.
 
 ## Unified evaluation revision — 2026-10-02
 
@@ -86,6 +112,10 @@ Implemented locally:
 - Recorded initial states, frozen reset manifests, checkpoint/source/configuration identities, per-step traces, and rejection of incomplete or mismatched comparisons.
 - Dependency-free tests for metric semantics, reset contamination, manifest integrity, and comparison validation.
 
-Local tests and source checks do not execute Isaac Sim or restore a real checkpoint. The RunPod is paused, so GPU integration, physical-state repeatability, checkpoint inference, and all new success-rate measurements are pending. The new shared spiral implementation is a new benchmark controller, not a remeasurement of the historical 83/128 result.
+Local tests and source checks do not execute Isaac Sim or validate policy inference. Checkpoint metadata has now been recovered, but GPU integration, physical-state repeatability, checkpoint inference, and all new success-rate measurements remain pending restoration of GPU device access. The new shared spiral implementation is a new benchmark controller, not a remeasurement of the historical 83/128 result.
 
 Local validation on 2026-10-02: all 68 unit/regression tests passed, Python compilation passed, and Ruff reported no issues. The test suite uses deterministic synthetic backends for lifecycle and metric checks; those outcomes are not manipulation experiment results.
+
+Pod validation at `2df57de`: all 69 tests passed with PyTorch installed, including two consecutive reset/step cycles through the actual simulation adapter with a tensor-backed test environment. This regression verifies that persistent buffers remain mutable after stepping; it does not execute Isaac Sim physics or prove GPU inference.
+
+After the device-access failure, a CUDA preflight was added before simulator startup. Ten mocked tests cover missing CUDA access, invalid device indices, query/allocation errors and preflight ordering. The resulting local suite ran 79 tests: 78 passed and the PyTorch-dependent adapter test was skipped because local PyTorch is unavailable. Ruff and compilation passed. The preflight is an early diagnostic, not a repair for host-managed device permissions.

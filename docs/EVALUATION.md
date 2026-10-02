@@ -2,7 +2,7 @@
 
 ## Status and scope
 
-This revision implements the common evaluator and local regression tests. Isaac Sim execution and checkpoint inference have **not** yet been validated for this revision: the GPU instance is paused. The commands below are the next integration checks, not completed experiments.
+This revision implements the common evaluator and regression tests. The GPU instance restarted on 2026-10-02 with an NVIDIA L4 and driver `570.195.03`; the preserved continuation run and its checkpoints were recovered, and 69 tests passed on the Pod. Isaac Sim execution and checkpoint inference have **not** yet been validated for this revision. Extension installation completed, but the container then reported NVML failure and denied access to its GPU device nodes. GPU access must be restored before proceeding. The commands below are the next integration checks, not completed experiments.
 
 The reference task is local insertion under the existing `challenge_v2` pose and friction distribution. All three methods use `LocalInsertionRLEnv` with identical initialization, gains, observation inputs, nominal grasp geometry, position bounds, and success-pose hold:
 
@@ -50,6 +50,14 @@ Factory automatically resets at its timeout. The evaluator reserves two extra si
 
 Use the configured Isaac Lab 2.2.1 / Isaac Sim 5.0 Python environment and the same source tree for all methods. Preserve a trained checkpoint and its **original** `params/agent.yaml`; a YAML with only a matching network shape is insufficient evidence of equivalent preprocessing.
 
+The evaluator checks CUDA availability, the requested device index, and a small tensor allocation before starting Isaac Sim. If this check fails, restore container GPU access first; changing task code or interpreting a startup failure as an unsuccessful insertion would be incorrect. CPU device requests bypass this CUDA check, but CPU task execution has not been validated.
+
+On the recovered Pod, the three `isaacsim-extscache-*==5.0.0.0` packages were reinstalled successfully. Their 446 extension directories were copied to `/workspace/runtime/insertion_isaacsim_extscache_5_0`, and the environment's `isaacsim/extscache` link now resolves to that persistent location. This prevents the restored extensions from depending on the temporary container disk after restart. The L4 must still pass the CUDA check before any benchmark resumes.
+
+The recovered run is `/workspace/projects/baseline_rl/logs/rl_games/LocalInsertion/2026-09-17_11-39-10`. Its training log confirms completion at epoch 100/100 with logged frames `1622016` and reward `898.63434`, saving `nn/last_LocalInsertion_ep_100_rew_898.63434.pth`. The original best training-reward checkpoint, `nn/LocalInsertion.pth`, records epoch `93`, frame `1523712`, and `last_mean_rewards` of `953.5416`.
+
+Use that original best training-reward checkpoint for the upcoming integration check and evaluation. This choice was made before observing the new cases' outcomes. Retain its checkpoint/configuration hashes in each run; training reward and completed epochs are provenance evidence, not success-rate evidence.
+
 Start with the committed eight-case integration manifest:
 
 ```bash
@@ -63,8 +71,8 @@ python scripts/evaluate_insertion.py \
 
 python scripts/evaluate_insertion.py \
   --method ppo --cases configs/evaluation_smoke.json --headless \
-  --checkpoint /absolute/path/to/LocalInsertion.pth \
-  --agent-config /absolute/path/to/training_run/params/agent.yaml \
+  --checkpoint /workspace/projects/baseline_rl/logs/rl_games/LocalInsertion/2026-09-17_11-39-10/nn/LocalInsertion.pth \
+  --agent-config /workspace/projects/baseline_rl/logs/rl_games/LocalInsertion/2026-09-17_11-39-10/params/agent.yaml \
   --output /workspace/results/evaluation_v1/ppo_smoke
 
 python scripts/compare_evaluations.py \
