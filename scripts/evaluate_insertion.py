@@ -225,7 +225,9 @@ class SimulationAdapter:
         import torch
         if not self.simulation_app.is_running():
             raise RuntimeError("Simulation closed before the evaluation horizon")
-        with torch.inference_mode():
+        # Simulator state survives across cases and is mutated by reset().
+        # Do not turn its persistent buffers into inference-only tensors.
+        with torch.no_grad():
             obs, reward, terminated, truncated, _ = self.env.step(action)
         # Do not refresh kinematics here: Factory._get_dones already did so.
         xy, depth, _ = self.base.insertion_geometry()
