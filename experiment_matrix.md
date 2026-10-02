@@ -1,6 +1,6 @@
 # Evaluation matrix
 
-This is the experiment protocol, not a completed result table. First validate the unified evaluator on the GPU using the eight committed integration cases. Then freeze the checkpoint and evaluate the 500 cases in `configs/evaluation_holdout.json`, verifying the realized initial state for each paired case.
+The eight-case GPU integration check is complete: the state/protocol comparison passed, with zero residual 2/8, spiral 4/8 and PPO 3/8 terminal-hold successes. The [committed evidence](benchmarks/gpu_integration_20261002/README.md) does not establish a PPO advantage. The remaining protocol is to diagnose failures and tune using the separate 64-case `configs/evaluation_development.json`, then freeze the checkpoint and evaluate the untouched 500 cases in `configs/evaluation_holdout.json`, verifying the realized initial state for each paired case.
 
 The primary criterion is XY error ≤2.5 mm and absolute depth error ≤1 mm, maintained throughout the final continuous 1 s of a common 10 s horizon. All three methods use the same `LocalInsertionRLEnv`, pre-insertion initialization, gains, action units, hold logic and final position limits. See [docs/EVALUATION.md](docs/EVALUATION.md).
 
@@ -32,8 +32,8 @@ Report these task metrics for every method:
 
 Report these learning metrics for every PPO row:
 
-- environment steps to 50%, 70%, and 80% held-out success;
-- evaluation success versus environment steps;
+- environment steps to 50%, 70%, 80%, and 95% development-set terminal-hold success;
+- development-set success versus environment steps, keeping the final holdout unused during selection;
 - mean and standard deviation across seeds 42, 43, and 44;
 - task return, regularized training return, and critic loss curves for diagnosing instability;
 - wall-clock training time and total transitions, including every earlier curriculum stage.

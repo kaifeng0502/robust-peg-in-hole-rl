@@ -4,7 +4,7 @@ A contact-stage manipulation system built with Isaac Sim, Isaac Lab, and RL-Game
 
 The implemented system starts at a pre-insertion pose and handles the local contact-rich phase: alignment, contact search, insertion, success detection, and pose holding. ROS 2 / MoveIt 2 integration and retreat/retry recovery are the next system milestones.
 
-The unified evaluation pipeline is implemented and covered by regression tests. On 2026-10-02, the restarted NVIDIA L4 instance yielded the preserved 100-epoch continuation run and its checkpoints. Its best training-reward checkpoint has been selected before evaluating the new cases. GPU evaluation remains pending because the container lost access to its GPU during environment recovery; no new simulation success rate is claimed. See the [evaluation runbook](docs/EVALUATION.md).
+The unified evaluation pipeline has passed GPU integration: all three methods completed the same eight cases, with matching recorded initial states and a one-second terminal hold criterion. Zero residual succeeded in 2/8 cases, spiral search in 4/8, and the recovered PPO checkpoint in 3/8. This small integration sample does not establish a PPO advantage or a 95% success rate. See the [raw evidence and analysis](benchmarks/gpu_integration_20261002/README.md) and [evaluation runbook](docs/EVALUATION.md).
 
 ## System architecture
 

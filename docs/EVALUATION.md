@@ -2,7 +2,7 @@
 
 ## Status and scope
 
-This revision implements the common evaluator and regression tests. The GPU instance restarted on 2026-10-02 with an NVIDIA L4 and driver `570.195.03`; the preserved continuation run and its checkpoints were recovered, and 69 tests passed on the Pod. Isaac Sim execution and checkpoint inference have **not** yet been validated for this revision. Extension installation completed, but the container then reported NVML failure and denied access to its GPU device nodes. GPU access must be restored before proceeding. The commands below are the next integration checks, not completed experiments.
+The common evaluator completed GPU integration on 2026-10-02 using an NVIDIA L4, driver `570.195.03`, and the recovered PPO checkpoint. All 79 regression tests passed on the Pod. Zero residual, spiral and PPO completed all eight integration cases, and the full comparison gate passed. Held-success counts were 2/8, 4/8 and 3/8 respectively; no PPO superiority or 95% success claim follows. See the [raw evidence and analysis](../benchmarks/gpu_integration_20261002/README.md). The 500-case holdout remains unused. Container GPU access intermittently failed for new processes, although the initialized simulation processes completed these runs.
 
 The reference task is local insertion under the existing `challenge_v2` pose and friction distribution. All three methods use `LocalInsertionRLEnv` with identical initialization, gains, observation inputs, nominal grasp geometry, position bounds, and success-pose hold:
 
@@ -44,6 +44,8 @@ Seeds alone do not prove identical physical starting states. Every run records r
 
 This verifies the recorded state, not hidden PhysX solver/contact caches. It is a checked seeded-reset protocol, not a claim of bitwise simulator replay. If states differ, comparison stops. Inspect the mismatches and fix reset repeatability before producing a headline comparison; do not loosen tolerance simply to obtain a table.
 
+The first eight-case GPU run also showed that Factory's reset is not a stationary handover: initial arm-joint speed reached 1.17–1.30 rad/s, and recorded fingertip speed was 7.02–22.37 mm/s, while initial finite-difference velocity observations were zero. These values are preserved in the state snapshots. Matching them across controllers can establish the comparison under this reset protocol; it does not validate a stationary MoveIt handover or sensor initialization for deployment.
+
 Factory automatically resets at its timeout. The evaluator reserves two extra simulator control steps but scores only the requested 150. Every sample must have no termination/truncation flag and must increment the episode counter exactly once. Unexpected resets abort the run before scoring reset observations. Failed or partial runs retain `run_complete: false` and cannot be compared.
 
 ## Reproduce on the GPU instance
@@ -56,7 +58,7 @@ On the recovered Pod, the three `isaacsim-extscache-*==5.0.0.0` packages were re
 
 The recovered run is `/workspace/projects/baseline_rl/logs/rl_games/LocalInsertion/2026-09-17_11-39-10`. Its training log confirms completion at epoch 100/100 with logged frames `1622016` and reward `898.63434`, saving `nn/last_LocalInsertion_ep_100_rew_898.63434.pth`. The original best training-reward checkpoint, `nn/LocalInsertion.pth`, records epoch `93`, frame `1523712`, and `last_mean_rewards` of `953.5416`.
 
-Use that original best training-reward checkpoint for the upcoming integration check and evaluation. This choice was made before observing the new cases' outcomes. Retain its checkpoint/configuration hashes in each run; training reward and completed epochs are provenance evidence, not success-rate evidence.
+That original best training-reward checkpoint was used for the completed integration check. This choice was made before observing the new cases' outcomes. Retain its checkpoint/configuration hashes in each reproduced run; training reward and completed epochs are provenance evidence, not success-rate evidence. Subsequent checkpoint selection should use the separate development manifest and terminal-hold metrics.
 
 Start with the committed eight-case integration manifest:
 
@@ -84,7 +86,7 @@ python scripts/compare_evaluations.py \
 
 The paths to the checkpoint and agent YAML must identify the actual retained training run. The evaluator restores the RL-Games model and input normalizer, sets evaluation mode, initializes batched/recurrent state, and uses deterministic actions. The expected action interface is six clipped residuals in `[-1, 1]`.
 
-After integration and tuning on development cases, freeze the checkpoint and use `configs/evaluation_holdout.json` for the 500-case comparison, changing output directory names accordingly. Do not tune on the final holdout and still describe it as unseen evaluation. For further tuning, create a separate development manifest with a different seed:
+After tuning on development cases, freeze the checkpoint and use `configs/evaluation_holdout.json` for the 500-case comparison, changing output directory names accordingly. Do not tune on the final holdout and still describe it as unseen evaluation. The committed `configs/evaluation_development.json` contains 64 cases with seeds disjoint from both integration and holdout cases. It has not been evaluated. To reproduce that manifest at a new path:
 
 ```bash
 python scripts/make_evaluation_cases.py \
@@ -132,4 +134,4 @@ python3 -m compileall -q local_insertion scripts tests
 ruff check .
 ```
 
-Tests cover transient success, hold loss/recovery, excessive depth, physical-interval flags, timeout/reset contamination, case provenance, incomplete runs and invalid numeric data. Simulator adapters still require the GPU integration run above.
+Tests cover transient success, hold loss/recovery, excessive depth, physical-interval flags, timeout/reset contamination, case provenance, incomplete runs, invalid numeric data and CUDA preflight failures. The committed GPU evidence validates the adapters on 24 complete episodes; performance and training claims require the separate development/final-test experiments.

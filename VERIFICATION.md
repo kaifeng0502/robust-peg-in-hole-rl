@@ -93,17 +93,17 @@ Reading the original best training-reward checkpoint, `nn/LocalInsertion.pth`, r
 | `frame` | 1523712 |
 | `last_mean_rewards` | 953.5416 |
 
-That original `LocalInsertion.pth` is selected for the upcoming integration check and unified evaluation **before observing results on the new cases**. The selection uses the saved training-reward checkpoint, not new evaluation outcomes. The checkpoint and original agent configuration will be hashed in evaluation metadata.
+That original `LocalInsertion.pth` was selected for the integration check **before observing results on the new cases**. Selection used the saved training-reward checkpoint. Its checkpoint and original agent configuration hashes are recorded in evaluation metadata.
 
 The selected checkpoint SHA256 is `9811f2bfa13dab366531324fbab5bb758a7e031753a6378b5d318ad99d843721`; its original agent configuration SHA256 is `10cfe0b4e3974952b02b565054a47ebcc2cf68a5ff21ca5fa316f448f7dfbe7e`.
 
 These records establish that the continuation completed and its weights survived. They do not establish deterministic inference correctness or terminal-hold success. The pinned Isaac Sim 5.0 extension-cache packages were restored after a workspace-quota interruption. The subsequent simulation attempt stopped before evaluating any cases because the container lost GPU access: `nvidia-smi` reported `Failed to initialize NVML: Unknown Error`, PyTorch reported zero CUDA devices, and opening `/dev/nvidiactl`, `/dev/nvidia0`, and `/dev/nvidia-uvm` returned `EPERM`, despite the device nodes being present. The same session had successfully detected the L4 earlier.
 
-These observations are consistent with the container-update GPU-access failure documented by [NVIDIA](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/troubleshooting.html#containers-losing-access-to-gpus-with-error-failed-to-initialize-nvml-unknown-error); the precise host-side trigger was not established. Container GPU access must be restored before simulation integration can proceed. No new manipulation results have been produced.
+These observations are consistent with the container-update GPU-access failure documented by [NVIDIA](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/troubleshooting.html#containers-losing-access-to-gpus-with-error-failed-to-initialize-nvml-unknown-error); the precise host-side trigger was not established. The error recurred after restarts without further user configuration changes. Initialized simulation processes continued to complete episodes, while new processes failed the CUDA preflight. The integration results below were obtained from completed runs after restoring access; runtime reliability remains an operational issue requiring host-side investigation.
 
 ## Unified evaluation revision — 2026-10-02
 
-Implemented locally:
+Implemented and exercised in GPU integration:
 
 - A common `LocalInsertionRLEnv` for spiral, zero-residual, and PPO evaluation, with the same pre-insertion pose distribution, nominal grasp offset, reward, control gains, and hold logic.
 - Position-error clipping after the hold override, closing the previous unbounded-hold target path.
@@ -112,10 +112,22 @@ Implemented locally:
 - Recorded initial states, frozen reset manifests, checkpoint/source/configuration identities, per-step traces, and rejection of incomplete or mismatched comparisons.
 - Dependency-free tests for metric semantics, reset contamination, manifest integrity, and comparison validation.
 
-Local tests and source checks do not execute Isaac Sim or validate policy inference. Checkpoint metadata has now been recovered, but GPU integration, physical-state repeatability, checkpoint inference, and all new success-rate measurements remain pending restoration of GPU device access. The new shared spiral implementation is a new benchmark controller, not a remeasurement of the historical 83/128 result.
+The new shared spiral implementation is a new benchmark controller, not a remeasurement of the historical 83/128 result. The three completed integration runs used the same source, protocol and runtime versions. The comparator accepted all eight paired cases, and all recorded initial-state components were exactly equal across methods.
 
 Local validation on 2026-10-02: all 68 unit/regression tests passed, Python compilation passed, and Ruff reported no issues. The test suite uses deterministic synthetic backends for lifecycle and metric checks; those outcomes are not manipulation experiment results.
 
 Pod validation at `2df57de`: all 69 tests passed with PyTorch installed, including two consecutive reset/step cycles through the actual simulation adapter with a tensor-backed test environment. This regression verifies that persistent buffers remain mutable after stepping; it does not execute Isaac Sim physics or prove GPU inference.
 
 After the device-access failure, a CUDA preflight was added before simulator startup. Ten mocked tests cover missing CUDA access, invalid device indices, query/allocation errors and preflight ordering. The resulting local suite ran 79 tests: 78 passed and the PyTorch-dependent adapter test was skipped because local PyTorch is unavailable. Ruff and compilation passed. The preflight is an early diagnostic, not a repair for host-managed device permissions.
+
+All 79 tests subsequently passed on the Pod at `089ccae`. Actual simulator validation then completed 24 episodes and produced 3,600 control-step records. Each episode covered exactly 150 control intervals / 10 seconds, without reset contamination. Offline metric recomputation matched all recorded episode and summary metrics within floating-point roundoff.
+
+| Method | Terminal-hold successes | Wilson 95% interval |
+|---|---:|---:|
+| Zero residual | 2/8 (25.0%) | 7.1–59.1% |
+| Spiral search | 4/8 (50.0%) | 21.5–78.5% |
+| PPO | 3/8 (37.5%) | 13.7–69.4% |
+
+This integration sample does not establish a PPO advantage or support the 95% target. PPO's higher task return did not produce more held successes than spiral. One PPO case reached valid geometry at 9.8 seconds and had only 0.2 seconds of final hold, so it correctly failed. Four PPO cases remained near the hole entrance with excessive lateral error. See the [raw evidence and detailed analysis](benchmarks/gpu_integration_20261002/README.md).
+
+The selected checkpoint and original agent configuration are also backed up locally, with SHA256 equality to the recovered Pod files. The full training environment snapshot is still on the persistent volume and must be compared with the new evaluation configuration before attributing the gap to a single training cause. A separate 64-case development manifest is prepared and has no seed overlap with the eight integration cases or the untouched 500-case holdout. No new training, multi-seed study, randomization ablation or final holdout evaluation was performed in this integration run.
