@@ -1,0 +1,40 @@
+{
+  "case_set_id": "2b5f0460f2465750d4bbe12c1e0d852f1375200e5a12309352b96d384123f69e",
+  "cases": [
+    {
+      "case_id": "case_000000",
+      "seed": 1020016823
+    },
+    {
+      "case_id": "case_000001",
+      "seed": 1377000625
+    },
+    {
+      "case_id": "case_000002",
+      "seed": 1545579167
+    },
+    {
+      "case_id": "case_000003",
+      "seed": 1683300319
+    },
+    {
+      "case_id": "case_000004",
+      "seed": 532987456
+    },
+    {
+      "case_id": "case_000005",
+      "seed": 643948030
+    },
+    {
+      "case_id": "case_000006",
+      "seed": 808389344
+    },
+    {
+      "case_id": "case_000007",
+      "seed": 334703040
+    }
+  ],
+  "distribution": "challenge_v2",
+  "schema_version": 1,
+  "seed": 20261001
+}

@@ -54,7 +54,7 @@ The corrected absolute-residual controller was trained with seed 42 and 128 para
 
 The full stage used the configured pose and friction randomization together: hole and grasp pose variation, 2 mm XY observation noise, and friction sampled from 0.30–1.20. Its TensorBoard success series was `[71.1%, 68.0%, 66.4%, 69.5%, 72.7%, 71.9%, 71.9%, 64.1%, 66.4%, 66.4%, 74.2%, 79.7%, 75.8%, 75.8%, 75.8%, 81.3%, 75.0%, 70.3%, 82.0%]`; the best checkpoint is `/workspace/projects/baseline_rl/logs/rl_games/LocalInsertion/2026-09-17_07-47-07/nn/LocalInsertion.pth`. This is a training-seed result, not a multi-seed generalization claim.
 
-The fixed-search challenge-v2 baseline is 64.8% (83/128), so the full randomized RL training run exceeds that reference in its held-in training distribution. A separate `play_rl.py` inference launch loaded the checkpoint and constructed the 128-environment policy successfully, but Isaac Sim later hit a known headless Vulkan/Carb mutex assertion before a long independent rollout completed; the 82.0% figure above therefore comes from the training episode success metric.
+The legacy fixed-search challenge-v2 rate is 64.8% (83/128), using a cumulative success buffer. It is not a fair terminal-hold comparison with PPO: metric semantics, start height, and horizon differed. A separate `play_rl.py` inference launch loaded the checkpoint and constructed the 128-environment policy successfully, but Isaac Sim later hit a headless Vulkan/Carb mutex assertion before that independent rollout completed. The 82.0% figure above comes from the training episode success metric, not that playback run.
 
 ## Independent deterministic evaluation
 
@@ -62,13 +62,30 @@ The first finite-horizon deterministic evaluation exposed a serious gap between 
 
 | Evaluation seed | Success | Final insertion result |
 |---:|---:|---|
-| 42 | 0/128 (0.0%) | No episode reached the success geometry |
-| 123 | 0/128 (0.0%) | No episode reached the success geometry |
+| 42 | 0/128 (0.0%) | No episode retained success geometry at the final evaluated sample |
+| 123 | 0/128 (0.0%) | No episode retained success geometry at the final evaluated sample |
 
-The earlier 62/128 and 59/128 counts came from the cumulative `ep_succeeded` buffer before the evaluation script was corrected; they are not valid success measurements. The corrected metric recomputes the Factory success predicate from the final geometry. This means the 82.0% TensorBoard series must not be treated as deployment success yet. The next engineering step is to trace the deterministic action output and reward/termination timing, then fix the evaluation and policy pipeline before changing the reward or curriculum.
+The earlier 62/128 and 59/128 counts came from the cumulative `ep_succeeded` buffer before the evaluation script was corrected; they describe ever-success and are not terminal success measurements. The corrected diagnostic recomputed the Factory predicate from final geometry. The difference from the 82.0% TensorBoard series remains unresolved; deterministic vs stochastic action selection, normalization, horizon, and reset timing must be verified before attributing it to a single cause.
+
+On 2026-10-02, review of `_log_factory_metrics` at the pinned Isaac Lab commit confirmed that `extras["successes"]` logs **current geometry when the training episode times out**, while `ep_succeeded` separately accumulates whether success ever occurred. Earlier documentation incorrectly assumed the 82.0% scalar necessarily used the latter buffer. The original TensorBoard tag-to-logger path still needs to be checked alongside preserved run artifacts. None of these historical scalars proves one-second terminal-hold success.
 
 ## Success-hold correction
 
 The trace showed that the policy could enter the success geometry briefly and then pull the peg back out. The RL environment now latches the first successful world pose, commands that stored pose on subsequent steps, and adds a 1.5 mm downward hold margin. A nominal deterministic check changed from 0/1 to 1/1 with 24.1 mm final depth.
 
-The full-randomization continuation was launched from the `07-47-07` checkpoint, but its final artifacts were not preserved after the compute instance stopped. No terminal success claim is made from that continuation. A future full-randomization result must be generated with the corrected final-geometry evaluator and retained alongside its checkpoint and evaluation seeds.
+The full-randomization continuation was launched from the `07-47-07` checkpoint. Its final artifacts are unavailable in the checked local repository; the previous connection failure does not establish that persistent storage was lost. No terminal success claim is made from that continuation. Recovery of that run and new GPU evaluation remain pending.
+
+## Unified evaluation revision — 2026-10-02
+
+Implemented locally:
+
+- A common `LocalInsertionRLEnv` for spiral, zero-residual, and PPO evaluation, with the same pre-insertion pose distribution, nominal grasp offset, reward, control gains, and hold logic.
+- Position-error clipping after the hold override, closing the previous unbounded-hold target path.
+- A 10 s finite-horizon evaluator with a guarded simulator timeout, deterministic PPO inference, original training configuration, and restored policy normalizers.
+- Success checks at every 120 Hz physics boundary. The headline criterion requires the final 1 s to remain inside XY ≤2.5 mm and absolute depth error ≤1 mm. The two-sided depth check also rejects excessive penetration.
+- Recorded initial states, frozen reset manifests, checkpoint/source/configuration identities, per-step traces, and rejection of incomplete or mismatched comparisons.
+- Dependency-free tests for metric semantics, reset contamination, manifest integrity, and comparison validation.
+
+Local tests and source checks do not execute Isaac Sim or restore a real checkpoint. The RunPod is paused, so GPU integration, physical-state repeatability, checkpoint inference, and all new success-rate measurements are pending. The new shared spiral implementation is a new benchmark controller, not a remeasurement of the historical 83/128 result.
+
+Local validation on 2026-10-02: all 68 unit/regression tests passed, Python compilation passed, and Ruff reported no issues. The test suite uses deterministic synthetic backends for lifecycle and metric checks; those outcomes are not manipulation experiment results.

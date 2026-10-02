@@ -34,6 +34,24 @@ class SpiralControllerCfg:
 
 
 @configclass
+class InsertionHoldCfg:
+    """Common hold behavior and final position-error bounds for all controllers."""
+
+    enabled: bool = True
+    downward_margin_m: float = 0.0015
+    max_xy_error_m: float = 0.004
+    max_z_error_m: float = 0.003
+
+
+@configclass
+class EvaluationGeometryCfg:
+    """Two-sided geometry tolerance; evaluated at each physics boundary."""
+
+    xy_tolerance_m: float = 0.0025
+    depth_tolerance_m: float = 0.001
+
+
+@configclass
 class LocalRewardCfg:
     keypoint_scale: float = 1.0
     alignment_scale: float = 0.5
@@ -107,6 +125,8 @@ class SpiralBaselineEnvCfg(FactoryTaskPegInsertCfg):
     randomization: PoseFrictionRandomizationCfg = PoseFrictionRandomizationCfg()
     spiral: SpiralControllerCfg = SpiralControllerCfg()
     episode_length_s: float = 8.0
+
+
 @configclass
 class LocalInsertionRLEnvCfg(FactoryTaskPegInsertCfg):
     scene: InteractiveSceneCfg = InteractiveSceneCfg(num_envs=128, env_spacing=2.0, clone_in_fabric=True)
@@ -115,6 +135,11 @@ class LocalInsertionRLEnvCfg(FactoryTaskPegInsertCfg):
     obs_rand: ObsRandCfg = _make_obs_rand()
     randomization: PoseFrictionRandomizationCfg = PoseFrictionRandomizationCfg()
     reward: LocalRewardCfg = LocalRewardCfg()
+    # Benchmark controllers share this exact environment, observations and reward.
+    controller_mode: str = "residual"
+    spiral: SpiralControllerCfg = SpiralControllerCfg()
+    hold: InsertionHoldCfg = InsertionHoldCfg()
+    evaluation_geometry: EvaluationGeometryCfg = EvaluationGeometryCfg()
     # PPO outputs an absolute residual around the planner's nominal insertion
     # target.  The controller still clips instantaneous impedance error.
     residual_xy_span_m: float = 0.006

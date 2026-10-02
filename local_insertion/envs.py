@@ -195,17 +195,35 @@ class LocalInsertionRLEnv(RandomizedPegInsertEnv):
     cfg: LocalInsertionRLEnvCfg
 
     def __init__(self, cfg: LocalInsertionRLEnvCfg, render_mode: str | None = None, **kwargs):
+        if cfg.controller_mode not in {"residual", "zero_residual", "spiral"}:
+            raise ValueError(f"Unknown controller mode: {cfg.controller_mode}")
+        if cfg.spiral.approach_duration_s <= 0.0:
+            raise ValueError("Spiral approach duration must be positive")
+        if min(cfg.hold.max_xy_error_m, cfg.hold.max_z_error_m) <= 0.0:
+            raise ValueError("Position-error bounds must be positive")
         super().__init__(cfg, render_mode, **kwargs)
         self.previous_depth = torch.zeros(self.num_envs, device=self.device)
         self.previous_rl_action = torch.zeros((self.num_envs, self.cfg.action_space), device=self.device)
         self.success_latched = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
         self.success_hold_pos = torch.zeros((self.num_envs, 3), device=self.device)
         self.success_hold_quat = torch.zeros((self.num_envs, 4), device=self.device)
-        self._compute_intermediate_values(self.physics_dt)
+        self.search_time = torch.zeros(self.num_envs, device=self.device)
+        self.search_start = torch.zeros((self.num_envs, 3), device=self.device)
+        self.search_insert_xy = torch.zeros((self.num_envs, 2), device=self.device)
+        self.search_engaged = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
+        self.evaluation_interval_success = torch.ones(self.num_envs, dtype=torch.bool, device=self.device)
+        self.evaluation_interval_ever_success = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
+        self.evaluation_interval_peak_force = torch.zeros(self.num_envs, device=self.device)
+        self.evaluation_task_reward = torch.zeros(self.num_envs, device=self.device)
+        if not hasattr(self, "held_pos") or self.last_update_timestamp < self._robot._data._sim_timestamp:
+            self._compute_intermediate_values(self.physics_dt)
         _, self.previous_depth[:], _ = self.insertion_geometry()
 
     def _reset_idx(self, env_ids):
         super()._reset_idx(env_ids)
+        # Manual benchmark resets must clear the history without relying on an
+        # earlier timeout. Factory normally clears these during the next step.
+        self._reset_buffers(env_ids)
         if hasattr(self, "previous_depth"):
             _, depth, _ = self.insertion_geometry()
             self.previous_depth[env_ids] = depth[env_ids]
@@ -213,48 +231,117 @@ class LocalInsertionRLEnv(RandomizedPegInsertEnv):
             self.success_latched[env_ids] = False
             self.success_hold_pos[env_ids] = 0.0
             self.success_hold_quat[env_ids] = 0.0
+            self.search_time[env_ids] = 0.0
+            self.search_start[env_ids] = self.fingertip_midpoint_pos[env_ids]
+            self.search_insert_xy[env_ids] = self.fingertip_midpoint_pos[env_ids, :2]
+            self.search_engaged[env_ids] = False
+            self.evaluation_interval_success[env_ids] = False
+            self.evaluation_interval_ever_success[env_ids] = False
+            self.evaluation_interval_peak_force[env_ids] = 0.0
+            self.evaluation_task_reward[env_ids] = 0.0
+
+    def _pre_physics_step(self, action):
+        if self.cfg.controller_mode != "residual":
+            action = torch.zeros_like(action)
+        super()._pre_physics_step(action)
+        self.evaluation_interval_success[:] = True
+        self.evaluation_interval_ever_success[:] = False
+        self.evaluation_interval_peak_force[:] = 0.0
+
+    def evaluation_success_geometry(self):
+        """Reject both insufficient depth and excessive penetration below the socket."""
+        xy_error, depth, _ = self.insertion_geometry()
+        geometry = self.cfg.evaluation_geometry
+        return (xy_error <= geometry.xy_tolerance_m) & (
+            torch.abs(depth - self.cfg_task.fixed_asset_cfg.height) <= geometry.depth_tolerance_m
+        )
+
+    def _sample_evaluation_geometry(self):
+        success = self.evaluation_success_geometry()
+        self.evaluation_interval_success &= success
+        self.evaluation_interval_ever_success |= success
+
+    def _spiral_target(self, fixed_action_frame):
+        """Search from the same pre-insertion pose and nominal grasp as PPO."""
+        cfg = self.cfg.spiral
+        entrance = fixed_action_frame.clone()
+        entrance[:, 2] += self.cfg.nominal_tool_to_peg_base_m
+        alpha = torch.clamp(self.search_time / cfg.approach_duration_s, 0.0, 1.0)
+        target = self.search_start + alpha[:, None] * (entrance - self.search_start)
+        searching = self.search_time >= cfg.approach_duration_s
+        elapsed = torch.clamp(self.search_time - cfg.approach_duration_s, min=0.0)
+        radius = torch.clamp(elapsed * cfg.radial_speed_m_s, max=cfg.max_radius_m)
+        angle = 2.0 * math.pi * cfg.turns_per_second * elapsed
+        target[searching] = entrance[searching]
+        target[searching, 0] += radius[searching] * torch.cos(angle[searching])
+        target[searching, 1] += radius[searching] * torch.sin(angle[searching])
+        target[searching, 2] -= cfg.preload_m
+        _, depth, _ = self.insertion_geometry()
+        newly_engaged = searching & (depth > cfg.engage_depth_m) & ~self.search_engaged
+        self.search_insert_xy[newly_engaged] = self.fingertip_midpoint_pos[newly_engaged, :2]
+        self.search_engaged |= newly_engaged
+        target[self.search_engaged, :2] = self.search_insert_xy[self.search_engaged]
+        target[self.search_engaged, 2] = (
+            entrance[self.search_engaged, 2] - self.cfg.nominal_insertion_depth_m
+        )
+        roll = torch.full_like(self.search_time, math.pi)
+        zero = torch.zeros_like(self.search_time)
+        self.search_time += self.physics_dt
+        return target, torch_utils.quat_from_euler_xyz(roll, zero, zero)
 
     def _apply_action(self):
         """Interpret actions as bounded residuals around an absolute insertion target."""
         if self.last_update_timestamp < self._robot._data._sim_timestamp:
             self._compute_intermediate_values(dt=self.physics_dt)
 
+        self._sample_evaluation_geometry()
         fixed_action_frame = self.fixed_pos_obs_frame + self.init_fixed_pos_obs_noise
         current_success = self._get_curr_successes(self.cfg_task.success_threshold)
-        newly_success = current_success & ~self.success_latched
+        newly_success = current_success & ~self.success_latched & self.cfg.hold.enabled
         if torch.any(newly_success):
             self.success_hold_pos[newly_success] = self.fingertip_midpoint_pos[newly_success]
             # Apply a small downward hold margin so contact compliance does not
             # let a barely successful peg climb back above the success plane.
-            self.success_hold_pos[newly_success, 2] -= 0.0015
+            self.success_hold_pos[newly_success, 2] -= self.cfg.hold.downward_margin_m
             self.success_hold_quat[newly_success] = self.fingertip_midpoint_quat[newly_success]
-        self.success_latched |= current_success
+        self.success_latched |= newly_success
         target_pos = fixed_action_frame.clone()
         target_pos[:, 2] += self.cfg.nominal_tool_to_peg_base_m - self.cfg.nominal_insertion_depth_m
         target_pos[:, :2] += self.actions[:, :2] * self.cfg.residual_xy_span_m
         target_pos[:, 2] += self.actions[:, 2] * self.cfg.residual_z_span_m
 
-        bounds = torch.tensor(self.cfg.ctrl.pos_action_bounds, device=self.device)
-        target_pos = fixed_action_frame + torch.clamp(target_pos - fixed_action_frame, -bounds, bounds)
-        # Bound instantaneous impedance error, especially in Z at contact. The
-        # absolute target remains fixed while the robot converges toward it.
-        max_error = torch.tensor([0.004, 0.004, 0.003], device=self.device)
-        target_pos = self.fingertip_midpoint_pos + torch.clamp(
-            target_pos - self.fingertip_midpoint_pos, -max_error, max_error
-        )
-
         target_roll = math.pi + self.actions[:, 3] * self.cfg.residual_roll_pitch_span_rad
         target_pitch = self.actions[:, 4] * self.cfg.residual_roll_pitch_span_rad
         target_yaw = self.actions[:, 5] * self.cfg.residual_yaw_span_rad
         target_quat = torch_utils.quat_from_euler_xyz(target_roll, target_pitch, target_yaw)
+        if self.cfg.controller_mode == "spiral":
+            target_pos, target_quat = self._spiral_target(fixed_action_frame)
         # Once the peg reaches the success geometry, latch the current pose so
         # subsequent policy noise cannot pull it back out before episode end.
         if torch.any(self.success_latched):
             target_pos[self.success_latched] = self.success_hold_pos[self.success_latched]
             target_quat[self.success_latched] = self.success_hold_quat[self.success_latched]
+        # Apply bounds AFTER every controller/hold target override. Otherwise a
+        # displaced peg can receive an unbounded spring command during hold.
+        bounds = torch.tensor(self.cfg.ctrl.pos_action_bounds, device=self.device)
+        target_pos = fixed_action_frame + torch.clamp(target_pos - fixed_action_frame, -bounds, bounds)
+        hold = self.cfg.hold
+        max_error = torch.tensor(
+            [hold.max_xy_error_m, hold.max_xy_error_m, hold.max_z_error_m], device=self.device
+        )
+        target_pos = self.fingertip_midpoint_pos + torch.clamp(
+            target_pos - self.fingertip_midpoint_pos, -max_error, max_error
+        )
         self.generate_ctrl_signals(target_pos, target_quat, 0.0)
+        self.evaluation_interval_peak_force = torch.maximum(
+            self.evaluation_interval_peak_force,
+            torch.linalg.vector_norm(self.applied_wrench[:, :3], dim=1),
+        )
 
     def _get_rewards(self):
+        # _get_dones has already refreshed kinematics at the final substep.
+        # Refreshing again here would erase the finite-difference velocities.
+        self._sample_evaluation_geometry()
         xy_error, depth, _ = self.insertion_geometry()
         curr_success = self._get_curr_successes(self.cfg_task.success_threshold)
         curr_engaged = self._get_curr_successes(self.cfg_task.engage_threshold)
@@ -298,6 +385,9 @@ class LocalInsertionRLEnv(RandomizedPegInsertEnv):
         reward = torch.zeros_like(depth)
         for term in reward_terms.values():
             reward += term
+        # Baselines have no residual-policy action penalty. Preserve a separate
+        # task return so their moving scripted targets are not called zero-cost.
+        self.evaluation_task_reward = reward - reward_terms["action_cost"] - reward_terms["action_rate_cost"]
 
         self._log_factory_metrics(reward_terms, curr_success)
         self.previous_depth[:] = depth
