@@ -1,0 +1,48 @@
+{
+  "scope": "Z output calibration before further training",
+  "original_checkpoint_epoch": 113,
+  "action_contract": "relative_z_v1",
+  "z_mu_initialization": {
+    "weight_row": 0.0,
+    "bias": -0.5
+  },
+  "reason": "bounded initial downward command, not an action-equivalent policy transfer",
+  "unchanged": [
+    "all non-Z mean output rows",
+    "actor trunk",
+    "critic",
+    "sigma network",
+    "normalizers",
+    "physics",
+    "observations",
+    "success criteria"
+  ],
+  "optimizer": "zero first/second moments for changed Z mean rows only; shared Adam step retained",
+  "gate_cases": [
+    "case_000000",
+    "case_000002",
+    "case_000010",
+    "case_000028"
+  ],
+  "gate_requirements": [
+    "exact matched initial states",
+    "finite 150 control intervals per case, no reset",
+    "negative commanded Z before hold in all four cases",
+    "no lifting-away failure: all cases reach within 1 mm of entrance",
+    "original successful case_000000 retains final 1-second held success",
+    "peak commanded force no more than twice the matched legacy case peak (screening regression bound, not a hardware safety limit)"
+  ],
+  "conditional_training": {
+    "enabled_only_after_audited_gate": true,
+    "num_envs": 1024,
+    "horizon": 128,
+    "rollouts": 8,
+    "new_transitions": 1048576,
+    "dense_reward": "legacy",
+    "success_reward": "terminal_hold_v2",
+    "seed": 42,
+    "followup_evaluation_cases": 4
+  },
+  "no_64_case_evaluation": true,
+  "sealed_500_untouched": true
+}

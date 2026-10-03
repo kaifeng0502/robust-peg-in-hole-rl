@@ -1,0 +1,108 @@
+{
+  "passed": true,
+  "checks": {
+    "matched_initial_states": true,
+    "all_approach_commands_down": true,
+    "all_reach_entrance": true,
+    "original_success_retained": true,
+    "force_regression_bound": true
+  },
+  "cases": [
+    {
+      "case_id": "case_000000",
+      "initial_state_exact": true,
+      "held_success": true,
+      "old_held_success": true,
+      "all_unlatched_initial_commands_down": true,
+      "command_delta_z_range_m": [
+        -0.0015000030398368835,
+        -0.0005249977111816406
+      ],
+      "max_depth_m": 0.0249265655875206,
+      "reached_entrance": true,
+      "first_within_1mm_of_entrance_s": 0.4666666666666667,
+      "final_depth_m": 0.024926412850618362,
+      "initial_xy_error_m": 0.0034605716355144978,
+      "final_xy_error_m": 0.00051609065849334,
+      "peak_commanded_force_n": 1.7481788396835327,
+      "old_peak_commanded_force_n": 2.140289545059204,
+      "force_regression_check": true,
+      "failure_category": null
+    },
+    {
+      "case_id": "case_000002",
+      "initial_state_exact": true,
+      "held_success": false,
+      "old_held_success": false,
+      "all_unlatched_initial_commands_down": true,
+      "command_delta_z_range_m": [
+        -0.0015000030398368835,
+        -0.0005249977111816406
+      ],
+      "max_depth_m": -2.562999725341797e-06,
+      "reached_entrance": true,
+      "first_within_1mm_of_entrance_s": 0.6,
+      "final_depth_m": -0.00015516579151153564,
+      "initial_xy_error_m": 0.0075758942402899265,
+      "final_xy_error_m": 0.005195783916860819,
+      "peak_commanded_force_n": 2.1778042316436768,
+      "old_peak_commanded_force_n": 2.6745309829711914,
+      "force_regression_check": true,
+      "failure_category": "misalignment"
+    },
+    {
+      "case_id": "case_000010",
+      "initial_state_exact": true,
+      "held_success": false,
+      "old_held_success": false,
+      "all_unlatched_initial_commands_down": true,
+      "command_delta_z_range_m": [
+        -0.0015000030398368835,
+        -0.0005249977111816406
+      ],
+      "max_depth_m": -5.856156349182129e-06,
+      "reached_entrance": true,
+      "first_within_1mm_of_entrance_s": 0.4666666666666667,
+      "final_depth_m": -0.00015792995691299438,
+      "initial_xy_error_m": 0.0016009624814614654,
+      "final_xy_error_m": 0.004760838113725185,
+      "peak_commanded_force_n": 1.7382826805114746,
+      "old_peak_commanded_force_n": 2.2236788272857666,
+      "force_regression_check": true,
+      "failure_category": "misalignment"
+    },
+    {
+      "case_id": "case_000028",
+      "initial_state_exact": true,
+      "held_success": false,
+      "old_held_success": false,
+      "all_unlatched_initial_commands_down": true,
+      "command_delta_z_range_m": [
+        -0.0015000030398368835,
+        -0.0005249977111816406
+      ],
+      "max_depth_m": 0.001386396586894989,
+      "reached_entrance": true,
+      "first_within_1mm_of_entrance_s": 0.5333333333333333,
+      "final_depth_m": 0.0013033002614974976,
+      "initial_xy_error_m": 0.0013731608632951975,
+      "final_xy_error_m": 0.0006475464906543493,
+      "peak_commanded_force_n": 1.524644374847412,
+      "old_peak_commanded_force_n": 2.045198440551758,
+      "force_regression_check": true,
+      "failure_category": "insufficient_depth"
+    }
+  ],
+  "control_rows": 600,
+  "physics_substeps": 4800,
+  "hashes": {
+    "summary.json": "2ad6dd0b185f89f9cd3992c6f79649a5555eea98c5ab0f787a0d0859ce5e88c1",
+    "trials.json": "f6effda38acedae4ed75b6a8549d1c4d15d247cf411add0c58980201563c8bf6",
+    "control_diagnostics.jsonl": "20fa405f869f7a5b1237f911bfce5a511809a7630ea290700833a5647fd2e331",
+    "metadata.json": "aceee4b2d3e8570c5b79c0e59b426b3d7e015575deb7ba5d08bf18ae2971e8cb",
+    "restored_agent_config.json": "82f6875997613b4368e9e4776ab418ff6a10ea25c42ba1a078193d780eab8cb5",
+    "trials.jsonl": "d1c51c8c0a73916d2030b7510e87b8f3384746570c2e426897f177599d7de705",
+    "trajectories.jsonl": "f0db5c48afc9a1f54f2d0fb19e9e8ab6f93c46cf57f48718e193df9b8490feb3"
+  },
+  "scope": "Four selected development cases for debugging only, not a success-rate estimate."
+}
