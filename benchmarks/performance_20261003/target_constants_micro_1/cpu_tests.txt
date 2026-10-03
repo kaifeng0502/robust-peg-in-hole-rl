@@ -1,0 +1,16 @@
+test_constructor_dtype_is_inferred_independently_of_state_dtype (test_target_constants.NumericalOracleTests.test_constructor_dtype_is_inferred_independently_of_state_dtype) ... ok
+test_hot_path_has_zero_constructors_and_preserves_signed_zero_and_clamp_order (test_target_constants.NumericalOracleTests.test_hot_path_has_zero_constructors_and_preserves_signed_zero_and_clamp_order) ... ok
+test_modes_latches_dtypes_and_repeated_steps_match_original_bitwise (test_target_constants.NumericalOracleTests.test_modes_latches_dtypes_and_repeated_steps_match_original_bitwise) ... ok
+test_partial_state_reset_does_not_modify_cached_constants (test_target_constants.NumericalOracleTests.test_partial_state_reset_does_not_modify_cached_constants) ... ok
+test_compilation_does_not_execute_module (test_target_constants.SourceGuardTests.test_compilation_does_not_execute_module) ... ok
+test_existing_instance_override_is_restored (test_target_constants.SourceGuardTests.test_existing_instance_override_is_restored) ... ok
+test_hash_and_runtime_guards (test_target_constants.SourceGuardTests.test_hash_and_runtime_guards) ... ok
+test_install_preserves_globals_builtins_and_other_instances (test_target_constants.SourceGuardTests.test_install_preserves_globals_builtins_and_other_instances) ... ok
+test_invalid_bounds_are_rejected_without_installation (test_target_constants.SourceGuardTests.test_invalid_bounds_are_rejected_without_installation) ... ok
+test_phase_boundary_validation_requires_reinstall_after_change (test_target_constants.SourceGuardTests.test_phase_boundary_validation_requires_reinstall_after_change) ... ok
+test_whole_module_replacement_changes_only_two_expressions (test_target_constants.SourceGuardTests.test_whole_module_replacement_changes_only_two_expressions) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 3.268s
+
+OK

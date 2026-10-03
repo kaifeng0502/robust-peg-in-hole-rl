@@ -1,0 +1,98 @@
+{
+  "passed": true,
+  "finished_utc": "2026-10-03T04:49:09.663252+00:00",
+  "block_order": "ABBAABBA",
+  "labels": {
+    "A": "reference",
+    "B": "target_constants"
+  },
+  "blocks": [
+    {
+      "index": 0,
+      "variant": "reference",
+      "calls": 100,
+      "wall_s": 0.622352872043848,
+      "wall_ms_per_call": 6.22352872043848,
+      "cuda_stream_elapsed_ms_per_call": 6.222244873046875
+    },
+    {
+      "index": 1,
+      "variant": "target_constants",
+      "calls": 100,
+      "wall_s": 0.6091090179979801,
+      "wall_ms_per_call": 6.091090179979801,
+      "cuda_stream_elapsed_ms_per_call": 6.0899560546875
+    },
+    {
+      "index": 2,
+      "variant": "target_constants",
+      "calls": 100,
+      "wall_s": 0.6288680853322148,
+      "wall_ms_per_call": 6.288680853322148,
+      "cuda_stream_elapsed_ms_per_call": 6.287548828125
+    },
+    {
+      "index": 3,
+      "variant": "reference",
+      "calls": 100,
+      "wall_s": 0.6374472212046385,
+      "wall_ms_per_call": 6.374472212046385,
+      "cuda_stream_elapsed_ms_per_call": 6.373331909179687
+    },
+    {
+      "index": 4,
+      "variant": "reference",
+      "calls": 100,
+      "wall_s": 0.6341184498742223,
+      "wall_ms_per_call": 6.341184498742223,
+      "cuda_stream_elapsed_ms_per_call": 6.340045166015625
+    },
+    {
+      "index": 5,
+      "variant": "target_constants",
+      "calls": 100,
+      "wall_s": 0.6128539144992828,
+      "wall_ms_per_call": 6.128539144992828,
+      "cuda_stream_elapsed_ms_per_call": 6.127260131835937
+    },
+    {
+      "index": 6,
+      "variant": "target_constants",
+      "calls": 100,
+      "wall_s": 0.6120022274553776,
+      "wall_ms_per_call": 6.120022274553776,
+      "cuda_stream_elapsed_ms_per_call": 6.118818359375
+    },
+    {
+      "index": 7,
+      "variant": "reference",
+      "calls": 100,
+      "wall_s": 0.6532450737431645,
+      "wall_ms_per_call": 6.532450737431645,
+      "cuda_stream_elapsed_ms_per_call": 6.530838623046875
+    }
+  ],
+  "summary": {
+    "reference": {
+      "median_wall_ms_per_call": 6.357828355394304,
+      "min_wall_ms_per_call": 6.22352872043848,
+      "max_wall_ms_per_call": 6.532450737431645
+    },
+    "target_constants": {
+      "median_wall_ms_per_call": 6.124280709773302,
+      "min_wall_ms_per_call": 6.091090179979801,
+      "max_wall_ms_per_call": 6.288680853322148
+    }
+  },
+  "median_apply_action_speedup": 1.0381347062110167,
+  "median_apply_action_wall_reduction_percent": 3.6733870838593474,
+  "checks": {
+    "preflight_commands_bitwise_equal": true,
+    "output_buffers_bitwise_equal": true,
+    "frozen_inputs_unchanged": true,
+    "finite_inputs_outputs": true,
+    "configuration_device_dtype_unchanged": true,
+    "no_simulation_advancement": true
+  },
+  "interpretation": "_apply_action microbenchmark at one frozen real state, including unchanged control and geometry branches. CUDA stream elapsed time includes idle gaps. No PhysX advancement, full-trajectory equivalence, env.step or PPO speedup claim."
+}

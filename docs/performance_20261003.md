@@ -100,6 +100,18 @@ speedup, trajectory equivalence, or PPO improvement. The candidate is not enable
 in the project controller; its modest local benefit must not be presented as a
 7% reduction in full training time.
 
+A [separate constant-only probe](../benchmarks/performance_20261003/target_constants_micro_1/result.json)
+keeps the original GPU conditions, indexed assignments and controller calls,
+but caches the two fixed position-bound tensors. On one frozen 128-environment
+state, `_apply_action` median time changed from **6.3578 to 6.1243 ms** across
+the same alternating block design: **3.67% less local wall time**. The observed
+ranges overlap (reference 6.2235–6.5325 ms; candidate 6.0911–6.2887 ms), so this
+small effect needs an end-to-end check. Real commands and recorded output buffers
+were bitwise equal; all eleven CPU source/numerical checks passed. The probe
+does not advance physics or establish full-trajectory equivalence. This candidate
+also remains outside the active project controller. The two local percentages
+refer to nested regions in separate probes and must not be added.
+
 The separate [instrumented run](../benchmarks/performance_20261003/reference_diagnostic_1/result.json)
 took 195.39 seconds. Host-observed region totals included 96.94 seconds in
 `sim_step`, 63.55 seconds in `apply_action` (23.47 exclusive), 16.33 seconds in
