@@ -1,0 +1,66 @@
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                       randomized_reset         0.00%       0.000us         0.00%       0.000us       0.000us        5.001s       230.95%        5.001s        2.501s             2  
+                                                  reset         0.00%       0.000us         0.00%       0.000us       0.000us        3.315s       153.09%        3.315s        1.657s             2  
+                                               reset_ik         0.00%       0.000us         0.00%       0.000us       0.000us        3.313s       152.98%        3.313s        1.656s             2  
+                                             kinematics         0.00%       0.000us         0.00%       0.000us       0.000us        2.105s        97.20%        2.105s       8.033ms           262  
+                                           apply_action         0.00%       0.000us         0.00%       0.000us       0.000us        1.189s        54.89%        1.189s      18.573ms            64  
+                                         control_torque         0.00%       0.000us         0.00%       0.000us       0.000us     696.413ms        32.16%     696.413ms       7.331ms            95  
+                                            scene_write         0.00%       0.000us         0.00%       0.000us       0.000us     668.412ms        30.87%     668.412ms       2.532ms           264  
+                      artiSolveInternalConstraintsTGS1T         0.00%       0.000us         0.00%       0.000us       0.000us     606.668ms        28.02%     606.668ms      23.995us         25283  
+                                      measured_env_step         0.00%       0.000us         0.00%       0.000us       0.000us     481.915ms        22.25%     481.915ms      60.239ms             8  
+      artiSolveInternalTendonAndMimicJointConstraints1T         0.00%       0.000us         0.00%       0.000us       0.000us     405.242ms        18.71%     405.242ms      16.028us         25283  
+                                     insertion_geometry         0.00%       0.000us         0.00%       0.000us       0.000us     385.263ms        17.79%     385.263ms       4.756ms            81  
+artiPropagateRigidImpulsesAndSolveSelfConstraintsTGS...         0.00%       0.000us         0.00%       0.000us       0.000us     351.815ms        16.25%     351.815ms      13.915us         25283  
+                                  stepArticulation1TTGS         0.00%       0.000us         0.00%       0.000us       0.000us     335.942ms        15.51%     335.942ms      13.356us         25152  
+                                                 reward         0.00%       0.000us         0.00%       0.000us       0.000us     296.970ms        13.71%     296.970ms      37.121ms             8  
+                                           scene_update         0.00%       0.000us         0.00%       0.000us       0.000us     133.201ms         6.15%     133.201ms     508.401us           262  
+                                      solveBlockUnified         0.00%       0.000us         0.00%       0.000us       0.000us     132.452ms         6.12%     132.452ms       7.149us         18528  
+                                          gripper_close         0.00%       0.000us         0.00%       0.000us       0.000us     126.484ms         5.84%     126.484ms       4.080ms            31  
+                                      markActiveSlabTGS         0.00%       0.000us         0.00%       0.000us       0.000us      67.586ms         3.12%      67.586ms       3.648us         18528  
+                               artiPropagateVelocityTGS         0.00%       0.000us         0.00%       0.000us       0.000us      41.028ms         1.89%      41.028ms       2.214us         18528  
+                  propagateAverageSolverBodyVelocityTGS         0.00%       0.000us         0.00%       0.000us       0.000us      40.622ms         1.88%      40.622ms       1.615us         25152  
+                              triangleTriangleCollision         0.00%       0.000us         0.00%       0.000us       0.000us      34.225ms         1.58%      34.225ms     352.831us            97  
+                                        control_signals         0.00%       0.000us         0.00%       0.000us       0.000us      23.022ms         1.06%      23.022ms     242.334us            95  
+                              artiPropagateImpulses2TGS         0.00%       0.000us         0.00%       0.000us       0.000us      22.059ms         1.02%      22.059ms       1.191us         18528  
+                                         cuLaunchKernel        32.64%        3.254s        33.15%        3.305s      15.317us      14.474ms         0.67%      14.477ms       0.067us        215787  
+                                     action_preparation         0.00%       0.000us         0.00%       0.000us       0.000us       9.310ms         0.43%       9.310ms       1.164ms             8  
+                                            aten::copy_         1.72%     171.466ms         3.90%     388.449ms      61.973us       6.174ms         0.29%       6.174ms       0.985us          6268  
+                                 aten::_index_put_impl_         0.64%      64.051ms         1.51%     150.979ms      56.022us       6.158ms         0.28%       6.736ms       2.500us          2695  
+void at::native::index_elementwise_kernel<128, 4, at...         0.00%       0.000us         0.00%       0.000us       0.000us       6.144ms         0.28%       6.144ms       2.303us          2668  
+                                            aten::index         0.88%      87.638ms         1.68%     167.752ms      70.248us       5.716ms         0.26%       6.272ms       2.626us          2388  
+void at::native::index_elementwise_kernel<128, 4, at...         0.00%       0.000us         0.00%       0.000us       0.000us       5.699ms         0.26%       5.699ms       2.404us          2371  
+                        setupInternalConstraintLaunch1T         0.00%       0.000us         0.00%       0.000us       0.000us       4.781ms         0.22%       4.781ms      36.496us           131  
+                         Memcpy DtoD (Device -> Device)         0.00%       0.000us         0.00%       0.000us       0.000us       4.342ms         0.20%       4.342ms       0.978us          4441  
+                                           observations         0.00%       0.000us         0.00%       0.000us       0.000us       4.256ms         0.20%       4.256ms     531.982us             8  
+            radixSortMultiCalculateRanksLaunchWithCount         0.00%       0.000us         0.00%       0.000us       0.000us       4.083ms         0.19%       4.083ms       3.896us          1048  
+                         Memcpy HtoD (Pinned -> Device)         0.00%       0.000us         0.00%       0.000us       0.000us       4.026ms         0.19%       4.026ms       1.047us          3846  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us       3.603ms         0.17%       3.603ms       1.067us          3376  
+                                         friction_reset         0.00%       0.000us         0.00%       0.000us       0.000us       3.537ms         0.16%       3.537ms       3.537ms             1  
+                                              aten::sub         1.42%     141.159ms         2.09%     208.462ms      68.058us       3.467ms         0.16%       3.467ms       1.132us          3063  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us       3.453ms         0.16%       3.453ms       1.396us          2474  
+                                              aten::mul         0.81%      80.327ms         1.22%     122.054ms      46.233us       3.159ms         0.15%       3.159ms       1.197us          2640  
+                                    computeMassMatrix1T         0.00%       0.000us         0.00%       0.000us       0.000us       3.055ms         0.14%       3.055ms      23.320us           131  
+                         Memcpy DtoH (Device -> Pinned)         0.00%       0.000us         0.00%       0.000us       0.000us       2.995ms         0.14%       2.995ms       1.152us          2600  
+                     radixSortMultiBlockLaunchWithCount         0.00%       0.000us         0.00%       0.000us       0.000us       2.821ms         0.13%       2.821ms       2.691us          1048  
+                                            aten::fill_         0.50%      49.460ms         1.06%     105.933ms      38.437us       2.772ms         0.13%       2.772ms       1.006us          2756  
+              computeUnconstrainedAccelerationsLaunch1T         0.00%       0.000us         0.00%       0.000us       0.000us       2.532ms         0.12%       2.532ms      19.328us           131  
+                                computeArtiMassMatrices         0.00%       0.000us         0.00%       0.000us       0.000us       2.512ms         0.12%       2.512ms      19.179us           131  
+                                              aten::add         0.63%      62.478ms         1.06%     105.191ms      47.641us       2.440ms         0.11%       2.442ms       1.106us          2208  
+                                              aten::bmm         0.48%      48.082ms         0.64%      63.806ms      74.802us       2.342ms         0.11%       2.342ms       2.746us           853  
+      computeUnconstrainedSpatialInertiaLaunchPartial1T         0.00%       0.000us         0.00%       0.000us       0.000us       2.339ms         0.11%       2.339ms      17.854us           131  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us       2.077ms         0.10%       2.077ms       1.442us          1440  
+                                        Memset (Device)         0.00%       0.000us         0.00%       0.000us       0.000us       2.070ms         0.10%       2.070ms       0.684us          3024  
+                 computeUnconstrainedVelocities1TLaunch         0.00%       0.000us         0.00%       0.000us       0.000us       1.971ms         0.09%       1.971ms      15.043us           131  
+             artiTGSContactConstraintBlockPrepareLaunch         0.00%       0.000us         0.00%       0.000us       0.000us       1.823ms         0.08%       1.823ms      18.985us            96  
+                                  aten::linalg_lu_solve         0.15%      15.004ms         0.57%      56.616ms     179.166us       1.804ms         0.08%       2.365ms       7.485us           316  
+                                   updateBodiesLaunch1T         0.00%       0.000us         0.00%       0.000us       0.000us       1.786ms         0.08%       1.786ms      13.634us           131  
+                                artiComputeDependencies         0.00%       0.000us         0.00%       0.000us       0.000us       1.765ms         0.08%       1.765ms      18.386us            96  
+                              aten::linalg_lu_factor_ex         0.11%      11.151ms         0.43%      42.829ms     135.534us       1.703ms         0.08%       2.380ms       7.533us           316  
+void getrf_semiwarp<float, float, 3, 1, true>(int, f...         0.00%       0.000us         0.00%       0.000us       0.000us       1.703ms         0.08%       1.703ms       5.390us           316  
+                      sortAndUpdateAggregateProjections         0.00%       0.000us         0.00%       0.000us       0.000us       1.643ms         0.08%       1.643ms      12.539us           131  
+                                              aten::cat         0.46%      45.741ms         0.68%      68.022ms      61.503us       1.621ms         0.07%       1.621ms       1.466us          1106  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 9.970s
+Self CUDA time total: 2.165s

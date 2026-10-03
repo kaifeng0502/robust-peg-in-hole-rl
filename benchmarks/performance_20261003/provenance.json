@@ -1,0 +1,31 @@
+{
+  "note": "Exact measurement outputs and configuration snapshots. No policy training updates were performed. Raw logs and the large diagnostic trace are retained separately. Paths identify the isolated runtime checkout, not a required installation location. The published tensor test resolves the repository root or explicit INSERTION_PROJECT; this test-only path change does not alter the measured scripts.",
+  "files": {
+    "benchmarks/performance_20261003/reference_capacity_512/result.json": "4da634dfb4bf5bae764121bee51546d3845548ed4b5ce9f3ff2d544d589b212c",
+    "benchmarks/performance_20261003/reference_capacity_512/metadata.json": "5101962d1ea7dd46fe42e0460fd44b8a4a9ff146b44664ddc5cb366bc2c4bc26",
+    "benchmarks/performance_20261003/reference_capacity_512_repeat/result.json": "fb1b1094714cb5ce46ea8d60de337d20818776a5103f2dbdeb659b7f578e0990",
+    "benchmarks/performance_20261003/reference_capacity_512_repeat/metadata.json": "1f1c4166644c3a51a573195d8c86ecea590a094b1e98dd3ca8722a414401d718",
+    "benchmarks/performance_20261003/reference_diagnostic_1/result.json": "e606298464fd642186d567f28a49934603f23655c2de1bd19b185daf5631890c",
+    "benchmarks/performance_20261003/reference_diagnostic_1/metadata.json": "ed673668234e2955421f54ef8f3ac008a55080c87324ddbe5018efef532655e4",
+    "benchmarks/performance_20261003/reference_dual_1_worker_0/result.json": "19db95dfe18a2a8cbcb3e518f46819aff6cd36ff0fd7f9c2c3a541d145bb1dcd",
+    "benchmarks/performance_20261003/reference_dual_1_worker_0/metadata.json": "98cfdefe98c5c5987a1cf48f0ec071eb3529626025e0e2cc49a201322c97be43",
+    "benchmarks/performance_20261003/reference_dual_1_worker_1/result.json": "359d029f132979b58319660fd607a0e9b0857304ac4e4dfc84d1d0ba4d0a94c8",
+    "benchmarks/performance_20261003/reference_dual_1_worker_1/metadata.json": "3fc98646f6cd32710d5a4175b21bbb61c3456952d114b02212e0b87d60ab0b28",
+    "benchmarks/performance_20261003/reference_single_1/result.json": "32d52b56a522b82c2f062113d1132a9d497fbcaf9254ee8730f8ea94ebd6ff7e",
+    "benchmarks/performance_20261003/reference_single_1/metadata.json": "dabf87afda006b2703dd6b731113c8e0b8fc3a8b21f31be196226015aa011eef",
+    "benchmarks/performance_20261003/reference_single_2/result.json": "230058b212214495fe3ae9c9aea9603ddac434f8a1fa2f7ccb517ae02fc3162b",
+    "benchmarks/performance_20261003/reference_single_2/metadata.json": "84c442e48889e5a0fd23d636881ca26588d9fd25a8dca960ccbdc81717f1bb19",
+    "benchmarks/performance_20261003/target_single_1/result.json": "826a282a42bcca6cdd719b28c9e2f1d9fd91014ecceccaa6a918cb0ffadbec70",
+    "benchmarks/performance_20261003/target_single_1/metadata.json": "b3371a9380644d5a41304fe5ad54c09a798869fedad50a3f3f0825e5c9cacf29",
+    "benchmarks/performance_20261003/reference_diagnostic_1/operator_cpu_times.txt": "41a6b14f4223de18804a0237ed9b68872676a686f283d779c01f1244eecf9c4d",
+    "benchmarks/performance_20261003/reference_diagnostic_1/operator_device_times.txt": "32d0b5f8ad66ecd369120f2428c5c23b82dcdc13bf6b91b8ccd658031a0cc908",
+    "tools/performance/profile_environment.py": "b59e41a7240e17a52e222134381f7c22442d702f62d3aedcba2eb8f9bfbdfd16",
+    "tools/performance/performance_probe.py": "71bc6e68dc54e25ccbc64fab130349ce40b02accfdd193241c57633479768037",
+    "tools/performance/target_updates.py": "667656892e2f5c9c03e6f478d1a97427ebf4dc223b3886f2eb13e0dec3d78fbc",
+    "tools/performance/test_profile_environment.py": "16d74f786d64338ce1d65dfbc47ec3c46682feea2f340a698a8e19458a977926",
+    "tools/performance/test_performance_probe.py": "1a006b109076bc1607f694380cfe329ac014dc145534196fc4a1c6f866822283",
+    "tools/performance/test_target_updates.py": "2bbe38fdc60e894e3b39737ae083f8d36f12949238275382e05e60b7e20d51a8",
+    "benchmarks/performance_20261003/tool_versions/profile_environment_v1.py": "56e3b1c6f2d57b5179022697f1ab11476f70d7bb60aa0669aca7c432fa476936"
+  },
+  "path_base": "repository root"
+}

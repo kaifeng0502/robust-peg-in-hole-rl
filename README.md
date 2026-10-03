@@ -8,6 +8,8 @@ The unified evaluation pipeline has passed GPU integration: all three methods co
 
 The next development stage uses 64 separate cases to diagnose the current controllers. A [predeclared continuation experiment](docs/DEVELOPMENT.md) compares legacy training reward with a terminal-hold reward profile under equal additional training budgets. The default controller and reward remain unchanged; candidate policies are evaluated through a frozen reference checkout. These experiments are pending, and the final 500-case holdout remains unused.
 
+[Environment stepping measurements](docs/performance_20261003.md) on the RTX 4090 D found 3.64–4.49× higher sampling throughput with 512 rather than 128 parallel environments, preserving the physics and controller configuration. This measures simulation capacity; equal-budget PPO training speed and learning quality at the larger batch size have not been established.
+
 ## System architecture
 
 ```mermaid

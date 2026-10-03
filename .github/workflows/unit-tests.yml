@@ -13,6 +13,8 @@ jobs:
         with:
           python-version: "3.11"
       - name: Compile Python sources
-        run: python -m compileall -q local_insertion scripts tests
+        run: python -m compileall -q local_insertion scripts tests tools/performance
       - name: Run control and evaluation regression tests
         run: python -m unittest discover -s tests -v
+      - name: Check performance measurement tooling
+        run: python -m unittest discover -s tools/performance -v
