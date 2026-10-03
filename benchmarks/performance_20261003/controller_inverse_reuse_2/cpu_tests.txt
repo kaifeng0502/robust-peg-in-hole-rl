@@ -1,0 +1,13 @@
+test_singular_matrix_exception_semantics (test_inverse_reuse.InverseReuseNumericalTests.test_singular_matrix_exception_semantics) ... ok
+test_torque_wrench_inputs_and_inverse_counts (test_inverse_reuse.InverseReuseNumericalTests.test_torque_wrench_inputs_and_inverse_counts) ... ok
+test_existing_instance_override_is_restored (test_inverse_reuse.SourceAndInstallationTests.test_existing_instance_override_is_restored) ... ok
+test_install_is_instance_local_and_restore_idempotent (test_inverse_reuse.SourceAndInstallationTests.test_install_is_instance_local_and_restore_idempotent) ... ok
+test_replacement_is_exactly_one_expression (test_inverse_reuse.SourceAndInstallationTests.test_replacement_is_exactly_one_expression) ... ok
+test_runtime_rejection_reports_precise_code_differences (test_inverse_reuse.SourceAndInstallationTests.test_runtime_rejection_reports_precise_code_differences) ... ok
+test_runtime_wrapper_is_rejected (test_inverse_reuse.SourceAndInstallationTests.test_runtime_wrapper_is_rejected) ... ok
+test_wrong_source_hash_is_rejected (test_inverse_reuse.SourceAndInstallationTests.test_wrong_source_hash_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.204s
+
+OK

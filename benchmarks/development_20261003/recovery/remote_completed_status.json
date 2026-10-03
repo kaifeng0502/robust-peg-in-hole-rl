@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "started_utc": "2026-10-03T05:13:06.531059+00:00",
+  "complete": false,
+  "phase": "remote_completed_awaiting_local_audit",
+  "original_run_directory": "/root/autodl-tmp/insertion/results/held_v2_pilot_20261003",
+  "transfer_sha256": "43aa9b85abc96e6ffa3c60d4e5a19c6f8bb1fdd23a1ed5d270b3c51dd818289e",
+  "observer_pid": 26854,
+  "workers": {
+    "legacy_continuation": {
+      "pid": 15330,
+      "start_ticks": 818678745,
+      "process_state": "not_found",
+      "completed_case_lines": 64,
+      "output": "/root/autodl-tmp/insertion/results/held_v2_pilot_20261003/legacy_continuation",
+      "exit_code": null,
+      "artifact_validation_passed": true
+    },
+    "held_v2": {
+      "pid": 15331,
+      "start_ticks": 818678745,
+      "process_state": "not_found",
+      "completed_case_lines": 64,
+      "output": "/root/autodl-tmp/insertion/results/held_v2_pilot_20261003/held_v2",
+      "exit_code": null,
+      "artifact_validation_passed": true
+    }
+  },
+  "phase_started_utc": "2026-10-03T05:57:12.640464+00:00",
+  "updated_utc": "2026-10-03T05:57:12.640468+00:00",
+  "resumed_utc": "2026-10-03T05:18:08.323003+00:00",
+  "resumed_monotonic_s": 8196025.621994776,
+  "deadline_monotonic_s": 8206825.621994776,
+  "resume_sha256": "55ca6f3a10aaf7b644f88e2d5539fca4b312124a5902cf7006bcad9ae35611cb",
+  "comparison_exit_code": 0,
+  "comparison_path": "/root/autodl-tmp/insertion/results/held_v2_pilot_20261003/candidate_comparison.json",
+  "archive": {
+    "path": "/root/autodl-tmp/insertion/results/held_v2_pilot_resume_20261003/completed_evaluation_evidence.tar.gz",
+    "sha256": "7a48733469762eeebba9d6606991afe5429ad3f505ebef194661623c36dc3ee6",
+    "bytes": 2483968,
+    "files": [
+      {
+        "archive_path": "pilot/candidate_comparison.json",
+        "sha256": "988f09cbb43b5165bf3272d5f1027ac5b6ce663b3353137254e368c49842371e",
+        "bytes": 37594
+      },
+      {
+        "archive_path": "pilot/evaluate_held_v2.log",
+        "sha256": "5c699ab0ff52ffaaf26ddb0bae7bbcc44be37224a345d526510e9c2758e28447",
+        "bytes": 10039
+      },
+      {
+        "archive_path": "pilot/evaluate_legacy_continuation.log",
+        "sha256": "e9a9df842b3f040e2ff0da5a0d093a1ec58d31d3fe4e7f85ac2ba9255e34bb91",
+        "bytes": 10210
+      },
+      {
+        "archive_path": "pilot/held_v2/metadata.json",
+        "sha256": "1360e2bbff11a2cc6f1a71f2abbea108948c6af856d2ee76f74705eb92885b2a",
+        "bytes": 26261
+      },
+      {
+        "archive_path": "pilot/held_v2/restored_agent_config.json",
+        "sha256": "5d0d96d7f987d21a6228358bc693910a37331f5e522132615521d2f8a6ce64ca",
+        "bytes": 2308
+      },
+      {
+        "archive_path": "pilot/held_v2/summary.json",
+        "sha256": "e478e59277c10150a80503376b0b6bee65d5d72d9a6fbaeaec9d731f2552eaac",
+        "bytes": 831
+      },
+      {
+        "archive_path": "pilot/held_v2/trajectories.jsonl",
+        "sha256": "f731711d055af86b498bb3d7bb3615037e7609e06a6c0ea98ec3c7478fcee7f5",
+        "bytes": 4819618
+      },
+      {
+        "archive_path": "pilot/held_v2/trials.json",
+        "sha256": "f41e15b699e7555c67ffaba26cf166ae17b2499b56c2215d73732331194886f0",
+        "bytes": 281984
+      },
+      {
+        "archive_path": "pilot/held_v2/trials.jsonl",
+        "sha256": "038faf406d32ac0ddacc08c7baff9e76d406039da50371be49def61437107258",
+        "bytes": 195389
+      },
+      {
+        "archive_path": "pilot/legacy_continuation/metadata.json",
+        "sha256": "81768d66642b6cb86a056dd0d089598969ba51dab90695175676f2eebc014d1b",
+        "bytes": 26261
+      },
+      {
+        "archive_path": "pilot/legacy_continuation/restored_agent_config.json",
+        "sha256": "efad14966ae1aced81fcb934f4140944e443203dbbe8d2a9a5d641443eba5480",
+        "bytes": 2332
+      },
+      {
+        "archive_path": "pilot/legacy_continuation/summary.json",
+        "sha256": "26feecd4f09cccdf0f21b06615f9fbf42073988416ccad1fcf6cd16481152a62",
+        "bytes": 857
+      },
+      {
+        "archive_path": "pilot/legacy_continuation/trajectories.jsonl",
+        "sha256": "e11d701fe7f4b03c66ff97e80c57e90c84728fd4cd1ff07e941a002420588b42",
+        "bytes": 4850807
+      },
+      {
+        "archive_path": "pilot/legacy_continuation/trials.json",
+        "sha256": "87342c17c7843dbc81ffa5e03e6e9a82f4857e6a7379082717c66327149f2e09",
+        "bytes": 282418
+      },
+      {
+        "archive_path": "pilot/legacy_continuation/trials.jsonl",
+        "sha256": "dcc70d800300bc96680c2adf742adc48d00fb302ef79c6f4f48a709c10865575",
+        "bytes": 195823
+      },
+      {
+        "archive_path": "pilot/plan.json",
+        "sha256": "dfd3075be479c3a8e8597bc955a145a4e3301f6d9c6a6c852d382e8aca4076d8",
+        "bytes": 2265
+      },
+      {
+        "archive_path": "pilot/reference_diagnosis.json",
+        "sha256": "33431ebc86db8fa262602e7d59c193f7c460a332b629a43c80554d0182468a33",
+        "bytes": 221118
+      },
+      {
+        "archive_path": "pilot/status.json",
+        "sha256": "b01342b8c520a7c8c9177850e28b98a158fa895ae0112cd0b414a317c6f5bedd",
+        "bytes": 381
+      },
+      {
+        "archive_path": "pilot/train_held_v2.log",
+        "sha256": "3858867a3659f6e4027e81febe47407d36a1b7f67badfae35c039cff257bdd4e",
+        "bytes": 9834
+      },
+      {
+        "archive_path": "pilot/train_legacy_continuation.log",
+        "sha256": "f23a02a0e857fc1021080dbd7183da287010683b5831033f0cb9f551ae35178d",
+        "bytes": 9883
+      },
+      {
+        "archive_path": "pilot/training_budget.json",
+        "sha256": "3f15bb9c25294a23d777da4af0e41015526fd1f6f9d5fc7de302edb691c2952c",
+        "bytes": 833
+      },
+      {
+        "archive_path": "pilot/training_contract.json",
+        "sha256": "56cfe43ebb08a99b48b72018415d9a4f520c9bd11e29253d2a583541e551315d",
+        "bytes": 1299
+      },
+      {
+        "archive_path": "pilot/user_pause.json",
+        "sha256": "fcf33b6da1573fb929404f50d59ceb697b2f5ac77e0930f4e2d7e030abb773bf",
+        "bytes": 472
+      },
+      {
+        "archive_path": "training_configs/legacy_continuation/agent.pkl",
+        "sha256": "2e61d92fa203e6f55c50f8add8e792d14851a042ecbfeedfaf0bbaee5aa4501c",
+        "bytes": 1482
+      },
+      {
+        "archive_path": "training_configs/legacy_continuation/agent.yaml",
+        "sha256": "62f67206ed82b91e771be5d27ae238ee92524df18417137c21fc507a389ed54d",
+        "bytes": 1690
+      },
+      {
+        "archive_path": "training_configs/legacy_continuation/env.pkl",
+        "sha256": "1e77b8b13a5ac01bf2355b2d03240b5cde86e2350257f8f707d19929c43b6f19",
+        "bytes": 10555
+      },
+      {
+        "archive_path": "training_configs/legacy_continuation/env.yaml",
+        "sha256": "7901c9c7ced575efbfddda99766c3d0de8a720ab3342b155146926309b47e22d",
+        "bytes": 13763
+      },
+      {
+        "archive_path": "training_configs/held_v2/agent.pkl",
+        "sha256": "46aaf179f9b090fc53e7024a82acdeb1552e5c7218e2c5b4cbe1a7c8161f82e0",
+        "bytes": 1470
+      },
+      {
+        "archive_path": "training_configs/held_v2/agent.yaml",
+        "sha256": "d462f8b3337a2ee9c209ce3d492d531b4973b26c2be713e9a76da1f0b2f412d7",
+        "bytes": 1678
+      },
+      {
+        "archive_path": "training_configs/held_v2/env.pkl",
+        "sha256": "c90b6eea8ab14bf97df7af0fb5f18c1cbae8d485b336fa7f0600f7bf2ad1b9b5",
+        "bytes": 10565
+      },
+      {
+        "archive_path": "training_configs/held_v2/env.yaml",
+        "sha256": "103b2099fbbbd42f8173ab857de399cf7d1b10275afdf1e43fd08da602dba1ec",
+        "bytes": 13773
+      },
+      {
+        "archive_path": "recovery/transfer.json",
+        "sha256": "43aa9b85abc96e6ffa3c60d4e5a19c6f8bb1fdd23a1ed5d270b3c51dd818289e",
+        "bytes": 5202
+      },
+      {
+        "archive_path": "recovery/resume.json",
+        "sha256": "55ca6f3a10aaf7b644f88e2d5539fca4b312124a5902cf7006bcad9ae35611cb",
+        "bytes": 495
+      },
+      {
+        "archive_path": "recovery/validation.json",
+        "sha256": "e5c91ce678b6538fe2fd136b0b5b666ccbca30ccd997767149f6cc12a97292d2",
+        "bytes": 2142
+      },
+      {
+        "archive_path": "recovery/comparison.log",
+        "sha256": "5ff35c838895320bc5d194405c05178f8155269206e38b1bb5d5ad271cc6ac2d",
+        "bytes": 230
+      }
+    ],
+    "training_checkpoint_archive": "Previously retained separately; not duplicated here."
+  },
+  "remote_validated_utc": "2026-10-03T05:57:12.640433+00:00",
+  "local_audit_pending": true
+}

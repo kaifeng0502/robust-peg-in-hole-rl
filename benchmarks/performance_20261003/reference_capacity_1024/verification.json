@@ -1,0 +1,24 @@
+{
+  "scope": "Independent local verification of archived measurement records; no new simulation or training.",
+  "reference_metadata": "benchmarks/performance_20261003/reference_single_2/metadata.json",
+  "reference_metadata_sha256": "84c442e48889e5a0fd23d636881ca26588d9fd25a8dca960ccbdc81717f1bb19",
+  "capacity_metadata_sha256": "32860e704deb6c2860c64181eb269b1d8e378178f04ef7ed03106febf8bc16f8",
+  "capacity_result_sha256": "2e20c332b9a9160ad7e4e80bc2685e1e4bf9e992044519a92310990a010f5a73",
+  "checks": {
+    "capacity_config_only_num_envs_differs": true,
+    "capacity_runtime_and_torch_settings_match_reference": true,
+    "constant_screen_config_runtime_and_torch_settings_match_reference": true,
+    "capacity_transition_episode_substep_arithmetic_valid": true,
+    "capacity_rate_recomputed": true,
+    "sampled_memory_summary_recomputed": true,
+    "measured_script_hash_matches_archived_v3": true,
+    "v2_v3_warmup_and_measured_loop_ast_equal": true,
+    "constant_patch_hash_matches_archived_patch": true
+  },
+  "limits": [
+    "Only one 1024-environment capacity run was measured.",
+    "The constant-only full-step result has no fresh matched reference, repeat, or trajectory validation.",
+    "Memory samples are device-wide at 5-second intervals and may miss short peaks.",
+    "No PPO training-speed or learning-equivalence measurement."
+  ]
+}

@@ -22,6 +22,15 @@ def run(script_name: str) -> None:
         raise RuntimeError(f"Expected one registration marker in {upstream}")
     source = source.replace(marker, replacement)
 
+    if script_name == "train.py":
+        marker = '    # create isaac environment\n'
+        guard = ("    if env_cfg.scene.num_envs != 1024:\n"
+                 "        raise ValueError('All future training must use 1024 environments')\n"
+                 "    agent_cfg['params']['config']['num_actors'] = 1024\n")
+        if source.count(marker) != 1:
+            raise RuntimeError("Could not locate training environment guard")
+        source = source.replace(marker, guard + marker)
+
     sys.argv[0] = str(upstream)
     namespace = {"__name__": "__main__", "__file__": str(upstream)}
     exec(compile(source, str(upstream), "exec"), namespace)

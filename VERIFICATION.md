@@ -54,7 +54,7 @@ The corrected absolute-residual controller was trained with seed 42 and 128 para
 
 The full stage used the configured pose and friction randomization together: hole and grasp pose variation, 2 mm XY observation noise, and friction sampled from 0.30–1.20. Its TensorBoard success series was `[71.1%, 68.0%, 66.4%, 69.5%, 72.7%, 71.9%, 71.9%, 64.1%, 66.4%, 66.4%, 74.2%, 79.7%, 75.8%, 75.8%, 75.8%, 81.3%, 75.0%, 70.3%, 82.0%]`; the best checkpoint is `/workspace/projects/baseline_rl/logs/rl_games/LocalInsertion/2026-09-17_07-47-07/nn/LocalInsertion.pth`. This is a training-seed result, not a multi-seed generalization claim.
 
-The fixed-search challenge-v2 baseline is 64.8% (83/128), so the full randomized RL training run exceeds that reference in its held-in training distribution. A separate `play_rl.py` inference launch loaded the checkpoint and constructed the 128-environment policy successfully, but Isaac Sim later hit a known headless Vulkan/Carb mutex assertion before a long independent rollout completed; the 82.0% figure above therefore comes from the training episode success metric.
+The legacy fixed-search challenge-v2 rate is 64.8% (83/128), using a cumulative success buffer. It is not a fair terminal-hold comparison with PPO: metric semantics, start height, and horizon differed. A separate `play_rl.py` inference launch loaded the checkpoint and constructed the 128-environment policy successfully, but Isaac Sim later hit a headless Vulkan/Carb mutex assertion before that independent rollout completed. The 82.0% figure above comes from the training episode success metric, not that playback run.
 
 ## Independent deterministic evaluation
 
@@ -62,13 +62,72 @@ The first finite-horizon deterministic evaluation exposed a serious gap between 
 
 | Evaluation seed | Success | Final insertion result |
 |---:|---:|---|
-| 42 | 0/128 (0.0%) | No episode reached the success geometry |
-| 123 | 0/128 (0.0%) | No episode reached the success geometry |
+| 42 | 0/128 (0.0%) | No episode retained success geometry at the final evaluated sample |
+| 123 | 0/128 (0.0%) | No episode retained success geometry at the final evaluated sample |
 
-The earlier 62/128 and 59/128 counts came from the cumulative `ep_succeeded` buffer before the evaluation script was corrected; they are not valid success measurements. The corrected metric recomputes the Factory success predicate from the final geometry. This means the 82.0% TensorBoard series must not be treated as deployment success yet. The next engineering step is to trace the deterministic action output and reward/termination timing, then fix the evaluation and policy pipeline before changing the reward or curriculum.
+The earlier 62/128 and 59/128 counts came from the cumulative `ep_succeeded` buffer before the evaluation script was corrected; they describe ever-success and are not terminal success measurements. The corrected diagnostic recomputed the Factory predicate from final geometry. The difference from the 82.0% TensorBoard series remains unresolved; deterministic vs stochastic action selection, normalization, horizon, and reset timing must be verified before attributing it to a single cause.
+
+On 2026-10-02, review of `_log_factory_metrics` at the pinned Isaac Lab commit confirmed that `extras["successes"]` logs **current geometry when the training episode times out**, while `ep_succeeded` separately accumulates whether success ever occurred. Earlier documentation incorrectly assumed the 82.0% scalar necessarily used the latter buffer. The original TensorBoard tag-to-logger path still needs to be checked alongside preserved run artifacts. None of these historical scalars proves one-second terminal-hold success.
 
 ## Success-hold correction
 
 The trace showed that the policy could enter the success geometry briefly and then pull the peg back out. The RL environment now latches the first successful world pose, commands that stored pose on subsequent steps, and adds a 1.5 mm downward hold margin. A nominal deterministic check changed from 0/1 to 1/1 with 24.1 mm final depth.
 
-The full-randomization continuation was launched from the `07-47-07` checkpoint, but its final artifacts were not preserved after the compute instance stopped. No terminal success claim is made from that continuation. A future full-randomization result must be generated with the corrected final-geometry evaluator and retained alongside its checkpoint and evaluation seeds.
+The full-randomization continuation was launched from the `07-47-07` checkpoint. Its artifacts were recovered from persistent storage on 2026-10-02 after the Pod restarted. The earlier connection failure did not indicate loss of the saved run.
+
+## Recovered continuation — 2026-10-02
+
+The restarted Pod reports an NVIDIA L4 with driver `570.195.03`. The recovered run directory is:
+
+```text
+/workspace/projects/baseline_rl/logs/rl_games/LocalInsertion/2026-09-17_11-39-10
+```
+
+The preserved training log confirms epoch `100/100`, logged frames `1622016`, reward `898.63434`, and the saved final checkpoint `nn/last_LocalInsertion_ep_100_rew_898.63434.pth`.
+
+Reading the original best training-reward checkpoint, `nn/LocalInsertion.pth`, recovered these fields:
+
+| Checkpoint field | Value |
+|---|---:|
+| `epoch` | 93 |
+| `frame` | 1523712 |
+| `last_mean_rewards` | 953.5416 |
+
+That original `LocalInsertion.pth` was selected for the integration check **before observing results on the new cases**. Selection used the saved training-reward checkpoint. Its checkpoint and original agent configuration hashes are recorded in evaluation metadata.
+
+The selected checkpoint SHA256 is `9811f2bfa13dab366531324fbab5bb758a7e031753a6378b5d318ad99d843721`; its original agent configuration SHA256 is `10cfe0b4e3974952b02b565054a47ebcc2cf68a5ff21ca5fa316f448f7dfbe7e`.
+
+These records establish that the continuation completed and its weights survived. They do not establish deterministic inference correctness or terminal-hold success. The pinned Isaac Sim 5.0 extension-cache packages were restored after a workspace-quota interruption. The subsequent simulation attempt stopped before evaluating any cases because the container lost GPU access: `nvidia-smi` reported `Failed to initialize NVML: Unknown Error`, PyTorch reported zero CUDA devices, and opening `/dev/nvidiactl`, `/dev/nvidia0`, and `/dev/nvidia-uvm` returned `EPERM`, despite the device nodes being present. The same session had successfully detected the L4 earlier.
+
+These observations are consistent with the container-update GPU-access failure documented by [NVIDIA](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/troubleshooting.html#containers-losing-access-to-gpus-with-error-failed-to-initialize-nvml-unknown-error); the precise host-side trigger was not established. The error recurred after restarts without further user configuration changes. Initialized simulation processes continued to complete episodes, while new processes failed the CUDA preflight. The integration results below were obtained from completed runs after restoring access; runtime reliability remains an operational issue requiring host-side investigation.
+
+## Unified evaluation revision — 2026-10-02
+
+Implemented and exercised in GPU integration:
+
+- A common `LocalInsertionRLEnv` for spiral, zero-residual, and PPO evaluation, with the same pre-insertion pose distribution, nominal grasp offset, reward, control gains, and hold logic.
+- Position-error clipping after the hold override, closing the previous unbounded-hold target path.
+- A 10 s finite-horizon evaluator with a guarded simulator timeout, deterministic PPO inference, original training configuration, and restored policy normalizers.
+- Success checks at every 120 Hz physics boundary. The headline criterion requires the final 1 s to remain inside XY ≤2.5 mm and absolute depth error ≤1 mm. The two-sided depth check also rejects excessive penetration.
+- Recorded initial states, frozen reset manifests, checkpoint/source/configuration identities, per-step traces, and rejection of incomplete or mismatched comparisons.
+- Dependency-free tests for metric semantics, reset contamination, manifest integrity, and comparison validation.
+
+The new shared spiral implementation is a new benchmark controller, not a remeasurement of the historical 83/128 result. The three completed integration runs used the same source, protocol and runtime versions. The comparator accepted all eight paired cases, and all recorded initial-state components were exactly equal across methods.
+
+Local validation on 2026-10-02: all 68 unit/regression tests passed, Python compilation passed, and Ruff reported no issues. The test suite uses deterministic synthetic backends for lifecycle and metric checks; those outcomes are not manipulation experiment results.
+
+Pod validation at `2df57de`: all 69 tests passed with PyTorch installed, including two consecutive reset/step cycles through the actual simulation adapter with a tensor-backed test environment. This regression verifies that persistent buffers remain mutable after stepping; it does not execute Isaac Sim physics or prove GPU inference.
+
+After the device-access failure, a CUDA preflight was added before simulator startup. Ten mocked tests cover missing CUDA access, invalid device indices, query/allocation errors and preflight ordering. The resulting local suite ran 79 tests: 78 passed and the PyTorch-dependent adapter test was skipped because local PyTorch is unavailable. Ruff and compilation passed. The preflight is an early diagnostic, not a repair for host-managed device permissions.
+
+All 79 tests subsequently passed on the Pod at `089ccae`. Actual simulator validation then completed 24 episodes and produced 3,600 control-step records. Each episode covered exactly 150 control intervals / 10 seconds, without reset contamination. Offline metric recomputation matched all recorded episode and summary metrics within floating-point roundoff.
+
+| Method | Terminal-hold successes | Wilson 95% interval |
+|---|---:|---:|
+| Zero residual | 2/8 (25.0%) | 7.1–59.1% |
+| Spiral search | 4/8 (50.0%) | 21.5–78.5% |
+| PPO | 3/8 (37.5%) | 13.7–69.4% |
+
+This integration sample does not establish a PPO advantage or support the 95% target. PPO's higher task return did not produce more held successes than spiral. One PPO case reached valid geometry at 9.8 seconds and had only 0.2 seconds of final hold, so it correctly failed. Four PPO cases remained near the hole entrance with excessive lateral error. See the [raw evidence and detailed analysis](benchmarks/gpu_integration_20261002/README.md).
+
+The selected checkpoint and original agent configuration are also backed up locally, with SHA256 equality to the recovered Pod files. The full training environment snapshot is still on the persistent volume and must be compared with the new evaluation configuration before attributing the gap to a single training cause. A separate 64-case development manifest is prepared and has no seed overlap with the eight integration cases or the untouched 500-case holdout. No new training, multi-seed study, randomization ablation or final holdout evaluation was performed in this integration run.

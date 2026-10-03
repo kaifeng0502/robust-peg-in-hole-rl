@@ -1,0 +1,212 @@
+{
+  "training_curves": {
+    "control_legacy_dense": {
+      "info/epochs": {
+        "count": 7,
+        "values": [
+          114.0,
+          115.0,
+          116.0,
+          117.0,
+          118.0,
+          119.0,
+          120.0
+        ]
+      },
+      "Episode/terminal_hold_v2/terminal_held_success": {
+        "count": 5,
+        "values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "Episode/terminal_hold_v2/ever_geometry_success": {
+        "count": 5,
+        "values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "info/kl": {
+        "count": 7,
+        "values": [
+          0.14844989776611328,
+          0.013754190877079964,
+          0.013898193836212158,
+          0.01478500198572874,
+          0.011897370219230652,
+          0.008007143624126911,
+          0.01302727498114109
+        ]
+      },
+      "info/last_lr": {
+        "count": 7,
+        "values": [
+          8.888888987712562e-05,
+          5.9259258705424145e-05,
+          5.9259258705424145e-05,
+          5.9259258705424145e-05,
+          5.9259258705424145e-05,
+          8.888888987712562e-05,
+          5.9259258705424145e-05
+        ]
+      },
+      "losses/entropy": {
+        "count": 7,
+        "values": [
+          7.691564083099365,
+          7.563992500305176,
+          7.585594177246094,
+          7.368009567260742,
+          7.027421951293945,
+          6.15875244140625,
+          6.0036234855651855
+        ]
+      },
+      "losses/c_loss": {
+        "count": 7,
+        "values": [
+          0.0804905965924263,
+          0.06640630960464478,
+          0.059892453253269196,
+          0.051022596657276154,
+          0.03947177529335022,
+          0.022230714559555054,
+          0.018238836899399757
+        ]
+      }
+    },
+    "candidate_entry_dense": {
+      "info/epochs": {
+        "count": 8,
+        "values": [
+          114.0,
+          115.0,
+          116.0,
+          117.0,
+          118.0,
+          119.0,
+          120.0,
+          121.0
+        ]
+      },
+      "Episode/terminal_hold_v2/terminal_held_success": {
+        "count": 6,
+        "values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "Episode/terminal_hold_v2/ever_geometry_success": {
+        "count": 6,
+        "values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "info/kl": {
+        "count": 8,
+        "values": [
+          0.0763779878616333,
+          0.014718260616064072,
+          0.013754820451140404,
+          0.011472057551145554,
+          0.013205528259277344,
+          0.00783332996070385,
+          0.010698514059185982,
+          0.015901777893304825
+        ]
+      },
+      "info/last_lr": {
+        "count": 8,
+        "values": [
+          8.888888987712562e-05,
+          5.9259258705424145e-05,
+          5.9259258705424145e-05,
+          5.9259258705424145e-05,
+          3.950617247028276e-05,
+          5.9259258705424145e-05,
+          5.9259258705424145e-05,
+          5.9259258705424145e-05
+        ]
+      },
+      "losses/entropy": {
+        "count": 8,
+        "values": [
+          7.713001251220703,
+          8.212082862854004,
+          8.418814659118652,
+          8.130796432495117,
+          7.811904430389404,
+          6.934792518615723,
+          7.0033369064331055,
+          7.747660160064697
+        ]
+      },
+      "losses/c_loss": {
+        "count": 8,
+        "values": [
+          0.08083212375640869,
+          0.06915469467639923,
+          0.06329807639122009,
+          0.05393233150243759,
+          0.041716817766427994,
+          0.024389196187257767,
+          0.02033112943172455,
+          0.026489686220884323
+        ]
+      }
+    }
+  },
+  "source_checkpoint_prior_action_evidence": {
+    "initial_control": {
+      "samples": 64,
+      "positive_fraction": 1.0,
+      "mean_raw_z": 0.5415174141526222
+    },
+    "first_15_controls": {
+      "samples": 960,
+      "positive_fraction": 0.9802083333333333,
+      "mean_raw_z": 0.6586040817239943
+    }
+  },
+  "logged_total_fps": {
+    "control_legacy_dense": {
+      "total_fps_median": 2369.5,
+      "total_fps_min": 2192,
+      "total_fps_max": 2551
+    },
+    "candidate_entry_dense": {
+      "total_fps_median": 2437.0,
+      "total_fps_min": 2222,
+      "total_fps_max": 2686
+    }
+  },
+  "device_memory_peak_mib_10_second_samples": {
+    "training_control_legacy_dense": 5380,
+    "training_candidate_entry_dense": 5380,
+    "evaluating_64_development_cases": 9072
+  },
+  "decision": "Do not adopt either transferred candidate or increase training automatically. Calibrate the changed Z action semantics and verify the actual initialized policy before further reward comparisons.",
+  "limits": [
+    "Training rewards have different definitions and are not compared as performance.",
+    "TensorBoard scalar points are not guaranteed one per final saved epoch; budget is checked in checkpoint binaries.",
+    "Sampled device memory is not allocator peak.",
+    "Old-policy positive Z initial actions and new-policy lifting support a transfer mismatch mechanism; they do not isolate every cause of failed learning.",
+    "The retained original epoch113 model and absolute action interface remain available."
+  ]
+}

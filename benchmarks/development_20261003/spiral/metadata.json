@@ -1,0 +1,943 @@
+{
+  "agent_config_sha256": null,
+  "case_set": {
+    "case_set_id": "cb64e7a09fab0a4756a2f80a96c41d4721dd9d8f02fc0415687a97beb7e64fd9",
+    "cases": [
+      {
+        "case_id": "case_000000",
+        "seed": 120965577
+      },
+      {
+        "case_id": "case_000001",
+        "seed": 21187555
+      },
+      {
+        "case_id": "case_000002",
+        "seed": 1455299991
+      },
+      {
+        "case_id": "case_000003",
+        "seed": 615921975
+      },
+      {
+        "case_id": "case_000004",
+        "seed": 2137984594
+      },
+      {
+        "case_id": "case_000005",
+        "seed": 1238856619
+      },
+      {
+        "case_id": "case_000006",
+        "seed": 458917771
+      },
+      {
+        "case_id": "case_000007",
+        "seed": 1663042551
+      },
+      {
+        "case_id": "case_000008",
+        "seed": 1280681836
+      },
+      {
+        "case_id": "case_000009",
+        "seed": 218509817
+      },
+      {
+        "case_id": "case_000010",
+        "seed": 78635797
+      },
+      {
+        "case_id": "case_000011",
+        "seed": 2044727720
+      },
+      {
+        "case_id": "case_000012",
+        "seed": 1618094106
+      },
+      {
+        "case_id": "case_000013",
+        "seed": 533282075
+      },
+      {
+        "case_id": "case_000014",
+        "seed": 545850437
+      },
+      {
+        "case_id": "case_000015",
+        "seed": 243538780
+      },
+      {
+        "case_id": "case_000016",
+        "seed": 967211986
+      },
+      {
+        "case_id": "case_000017",
+        "seed": 2108824319
+      },
+      {
+        "case_id": "case_000018",
+        "seed": 617627598
+      },
+      {
+        "case_id": "case_000019",
+        "seed": 992491907
+      },
+      {
+        "case_id": "case_000020",
+        "seed": 1305291916
+      },
+      {
+        "case_id": "case_000021",
+        "seed": 1463058351
+      },
+      {
+        "case_id": "case_000022",
+        "seed": 1429586835
+      },
+      {
+        "case_id": "case_000023",
+        "seed": 153799848
+      },
+      {
+        "case_id": "case_000024",
+        "seed": 1082408603
+      },
+      {
+        "case_id": "case_000025",
+        "seed": 789545759
+      },
+      {
+        "case_id": "case_000026",
+        "seed": 166642250
+      },
+      {
+        "case_id": "case_000027",
+        "seed": 1374445383
+      },
+      {
+        "case_id": "case_000028",
+        "seed": 1940825805
+      },
+      {
+        "case_id": "case_000029",
+        "seed": 1546051256
+      },
+      {
+        "case_id": "case_000030",
+        "seed": 135798431
+      },
+      {
+        "case_id": "case_000031",
+        "seed": 816359821
+      },
+      {
+        "case_id": "case_000032",
+        "seed": 366821102
+      },
+      {
+        "case_id": "case_000033",
+        "seed": 1389841231
+      },
+      {
+        "case_id": "case_000034",
+        "seed": 1244555032
+      },
+      {
+        "case_id": "case_000035",
+        "seed": 1293085270
+      },
+      {
+        "case_id": "case_000036",
+        "seed": 1970739226
+      },
+      {
+        "case_id": "case_000037",
+        "seed": 922820250
+      },
+      {
+        "case_id": "case_000038",
+        "seed": 538928811
+      },
+      {
+        "case_id": "case_000039",
+        "seed": 1346200071
+      },
+      {
+        "case_id": "case_000040",
+        "seed": 1743463360
+      },
+      {
+        "case_id": "case_000041",
+        "seed": 630163751
+      },
+      {
+        "case_id": "case_000042",
+        "seed": 1323959745
+      },
+      {
+        "case_id": "case_000043",
+        "seed": 850476525
+      },
+      {
+        "case_id": "case_000044",
+        "seed": 1341466314
+      },
+      {
+        "case_id": "case_000045",
+        "seed": 1067951426
+      },
+      {
+        "case_id": "case_000046",
+        "seed": 785708211
+      },
+      {
+        "case_id": "case_000047",
+        "seed": 516077980
+      },
+      {
+        "case_id": "case_000048",
+        "seed": 164964197
+      },
+      {
+        "case_id": "case_000049",
+        "seed": 338280928
+      },
+      {
+        "case_id": "case_000050",
+        "seed": 760502586
+      },
+      {
+        "case_id": "case_000051",
+        "seed": 1821873583
+      },
+      {
+        "case_id": "case_000052",
+        "seed": 36309549
+      },
+      {
+        "case_id": "case_000053",
+        "seed": 1321821459
+      },
+      {
+        "case_id": "case_000054",
+        "seed": 133542620
+      },
+      {
+        "case_id": "case_000055",
+        "seed": 969500500
+      },
+      {
+        "case_id": "case_000056",
+        "seed": 1029402810
+      },
+      {
+        "case_id": "case_000057",
+        "seed": 393518697
+      },
+      {
+        "case_id": "case_000058",
+        "seed": 2147080601
+      },
+      {
+        "case_id": "case_000059",
+        "seed": 177098820
+      },
+      {
+        "case_id": "case_000060",
+        "seed": 1769241775
+      },
+      {
+        "case_id": "case_000061",
+        "seed": 2120326695
+      },
+      {
+        "case_id": "case_000062",
+        "seed": 1054719126
+      },
+      {
+        "case_id": "case_000063",
+        "seed": 1422024199
+      }
+    ],
+    "distribution": "challenge_v2",
+    "schema_version": 1,
+    "seed": 20261003
+  },
+  "case_set_id": "cb64e7a09fab0a4756a2f80a96c41d4721dd9d8f02fc0415687a97beb7e64fd9",
+  "checkpoint_sha256": null,
+  "code_revision": "79982d405e09d041563079dc4dce49f948b93fe763e87751a4b085592b635a29",
+  "control_uses_simulator_success_signal": true,
+  "criteria": {
+    "depth_tolerance_m": 0.001,
+    "dt_s": 0.06666666666666667,
+    "hold_duration_s": 1.0,
+    "xy_tolerance_m": 0.0025
+  },
+  "deterministic_policy": true,
+  "force_note": "Commanded impedance wrench, not sensor-measured contact force.",
+  "git_commit": "c15f16bbd2f9fa5f9480d103cd69e0fc125a9e38",
+  "method": "spiral",
+  "policy_observation_clip": null,
+  "protocol": {
+    "criteria": {
+      "depth_tolerance_m": 0.001,
+      "dt_s": 0.06666666666666667,
+      "hold_duration_s": 1.0,
+      "xy_tolerance_m": 0.0025
+    },
+    "force_sampling": "maximum_command_magnitude_over_all_physics_substeps",
+    "horizon_steps": 150,
+    "initialization": "single_environment_seeded_reset_with_realized_state_gate",
+    "name": "local_insertion_held_v1",
+    "shared_environment_config": {
+      "action_noise_model": null,
+      "action_space": 6,
+      "ctrl": {
+        "default_dof_pos_tensor": [
+          -1.3003,
+          -0.4015,
+          1.1791,
+          -2.1493,
+          0.4001,
+          1.9425,
+          0.4754
+        ],
+        "default_task_prop_gains": [
+          500.0,
+          500.0,
+          400.0,
+          30.0,
+          30.0,
+          30.0
+        ],
+        "ema_factor": 0.35,
+        "kd_null": 6.3246,
+        "kp_null": 10.0,
+        "pos_action_bounds": [
+          0.02,
+          0.02,
+          0.06
+        ],
+        "pos_action_threshold": [
+          0.00025,
+          0.00025,
+          0.00025
+        ],
+        "reset_joints": [
+          0.0015178,
+          -0.19651,
+          -0.0014364,
+          -1.9761,
+          -0.00027717,
+          1.7796,
+          0.78556
+        ],
+        "reset_rot_deriv_scale": 10.0,
+        "reset_task_prop_gains": [
+          300,
+          300,
+          300,
+          20,
+          20,
+          20
+        ],
+        "rot_action_bounds": [
+          0.2617993877991494,
+          0.2617993877991494,
+          0.2617993877991494
+        ],
+        "rot_action_threshold": [
+          0.004363323129985824,
+          0.004363323129985824,
+          0.004363323129985824
+        ]
+      },
+      "decimation": 8,
+      "episode_length_s": 10.133333333333333,
+      "evaluation_geometry": {
+        "depth_tolerance_m": 0.001,
+        "xy_tolerance_m": 0.0025
+      },
+      "events": null,
+      "hold": {
+        "downward_margin_m": 0.0015,
+        "enabled": true,
+        "max_xy_error_m": 0.004,
+        "max_z_error_m": 0.003
+      },
+      "is_finite_horizon": false,
+      "nominal_insertion_depth_m": 0.0245,
+      "nominal_tool_to_peg_base_m": 0.032,
+      "num_actions": null,
+      "num_observations": null,
+      "num_states": null,
+      "obs_order": [
+        "fingertip_pos_rel_fixed",
+        "fingertip_quat",
+        "ee_linvel",
+        "ee_angvel"
+      ],
+      "obs_rand": {
+        "fixed_asset_pos": [
+          0.002,
+          0.002,
+          0.001
+        ]
+      },
+      "observation_noise_model": null,
+      "observation_space": 19,
+      "randomization": {
+        "friction_enabled": true,
+        "friction_max": 1.2,
+        "friction_min": 0.3,
+        "pose_enabled": true
+      },
+      "rerender_on_reset": false,
+      "residual_roll_pitch_span_rad": 0.08726646259971647,
+      "residual_xy_span_m": 0.006,
+      "residual_yaw_span_rad": 0.17453292519943295,
+      "residual_z_span_m": 0.003,
+      "reward": {
+        "action_rate_scale": 0.02,
+        "action_scale": 0.01,
+        "alignment_scale": 0.5,
+        "alignment_sigma_m": 0.003,
+        "approach_scale": 1.5,
+        "approach_sigma_m": 0.01,
+        "commanded_wrench_scale": 0.002,
+        "depth_scale": 2.0,
+        "engage_scale": 2.0,
+        "first_success_scale": 20.0,
+        "keypoint_scale": 1.0,
+        "progress_normalizer_m": 0.002,
+        "progress_scale": 3.0,
+        "success_hold_scale": 1.0,
+        "wrench_normalizer_n": 20.0
+      },
+      "robot": {
+        "actuator_value_resolution_debug_print": false,
+        "actuators": {
+          "panda_arm1": {
+            "armature": 0.0,
+            "class_type": "isaaclab.actuators.actuator_pd:ImplicitActuator",
+            "damping": 0.0,
+            "dynamic_friction": null,
+            "effort_limit": null,
+            "effort_limit_sim": 87,
+            "friction": 0.0,
+            "joint_names_expr": [
+              "panda_joint[1-4]"
+            ],
+            "stiffness": 0.0,
+            "velocity_limit": null,
+            "velocity_limit_sim": 124.6,
+            "viscous_friction": null
+          },
+          "panda_arm2": {
+            "armature": 0.0,
+            "class_type": "isaaclab.actuators.actuator_pd:ImplicitActuator",
+            "damping": 0.0,
+            "dynamic_friction": null,
+            "effort_limit": null,
+            "effort_limit_sim": 12,
+            "friction": 0.0,
+            "joint_names_expr": [
+              "panda_joint[5-7]"
+            ],
+            "stiffness": 0.0,
+            "velocity_limit": null,
+            "velocity_limit_sim": 149.5,
+            "viscous_friction": null
+          },
+          "panda_hand": {
+            "armature": 0.0,
+            "class_type": "isaaclab.actuators.actuator_pd:ImplicitActuator",
+            "damping": 173.0,
+            "dynamic_friction": null,
+            "effort_limit": null,
+            "effort_limit_sim": 40.0,
+            "friction": 0.1,
+            "joint_names_expr": [
+              "panda_finger_joint[1-2]"
+            ],
+            "stiffness": 7500.0,
+            "velocity_limit": null,
+            "velocity_limit_sim": 0.04,
+            "viscous_friction": null
+          }
+        },
+        "articulation_root_prim_path": null,
+        "class_type": "isaaclab.assets.articulation.articulation:Articulation",
+        "collision_group": 0,
+        "debug_vis": false,
+        "init_state": {
+          "ang_vel": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "joint_pos": {
+            "panda_finger_joint2": 0.04,
+            "panda_joint1": 0.00871,
+            "panda_joint2": -0.10368,
+            "panda_joint3": -0.00794,
+            "panda_joint4": -1.49139,
+            "panda_joint5": -0.00083,
+            "panda_joint6": 1.38774,
+            "panda_joint7": 0.0
+          },
+          "joint_vel": {
+            ".*": 0.0
+          },
+          "lin_vel": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pos": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rot": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "prim_path": "/World/envs/env_.*/Robot",
+        "soft_joint_pos_limit_factor": 1.0,
+        "spawn": {
+          "activate_contact_sensors": true,
+          "articulation_props": {
+            "articulation_enabled": null,
+            "enabled_self_collisions": false,
+            "fix_root_link": null,
+            "sleep_threshold": null,
+            "solver_position_iteration_count": 192,
+            "solver_velocity_iteration_count": 1,
+            "stabilization_threshold": null
+          },
+          "collision_props": {
+            "collision_enabled": null,
+            "contact_offset": 0.005,
+            "min_torsional_patch_radius": null,
+            "rest_offset": 0.0,
+            "torsional_patch_radius": null
+          },
+          "copy_from_source": true,
+          "deformable_props": null,
+          "fixed_tendons_props": null,
+          "func": "isaaclab.sim.spawners.from_files.from_files:spawn_from_usd",
+          "joint_drive_props": null,
+          "mass_props": null,
+          "rigid_props": {
+            "angular_damping": 0.0,
+            "disable_gravity": true,
+            "enable_gyroscopic_forces": true,
+            "kinematic_enabled": null,
+            "linear_damping": 0.0,
+            "max_angular_velocity": 3666.0,
+            "max_contact_impulse": 1e+32,
+            "max_depenetration_velocity": 5.0,
+            "max_linear_velocity": 1000.0,
+            "retain_accelerations": null,
+            "rigid_body_enabled": null,
+            "sleep_threshold": null,
+            "solver_position_iteration_count": 192,
+            "solver_velocity_iteration_count": 1,
+            "stabilization_threshold": null
+          },
+          "scale": null,
+          "semantic_tags": null,
+          "spatial_tendons_props": null,
+          "usd_path": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.0/Isaac/IsaacLab/Factory/franka_mimic.usd",
+          "variants": null,
+          "visible": true,
+          "visual_material": null,
+          "visual_material_path": "material"
+        }
+      },
+      "scene": {
+        "clone_in_fabric": true,
+        "env_spacing": 2.0,
+        "filter_collisions": true,
+        "lazy_sensor_update": true,
+        "num_envs": 1,
+        "replicate_physics": true
+      },
+      "seed": 120965577,
+      "sim": {
+        "create_stage_in_memory": false,
+        "device": "cuda:0",
+        "dt": 0.008333333333333333,
+        "enable_scene_query_support": false,
+        "gravity": [
+          0.0,
+          0.0,
+          -9.81
+        ],
+        "physics_material": {
+          "compliant_contact_damping": 0.0,
+          "compliant_contact_stiffness": 0.0,
+          "dynamic_friction": 1.0,
+          "friction_combine_mode": "average",
+          "func": "isaaclab.sim.spawners.materials.physics_materials:spawn_rigid_body_material",
+          "restitution": 0.0,
+          "restitution_combine_mode": "average",
+          "static_friction": 1.0
+        },
+        "physics_prim_path": "/physicsScene",
+        "physx": {
+          "bounce_threshold_velocity": 0.2,
+          "enable_ccd": false,
+          "enable_enhanced_determinism": false,
+          "enable_stabilization": false,
+          "friction_correlation_distance": 0.00625,
+          "friction_offset_threshold": 0.01,
+          "gpu_collision_stack_size": 268435456,
+          "gpu_found_lost_aggregate_pairs_capacity": 33554432,
+          "gpu_found_lost_pairs_capacity": 2097152,
+          "gpu_heap_capacity": 67108864,
+          "gpu_max_num_partitions": 1,
+          "gpu_max_particle_contacts": 1048576,
+          "gpu_max_rigid_contact_count": 8388608,
+          "gpu_max_rigid_patch_count": 8388608,
+          "gpu_max_soft_body_contacts": 1048576,
+          "gpu_temp_buffer_capacity": 16777216,
+          "gpu_total_aggregate_pairs_capacity": 2097152,
+          "max_position_iteration_count": 192,
+          "max_velocity_iteration_count": 1,
+          "min_position_iteration_count": 1,
+          "min_velocity_iteration_count": 0,
+          "solver_type": 1
+        },
+        "render": {
+          "antialiasing_mode": null,
+          "carb_settings": null,
+          "dlss_mode": null,
+          "enable_ambient_occlusion": null,
+          "enable_direct_lighting": null,
+          "enable_dl_denoiser": null,
+          "enable_dlssg": null,
+          "enable_global_illumination": null,
+          "enable_reflections": null,
+          "enable_shadows": null,
+          "enable_translucency": null,
+          "rendering_mode": null,
+          "samples_per_pixel": null
+        },
+        "render_interval": 8,
+        "use_fabric": true
+      },
+      "spiral": {
+        "approach_duration_s": 1.0,
+        "engage_depth_m": 0.002,
+        "insertion_depth_m": 0.0245,
+        "max_radius_m": 0.0045,
+        "max_xy_error_m": 0.004,
+        "max_z_error_m": 0.003,
+        "preload_m": 0.003,
+        "radial_speed_m_s": 0.001,
+        "turns_per_second": 1.25
+      },
+      "state_order": [
+        "fingertip_pos",
+        "fingertip_quat",
+        "ee_linvel",
+        "ee_angvel",
+        "joint_pos",
+        "held_pos",
+        "held_pos_rel_fixed",
+        "held_quat",
+        "fixed_pos",
+        "fixed_quat"
+      ],
+      "state_space": 43,
+      "task": {
+        "action_grad_penalty_scale": 0.0,
+        "action_penalty_ee_scale": 0.0,
+        "asset_size": 8.0,
+        "duration_s": 10.0,
+        "ee_success_yaw": 0.0,
+        "engage_threshold": 0.9,
+        "fixed_asset": {
+          "actuator_value_resolution_debug_print": false,
+          "actuators": {},
+          "articulation_root_prim_path": null,
+          "class_type": "isaaclab.assets.articulation.articulation:Articulation",
+          "collision_group": 0,
+          "debug_vis": false,
+          "init_state": {
+            "ang_vel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "joint_pos": {},
+            "joint_vel": {},
+            "lin_vel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pos": [
+              0.6,
+              0.0,
+              0.05
+            ],
+            "rot": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "prim_path": "/World/envs/env_.*/FixedAsset",
+          "soft_joint_pos_limit_factor": 1.0,
+          "spawn": {
+            "activate_contact_sensors": true,
+            "articulation_props": null,
+            "collision_props": {
+              "collision_enabled": null,
+              "contact_offset": 0.005,
+              "min_torsional_patch_radius": null,
+              "rest_offset": 0.0,
+              "torsional_patch_radius": null
+            },
+            "copy_from_source": true,
+            "deformable_props": null,
+            "fixed_tendons_props": null,
+            "func": "isaaclab.sim.spawners.from_files.from_files:spawn_from_usd",
+            "joint_drive_props": null,
+            "mass_props": {
+              "density": null,
+              "mass": 0.05
+            },
+            "rigid_props": {
+              "angular_damping": 0.0,
+              "disable_gravity": false,
+              "enable_gyroscopic_forces": true,
+              "kinematic_enabled": null,
+              "linear_damping": 0.0,
+              "max_angular_velocity": 3666.0,
+              "max_contact_impulse": 1e+32,
+              "max_depenetration_velocity": 5.0,
+              "max_linear_velocity": 1000.0,
+              "retain_accelerations": null,
+              "rigid_body_enabled": null,
+              "sleep_threshold": null,
+              "solver_position_iteration_count": 192,
+              "solver_velocity_iteration_count": 1,
+              "stabilization_threshold": null
+            },
+            "scale": null,
+            "semantic_tags": null,
+            "spatial_tendons_props": null,
+            "usd_path": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.0/Isaac/IsaacLab/Factory/factory_hole_8mm.usd",
+            "variants": null,
+            "visible": true,
+            "visual_material": null,
+            "visual_material_path": "material"
+          }
+        },
+        "fixed_asset_cfg": {
+          "base_height": 0.0,
+          "diameter": 0.0081,
+          "friction": 0.75,
+          "height": 0.025,
+          "mass": 0.05,
+          "usd_path": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.0/Isaac/IsaacLab/Factory/factory_hole_8mm.usd"
+        },
+        "fixed_asset_init_orn_deg": 0.0,
+        "fixed_asset_init_orn_range_deg": 10.0,
+        "fixed_asset_init_pos_noise": [
+          0.005,
+          0.005,
+          0.001
+        ],
+        "hand_init_orn": [
+          3.1416,
+          0.0,
+          0.0
+        ],
+        "hand_init_orn_noise": [
+          0.05235987755982989,
+          0.05235987755982989,
+          0.08726646259971647
+        ],
+        "hand_init_pos": [
+          0.0,
+          0.0,
+          0.035
+        ],
+        "hand_init_pos_noise": [
+          0.004,
+          0.004,
+          0.001
+        ],
+        "held_asset": {
+          "actuator_value_resolution_debug_print": false,
+          "actuators": {},
+          "articulation_root_prim_path": null,
+          "class_type": "isaaclab.assets.articulation.articulation:Articulation",
+          "collision_group": 0,
+          "debug_vis": false,
+          "init_state": {
+            "ang_vel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "joint_pos": {},
+            "joint_vel": {},
+            "lin_vel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pos": [
+              0.0,
+              0.4,
+              0.1
+            ],
+            "rot": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "prim_path": "/World/envs/env_.*/HeldAsset",
+          "soft_joint_pos_limit_factor": 1.0,
+          "spawn": {
+            "activate_contact_sensors": true,
+            "articulation_props": null,
+            "collision_props": {
+              "collision_enabled": null,
+              "contact_offset": 0.005,
+              "min_torsional_patch_radius": null,
+              "rest_offset": 0.0,
+              "torsional_patch_radius": null
+            },
+            "copy_from_source": true,
+            "deformable_props": null,
+            "fixed_tendons_props": null,
+            "func": "isaaclab.sim.spawners.from_files.from_files:spawn_from_usd",
+            "joint_drive_props": null,
+            "mass_props": {
+              "density": null,
+              "mass": 0.019
+            },
+            "rigid_props": {
+              "angular_damping": 0.0,
+              "disable_gravity": true,
+              "enable_gyroscopic_forces": true,
+              "kinematic_enabled": null,
+              "linear_damping": 0.0,
+              "max_angular_velocity": 3666.0,
+              "max_contact_impulse": 1e+32,
+              "max_depenetration_velocity": 5.0,
+              "max_linear_velocity": 1000.0,
+              "retain_accelerations": null,
+              "rigid_body_enabled": null,
+              "sleep_threshold": null,
+              "solver_position_iteration_count": 192,
+              "solver_velocity_iteration_count": 1,
+              "stabilization_threshold": null
+            },
+            "scale": null,
+            "semantic_tags": null,
+            "spatial_tendons_props": null,
+            "usd_path": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.0/Isaac/IsaacLab/Factory/factory_peg_8mm.usd",
+            "variants": null,
+            "visible": true,
+            "visual_material": null,
+            "visual_material_path": "material"
+          }
+        },
+        "held_asset_cfg": {
+          "diameter": 0.007986,
+          "friction": 0.75,
+          "height": 0.05,
+          "mass": 0.019,
+          "usd_path": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.0/Isaac/IsaacLab/Factory/factory_peg_8mm.usd"
+        },
+        "held_asset_pos_noise": [
+          0.001,
+          0.001,
+          0.0005
+        ],
+        "held_asset_rot_init": 0.0,
+        "keypoint_coef_baseline": [
+          5,
+          4
+        ],
+        "keypoint_coef_coarse": [
+          50,
+          2
+        ],
+        "keypoint_coef_fine": [
+          100,
+          0
+        ],
+        "keypoint_scale": 0.15,
+        "name": "peg_insert",
+        "num_keypoints": 4,
+        "robot_cfg": {
+          "franka_fingerpad_length": 0.017608,
+          "friction": 0.75,
+          "robot_usd": ""
+        },
+        "success_threshold": 0.04,
+        "unidirectional_rot": false
+      },
+      "task_name": "peg_insert",
+      "ui_window_class_type": "isaaclab.envs.ui.base_env_window:BaseEnvWindow",
+      "viewer": {
+        "asset_name": null,
+        "body_name": null,
+        "cam_prim_path": "/OmniverseKit_Persp",
+        "env_index": 0,
+        "eye": [
+          7.5,
+          7.5,
+          7.5
+        ],
+        "lookat": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "origin_type": "world",
+        "resolution": [
+          1280,
+          720
+        ]
+      },
+      "wait_for_textures": true,
+      "xr": null
+    },
+    "success_sampling": "all_physics_boundaries_including_control_interval_endpoints"
+  },
+  "protocol_id": "866b607a992ecbedac16468a93be824aa152c2741c23fd62cf5f03ce464f5a74",
+  "run_complete": true,
+  "runtime_versions": {
+    "cuda": "12.8",
+    "device": "cuda:0",
+    "direct_env_source_sha256": "8d4c64aef3a4b9e258fb069211c5cae1293d7b5b742ce3b5c523dceaa298317c",
+    "factory_source_sha256": "52d843bc0dac4c3661ecc0e9c84bfafcfa73d11623337b8c9a74032e1ecf6869",
+    "gpu": "NVIDIA GeForce RTX 4090 D",
+    "gymnasium": "1.2.0",
+    "isaaclab": "0.45.9",
+    "isaacsim": "5.0.0.0",
+    "python": "3.11.13",
+    "rl-games": "1.6.1",
+    "torch": "2.7.0+cu128"
+  },
+  "schema_version": 1,
+  "trial_count": 64,
+  "wall_time_s": 5882.628004667349
+}

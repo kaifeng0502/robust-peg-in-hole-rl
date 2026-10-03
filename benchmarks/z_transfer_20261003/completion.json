@@ -1,0 +1,17 @@
+{
+  "local_audit_complete": true,
+  "training_transitions_added": 1048576,
+  "trace_rows_per_stage": 600,
+  "physics_records_per_stage": 4800,
+  "initial_states_exact": true,
+  "gate_before_and_after": true,
+  "held_success_before": 1,
+  "held_success_after": 1,
+  "gained_successes": 0,
+  "lost_successes": 0,
+  "new_policy_adopted": false,
+  "no_64_case_run": true,
+  "sealed_holdout_accessed": false,
+  "paid_instance_shutdown": false,
+  "decision": "Preserve as calibrated research candidate. No demonstrated success gain; no additional training queued."
+}

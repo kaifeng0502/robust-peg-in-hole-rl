@@ -1,0 +1,15 @@
+{
+  "reason": "User requested checkpoint saves every100instead of10; running agent reads save_freq only once.",
+  "paused_utc": "2026-10-03T11:56:47.005464+00:00",
+  "old_supervisor_pid": 44425,
+  "old_training_pid": 44552,
+  "resume_epoch": 133,
+  "resume_frame": 3686400,
+  "checkpoint_sha256": "6d8bfc9b37bed1220c929fe11b9adcfe90303f227fdf9f78edaa91398b61009a",
+  "last_logged_epoch": 134,
+  "completed_rollouts_to_replay": 1,
+  "possible_partial_rollout_samples_upper_bound": 65536,
+  "initial_epoch": 121,
+  "logical_final_epoch": 621,
+  "remaining_logical_rollouts": 488
+}

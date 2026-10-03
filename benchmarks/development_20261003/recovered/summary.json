@@ -1,0 +1,29 @@
+{
+  "ever_success_count": 38,
+  "ever_success_rate": 0.59375,
+  "failure_counts": {
+    "insufficient_depth": 6,
+    "insufficient_hold": 1,
+    "misalignment": 20
+  },
+  "final_success_count": 38,
+  "final_success_rate": 0.59375,
+  "force_note": "Commanded force magnitude, not sensor-measured contact force.",
+  "had_hold_anytime_count": 37,
+  "had_hold_anytime_rate": 0.578125,
+  "held_success_count": 37,
+  "max_peak_commanded_force_n": 3.6230952739715576,
+  "mean_episode_reward": 684.0538512283529,
+  "mean_max_depth_m": 0.015785777068231255,
+  "mean_peak_commanded_force_n": 2.389726271852851,
+  "mean_success_time_s": 4.61081081081081,
+  "mean_task_episode_reward": 686.0491549768049,
+  "median_success_time_s": 3.8666666666666667,
+  "method": "ppo",
+  "success_rate": 0.578125,
+  "success_rate_ci95": [
+    0.456100315400829,
+    0.691302175256545
+  ],
+  "trials": 64
+}

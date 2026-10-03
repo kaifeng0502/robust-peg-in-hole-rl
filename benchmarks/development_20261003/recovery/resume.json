@@ -1,0 +1,20 @@
+{
+  "resumed_utc": "2026-10-03T05:18:08.323003+00:00",
+  "resumed_monotonic_s": 8196025.621994776,
+  "boot_id": "6eddae47-4b76-43a3-9847-ed9c9a9df64c",
+  "groups": [
+    {
+      "name": "legacy_continuation",
+      "pid": 15330,
+      "member_count": 34,
+      "signal_sent_utc": "2026-10-03T05:18:08.315551+00:00"
+    },
+    {
+      "name": "held_v2",
+      "pid": 15331,
+      "member_count": 34,
+      "signal_sent_utc": "2026-10-03T05:18:08.322683+00:00"
+    }
+  ],
+  "observer_pid": 26854
+}

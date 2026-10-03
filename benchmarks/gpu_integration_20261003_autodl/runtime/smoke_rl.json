@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "task": "Isaac-LocalInsertion-RL-Direct-v0",
+  "num_envs": 4,
+  "steps": 12,
+  "policy_observation_shape": [
+    4,
+    19
+  ],
+  "mean_reward": 1.7092535346746445,
+  "initial_mean_depth_m": -0.002544701099395752,
+  "final_mean_depth_m": 0.00031223520636558533,
+  "max_depth_m": 0.0006559640169143677,
+  "success_count": 0,
+  "friction_min_observed": 0.41600969433784485,
+  "friction_max_observed": 1.1889467239379883,
+  "friction_expected_range": [
+    0.3,
+    1.2
+  ]
+}

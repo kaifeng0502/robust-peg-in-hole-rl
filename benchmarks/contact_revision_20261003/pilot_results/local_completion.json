@@ -1,0 +1,18 @@
+{
+  "phase": "independent_audit_complete",
+  "full_archive_sha256": "8721df38e5284198798fba798ad841d5fe5b1a0a77488332e5272d85dce3e794",
+  "archive_member_hashes_verified": 41,
+  "trace_rows_verified": 19200,
+  "paired_initial_states_exactly_equal": true,
+  "checkpoint_binary_and_config_audit_passed": true,
+  "training_transitions_per_arm": 1048576,
+  "total_new_training_transitions": 2097152,
+  "held_successes": {
+    "control_legacy_dense": 0,
+    "candidate_entry_dense": 0
+  },
+  "decision": "Neither transferred candidate adopted; no further training started; require actual policy transfer calibration before another reward trial.",
+  "holdout_sealed": true,
+  "paid_instance_shutdown": false,
+  "ci_note": "CI status belongs to the PR commit; completion IDs recorded in the external DEVELOPMENT_STATE journal."
+}

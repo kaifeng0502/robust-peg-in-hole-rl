@@ -1,0 +1,321 @@
+{
+  "cases": [
+    {
+      "case_id": "case_000000",
+      "stages": {
+        "reference": {
+          "held_success": true,
+          "final_xy_error_m": 0.0005447869771160185,
+          "final_depth_m": 0.02410518378019333,
+          "first_hold_time_s": 2.533333333333333,
+          "peak_commanded_force_n": 2.140289545059204,
+          "episode_reward": 1145.3280274868011,
+          "task_episode_reward": 1146.9858338832855,
+          "failure_category": null,
+          "unlatched_raw_z_mean": 0.18344915334297263,
+          "unlatched_raw_z_positive_fraction": 0.6521739130434783,
+          "unlatched_raw_z_lower_clip_fraction": 0.043478260869565216,
+          "max_depth_m": 0.02410787343978882
+        },
+        "gate_z_minus_half": {
+          "held_success": true,
+          "final_xy_error_m": 0.00051609065849334,
+          "final_depth_m": 0.024926412850618362,
+          "first_hold_time_s": 8.733333333333333,
+          "peak_commanded_force_n": 1.7481788396835327,
+          "episode_reward": 950.4586007595062,
+          "task_episode_reward": 952.690061211586,
+          "failure_category": null,
+          "unlatched_raw_z_mean": -0.5,
+          "unlatched_raw_z_positive_fraction": 0.0,
+          "unlatched_raw_z_lower_clip_fraction": 0.0,
+          "max_depth_m": 0.0249265655875206
+        },
+        "post_train_four": {
+          "held_success": true,
+          "final_xy_error_m": 0.00019031039846595377,
+          "final_depth_m": 0.024935655295848846,
+          "first_hold_time_s": 4.266666666666667,
+          "peak_commanded_force_n": 1.796657919883728,
+          "episode_reward": 1097.4590727090836,
+          "task_episode_reward": 1099.3211348056793,
+          "failure_category": null,
+          "unlatched_raw_z_mean": -0.8443966142985285,
+          "unlatched_raw_z_positive_fraction": 0.0,
+          "unlatched_raw_z_lower_clip_fraction": 0.3469387755102041,
+          "max_depth_m": 0.024935655295848846
+        }
+      }
+    },
+    {
+      "case_id": "case_000002",
+      "stages": {
+        "reference": {
+          "held_success": false,
+          "final_xy_error_m": 0.005432669073343277,
+          "final_depth_m": -0.00019621849060058594,
+          "first_hold_time_s": null,
+          "peak_commanded_force_n": 2.6745309829711914,
+          "episode_reward": 81.38972789049149,
+          "task_episode_reward": 83.6859966814518,
+          "failure_category": "misalignment",
+          "unlatched_raw_z_mean": 0.5793021021286646,
+          "unlatched_raw_z_positive_fraction": 1.0,
+          "unlatched_raw_z_lower_clip_fraction": 0.0,
+          "max_depth_m": -5.172938108444214e-05
+        },
+        "gate_z_minus_half": {
+          "held_success": false,
+          "final_xy_error_m": 0.005195783916860819,
+          "final_depth_m": -0.00015516579151153564,
+          "first_hold_time_s": null,
+          "peak_commanded_force_n": 2.1778042316436768,
+          "episode_reward": 77.18538165092468,
+          "task_episode_reward": 79.64361545443535,
+          "failure_category": "misalignment",
+          "unlatched_raw_z_mean": -0.5,
+          "unlatched_raw_z_positive_fraction": 0.0,
+          "unlatched_raw_z_lower_clip_fraction": 0.0,
+          "max_depth_m": -2.562999725341797e-06
+        },
+        "post_train_four": {
+          "held_success": false,
+          "final_xy_error_m": 0.003801522310823202,
+          "final_depth_m": 1.8656253814697266e-05,
+          "first_hold_time_s": null,
+          "peak_commanded_force_n": 2.1392922401428223,
+          "episode_reward": 108.78082530200481,
+          "task_episode_reward": 111.7490907907486,
+          "failure_category": "misalignment",
+          "unlatched_raw_z_mean": -0.8956960419813792,
+          "unlatched_raw_z_positive_fraction": 0.0,
+          "unlatched_raw_z_lower_clip_fraction": 0.49333333333333335,
+          "max_depth_m": 3.565847873687744e-05
+        }
+      }
+    },
+    {
+      "case_id": "case_000010",
+      "stages": {
+        "reference": {
+          "held_success": false,
+          "final_xy_error_m": 0.004693715833127499,
+          "final_depth_m": -0.00016432255506515503,
+          "first_hold_time_s": null,
+          "peak_commanded_force_n": 2.2236788272857666,
+          "episode_reward": 90.73422837257385,
+          "task_episode_reward": 93.00233286619186,
+          "failure_category": "misalignment",
+          "unlatched_raw_z_mean": 0.5439054173231125,
+          "unlatched_raw_z_positive_fraction": 1.0,
+          "unlatched_raw_z_lower_clip_fraction": 0.0,
+          "max_depth_m": -6.198883056640625e-06
+        },
+        "gate_z_minus_half": {
+          "held_success": false,
+          "final_xy_error_m": 0.004760838113725185,
+          "final_depth_m": -0.00015792995691299438,
+          "first_hold_time_s": null,
+          "peak_commanded_force_n": 1.7382826805114746,
+          "episode_reward": 76.14076581597328,
+          "task_episode_reward": 78.58317604660988,
+          "failure_category": "misalignment",
+          "unlatched_raw_z_mean": -0.5,
+          "unlatched_raw_z_positive_fraction": 0.0,
+          "unlatched_raw_z_lower_clip_fraction": 0.0,
+          "max_depth_m": -5.856156349182129e-06
+        },
+        "post_train_four": {
+          "held_success": false,
+          "final_xy_error_m": 0.005944611504673958,
+          "final_depth_m": -0.00015772879123687744,
+          "first_hold_time_s": null,
+          "peak_commanded_force_n": 1.809389352798462,
+          "episode_reward": 72.11725577712059,
+          "task_episode_reward": 74.98389780521393,
+          "failure_category": "misalignment",
+          "unlatched_raw_z_mean": -0.8979172849655152,
+          "unlatched_raw_z_positive_fraction": 0.0,
+          "unlatched_raw_z_lower_clip_fraction": 0.49333333333333335,
+          "max_depth_m": -5.093216896057129e-05
+        }
+      }
+    },
+    {
+      "case_id": "case_000028",
+      "stages": {
+        "reference": {
+          "held_success": false,
+          "final_xy_error_m": 0.0005837474600411952,
+          "final_depth_m": 0.022470790892839432,
+          "first_hold_time_s": null,
+          "peak_commanded_force_n": 2.045198440551758,
+          "episode_reward": 645.7734240889549,
+          "task_episode_reward": 648.2065526843071,
+          "failure_category": "insufficient_depth",
+          "unlatched_raw_z_mean": 0.06253499813377857,
+          "unlatched_raw_z_positive_fraction": 0.58,
+          "unlatched_raw_z_lower_clip_fraction": 0.06666666666666667,
+          "max_depth_m": 0.022470790892839432
+        },
+        "gate_z_minus_half": {
+          "held_success": false,
+          "final_xy_error_m": 0.0006475464906543493,
+          "final_depth_m": 0.0013033002614974976,
+          "first_hold_time_s": null,
+          "peak_commanded_force_n": 1.524644374847412,
+          "episode_reward": 327.66209572553635,
+          "task_episode_reward": 330.1416500210762,
+          "failure_category": "insufficient_depth",
+          "unlatched_raw_z_mean": -0.5,
+          "unlatched_raw_z_positive_fraction": 0.0,
+          "unlatched_raw_z_lower_clip_fraction": 0.0,
+          "max_depth_m": 0.001386396586894989
+        },
+        "post_train_four": {
+          "held_success": false,
+          "final_xy_error_m": 0.0005355251487344503,
+          "final_depth_m": 0.016482871025800705,
+          "first_hold_time_s": null,
+          "peak_commanded_force_n": 1.9142495393753052,
+          "episode_reward": 456.2067338824272,
+          "task_episode_reward": 459.1287783384323,
+          "failure_category": "insufficient_depth",
+          "unlatched_raw_z_mean": -0.8897251419226329,
+          "unlatched_raw_z_positive_fraction": 0.0,
+          "unlatched_raw_z_lower_clip_fraction": 0.48,
+          "max_depth_m": 0.016482871025800705
+        }
+      }
+    }
+  ],
+  "paired": {
+    "both_held_success": 1,
+    "gained_successes": 0,
+    "lost_successes": 0
+  },
+  "stage_summary": {
+    "reference": {
+      "ever_success_count": 1,
+      "ever_success_rate": 0.25,
+      "failure_counts": {
+        "insufficient_depth": 1,
+        "misalignment": 2
+      },
+      "final_success_count": 1,
+      "final_success_rate": 0.25,
+      "force_note": "Commanded force magnitude, not sensor-measured contact force.",
+      "had_hold_anytime_count": 1,
+      "had_hold_anytime_rate": 0.25,
+      "held_success_count": 1,
+      "max_peak_commanded_force_n": 2.6745309829711914,
+      "mean_episode_reward": 490.80635195970535,
+      "mean_max_depth_m": 0.011630184017121792,
+      "mean_peak_commanded_force_n": 2.27092444896698,
+      "mean_success_time_s": 2.533333333333333,
+      "mean_task_episode_reward": 492.97017902880907,
+      "median_success_time_s": 2.533333333333333,
+      "method": "ppo",
+      "success_rate": 0.25,
+      "success_rate_ci95": [
+        0.0455872608097006,
+        0.699358157417598
+      ],
+      "trials": 4
+    },
+    "gate_z_minus_half": {
+      "ever_success_count": 1,
+      "ever_success_rate": 0.25,
+      "failure_counts": {
+        "insufficient_depth": 1,
+        "misalignment": 2
+      },
+      "final_success_count": 1,
+      "final_success_rate": 0.25,
+      "force_note": "Commanded force magnitude, not sensor-measured contact force.",
+      "had_hold_anytime_count": 1,
+      "had_hold_anytime_rate": 0.25,
+      "held_success_count": 1,
+      "max_peak_commanded_force_n": 2.1778042316436768,
+      "mean_episode_reward": 357.86171098798513,
+      "mean_max_depth_m": 0.006576135754585266,
+      "mean_peak_commanded_force_n": 1.797227531671524,
+      "mean_success_time_s": 8.733333333333333,
+      "mean_task_episode_reward": 360.26462568342686,
+      "median_success_time_s": 8.733333333333333,
+      "method": "ppo",
+      "success_rate": 0.25,
+      "success_rate_ci95": [
+        0.0455872608097006,
+        0.699358157417598
+      ],
+      "trials": 4
+    },
+    "post_train_four": {
+      "ever_success_count": 1,
+      "ever_success_rate": 0.25,
+      "failure_counts": {
+        "insufficient_depth": 1,
+        "misalignment": 2
+      },
+      "final_success_count": 1,
+      "final_success_rate": 0.25,
+      "force_note": "Commanded force magnitude, not sensor-measured contact force.",
+      "had_hold_anytime_count": 1,
+      "had_hold_anytime_rate": 0.25,
+      "held_success_count": 1,
+      "max_peak_commanded_force_n": 2.1392922401428223,
+      "mean_episode_reward": 433.64097191765904,
+      "mean_max_depth_m": 0.010350813157856464,
+      "mean_peak_commanded_force_n": 1.9148972630500793,
+      "mean_success_time_s": 4.266666666666667,
+      "mean_task_episode_reward": 436.29572543501854,
+      "median_success_time_s": 4.266666666666667,
+      "method": "ppo",
+      "success_rate": 0.25,
+      "success_rate_ci95": [
+        0.0455872608097006,
+        0.699358157417598
+      ],
+      "trials": 4
+    }
+  },
+  "training": {
+    "logged_epochs": [
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121
+    ],
+    "logged_total_fps": [
+      2086,
+      2275,
+      2230,
+      2261,
+      2238,
+      2224,
+      2277,
+      2202
+    ],
+    "median_logged_total_fps": 2234.0,
+    "training_wall_s": 515.8943695984781,
+    "four_case_wall_s": 222.0940339975059,
+    "device_sampled_peak_mib": {
+      "training": 5380,
+      "four_case_postcheck": 4538
+    },
+    "memory_note": "Device-wide samples every 10 seconds, not allocator peaks."
+  },
+  "limits": [
+    "Four reused selected development cases, not a generalization estimate.",
+    "Legacy absolute-interface reference is historical context, not an isolated action-only comparison.",
+    "Identical physical reset states do not imply identical closed-loop trajectories.",
+    "Hold audit uses recorded full-interval geometry flags; substep pose records and reward/target reconstruction are preserved.",
+    "No new successful case; one XY error improves and the other worsens.",
+    "The remaining depth failure is deeper than the calibrated initializer but shallower than the original absolute-interface reference."
+  ]
+}

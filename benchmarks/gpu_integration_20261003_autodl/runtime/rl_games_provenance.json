@@ -1,0 +1,39 @@
+{
+  "fetched_on": "2026-10-03",
+  "origin": "https://github.com/isaac-sim/rl_games.git",
+  "branch": "python3.11",
+  "commit": "6b3534f29568158e9e29ec8bf83cc88fce5f0cae",
+  "commit_date": "2025-10-24",
+  "commit_subject": "Comment out opencv-python dependency",
+  "version": "1.6.1",
+  "shallow_clone": true,
+  "retained_commits": 1,
+  "archive": "rl_games_source.tar.gz",
+  "archive_sha256": "6cf0150bee5ea014c77101487b3bbadf9dce327b982f10d3974eca2dd737d9ce",
+  "archive_contains_git": true,
+  "wheel": {
+    "path": "wheels/rl_games-1.6.1-py3-none-any.whl",
+    "sha256": "f2f4684ee78128a32b542843f3d7b9074a3b8a195203aa857ba8ab65c1313986",
+    "size_bytes": 240679,
+    "tag": "py3-none-any",
+    "root_is_purelib": true,
+    "generator": "poetry-core 2.5.0",
+    "source_tree_clean_after_build": true,
+    "zip_integrity_verified": true
+  },
+  "build_backend": "poetry.core.masonry.api",
+  "build_requires": ["poetry-core>=1.0.0"],
+  "python_requirement": ">=3.7.1",
+  "pyproject_required_dependencies": {
+    "gym": "^0.23.0",
+    "tensorboard": "^2.8.0",
+    "tensorboardX": "^2.5",
+    "PyYAML": "^6.0",
+    "psutil": "^5.9.0",
+    "setproctitle": "^1.2.2",
+    "ray": "^2.45.0",
+    "wandb": ">=0.13.11"
+  },
+  "dependency_note": "Normal pip installation uses pyproject.toml and Poetry. setup.py contains divergent dependencies, including numpy==1.26.0, and is not the authoritative dependency metadata for that installation path. opencv-python is commented out in pyproject.toml. Optional environment extras are not needed for insertion evaluation.",
+  "historical_revision_note": "The original RunPod environment recorded rl-games version 1.6.1 but did not retain its exact source commit locally. This fetched commit is pinned for AutoDL migration and must not be claimed to be the proven original RunPod revision."
+}

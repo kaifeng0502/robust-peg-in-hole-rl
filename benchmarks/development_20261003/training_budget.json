@@ -1,0 +1,18 @@
+{
+  "legacy_continuation": {
+    "checkpoint": "/root/autodl-tmp/insertion/candidate_held_v2/logs/rl_games/LocalInsertion/held_v2_pilot_20261003_legacy_continuation/nn/last_LocalInsertion_ep_113_rew__910.4523_.pth",
+    "sha256": "eab619e78c684bdea4decbfb5c516335a2e92568b0b71a13199c10abb1a4650c",
+    "epoch": 113,
+    "added_transitions": 327680,
+    "inherited_frame_counter": 1523712,
+    "final_frame_counter": 1851392
+  },
+  "held_v2": {
+    "checkpoint": "/root/autodl-tmp/insertion/candidate_held_v2/logs/rl_games/LocalInsertion/held_v2_pilot_20261003_held_v2/nn/last_LocalInsertion_ep_113_rew__968.4925_.pth",
+    "sha256": "d4961ec728b94c70a63a301b10b48dcc28ccfee802e0829e63023f5232617d0d",
+    "epoch": 113,
+    "added_transitions": 327680,
+    "inherited_frame_counter": 1523712,
+    "final_frame_counter": 1851392
+  }
+}

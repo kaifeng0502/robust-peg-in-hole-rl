@@ -1,0 +1,95 @@
+[INFO][AppLauncher]: Using device: cuda:0
+[INFO][AppLauncher]: Loading experience file: /root/autodl-tmp/insertion/IsaacLab/apps/isaaclab.python.headless.kit
+[Warning] [simulation_app.simulation_app] Modules: ['omni.kit_app'] were loaded before SimulationApp was started and might not be loaded correctly.
+[Warning] [simulation_app.simulation_app] Please check to make sure no extra omniverse or pxr modules are imported before the call to SimulationApp(...)
+Loading user config located at: '/root/autodl-tmp/insertion/env/lib/python3.11/site-packages/omni/data/Kit/Isaac-Sim/5.0/user.config.json'
+[Info] [carb] Logging to file: /root/autodl-tmp/insertion/env/lib/python3.11/site-packages/omni/logs/Kit/Isaac-Sim/5.0/kit_20261003_151839.log
+2026-10-03T07:18:39Z [179ms] [Warning] [omni.usd_config.extension] Enable omni.materialx.libs extension to use MaterialX
+2026-10-03T07:18:40Z [763ms] [Warning] [omni.platforminfo.plugin] failed to open the default display.  Can't verify X Server version.
+2026-10-03T07:18:40Z [1,460ms] [Warning] [omni.isaac.dynamic_control] omni.isaac.dynamic_control is deprecated as of Isaac Sim 4.5. No action is needed from end-users.
+Warp CUDA error: Failed to get driver entry point 'cuDeviceGetUuid' (CUDA error 1)
+Warp CUDA error: Function cuDeviceGetUuid_f: a suitable driver entry point was not found
+Warp CUDA error 36: API call is not supported in the installed CUDA driver (in function cuda_init, /builds/omniverse/warp/warp/native/warp.cu:277)
+
+|---------------------------------------------------------------------------------------------|
+| Driver Version: 595.71.05     | Graphics API: Vulkan
+|=============================================================================================|
+| GPU | Name                             | Active | LDA | GPU Memory | Vendor-ID | LUID       |
+|     |                                  |        |     |            | Device-ID | UUID       |
+|     |                                  |        |     |            | Bus-ID    |            |
+|---------------------------------------------------------------------------------------------|
+| 0   | NVIDIA GeForce RTX 4090 D        | Yes: 0 |     | 24810   MB | 10de      | 0          |
+|     |                                  |        |     |            | 2685      | 5b494d0e.. |
+|     |                                  |        |     |            | b2        |            |
+|=============================================================================================|
+| OS: 22.04.5 LTS (Jammy Jellyfish) ubuntu, Version: 22.04.5, Kernel: 5.15.0-78-generic
+| Processor: Intel(R) Xeon(R) Platinum 8352S CPU @ 2.20GHz
+| Bare Metal Cores: 64 | Bare Metal Logical Cores: 128
+| Core Usage Quota: 16
+|---------------------------------------------------------------------------------------------|
+| Total Memory (MB): 63488 | Free Memory: 49336
+| Total Page/Swap (MB): 0 | Free Page/Swap: 0
+|---------------------------------------------------------------------------------------------|
+2026-10-03T07:18:48Z [8,767ms] [Warning] [gpu.foundation.plugin] CPU performance profile is set to powersave. This profile sets the CPU to the lowest frequency reducing performance.
+2026-10-03T07:18:48Z [8,773ms] [Warning] [gpu.foundation.plugin] PCIe link width current (8) and maximum (16) for device 0 don't match.
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[INFO]: Parsing configuration from: <class 'local_insertion.env_cfg.LocalInsertionRLEnvCfg'>
+[INFO]: Parsing configuration from: /root/autodl-tmp/insertion/contact_revision_20261003/candidate_source/local_insertion/agents/rl_games_ppo_cfg.yaml
+[INFO]: Loading model checkpoint from: /root/autodl-tmp/insertion/results/held_v2_pilot_20261003/training/held_v2/nn/last_LocalInsertion_ep_113_rew__968.4925_.pth
+[INFO] Logging experiment in directory: /root/autodl-tmp/insertion/contact_revision_20261003/candidate_source/logs/rl_games/LocalInsertion
+2026-10-03T07:18:52Z [13,212ms] [Warning] [__main__] IO descriptors are only supported for manager based RL environments. No IO descriptors will be exported.
+Setting seed: 42
+[INFO]: Base environment:
+	Environment device    : cuda:0
+	Environment seed      : 42
+	Physics step-size     : 0.008333333333333333
+	Rendering step-size   : 0.06666666666666667
+	Environment step-size : 0.06666666666666667
+2026-10-03T07:18:56Z [16,764ms] [Warning] [omni.fabric.plugin] Warning: input prim:attr `/World/envs/env_0:omni:rtx:skip` has no valid data.
+
+[INFO]: Time taken for scene creation : 10.650488 seconds
+[INFO]: Scene manager:  <class InteractiveScene>
+	Number of environments: 1024
+	Environment spacing   : 2.0
+	Source prim name      : /World/envs/env_0
+	Global prim paths     : []
+	Replicate physics     : True
+[INFO]: Starting the simulation. This may take a few seconds. Please wait...
+[INFO]: Time taken for simulation start : 3.136330 seconds
+[INFO]: Completed setting up the environment...
+self.seed = 42
+Started to train
+Exact experiment name requested from command line: contact_revision_1024_retry1_control_legacy_dense
+seq_length: 4
+current training device: cuda:0
+/root/autodl-tmp/insertion/env/lib/python3.11/site-packages/rl_games/common/a2c_common.py:261: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = torch.cuda.amp.GradScaler(enabled=self.mixed_precision)
+build mlp: 19
+RunningMeanStd:  (1,)
+RunningMeanStd:  (19,)
+=> loading checkpoint '/root/autodl-tmp/insertion/results/held_v2_pilot_20261003/training/held_v2/nn/last_LocalInsertion_ep_113_rew__968.4925_.pth'
+/root/autodl-tmp/insertion/env/lib/python3.11/site-packages/rl_games/algos_torch/a2c_continuous.py:130: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.mixed_precision):
+fps step: 2631 fps step and policy inference: 2604 fps total: 2367 epoch: 114/121 frames: 1851392
+fps step: 2666 fps step and policy inference: 2643 fps total: 2357 epoch: 115/121 frames: 1982464
+=> saving checkpoint '/root/autodl-tmp/insertion/contact_revision_20261003/candidate_source/logs/rl_games/LocalInsertion/contact_revision_1024_retry1_control_legacy_dense/nn/last_LocalInsertion_ep_115_rew_34.838543.pth'
+saving next best rewards:  [34.838543]
+=> saving checkpoint '/root/autodl-tmp/insertion/contact_revision_20261003/candidate_source/logs/rl_games/LocalInsertion/contact_revision_1024_retry1_control_legacy_dense/nn/LocalInsertion.pth'
+fps step: 2602 fps step and policy inference: 2579 fps total: 2278 epoch: 116/121 frames: 2113536
+saving next best rewards:  [35.840763]
+=> saving checkpoint '/root/autodl-tmp/insertion/contact_revision_20261003/candidate_source/logs/rl_games/LocalInsertion/contact_revision_1024_retry1_control_legacy_dense/nn/LocalInsertion.pth'
+fps step: 2643 fps step and policy inference: 2619 fps total: 2192 epoch: 117/121 frames: 2244608
+fps step: 2748 fps step and policy inference: 2723 fps total: 2508 epoch: 118/121 frames: 2375680
+fps step: 2749 fps step and policy inference: 2725 fps total: 2474 epoch: 119/121 frames: 2506752
+saving next best rewards:  [36.079346]
+=> saving checkpoint '/root/autodl-tmp/insertion/contact_revision_20261003/candidate_source/logs/rl_games/LocalInsertion/contact_revision_1024_retry1_control_legacy_dense/nn/LocalInsertion.pth'
+fps step: 2842 fps step and policy inference: 2816 fps total: 2551 epoch: 120/121 frames: 2637824
+=> saving checkpoint '/root/autodl-tmp/insertion/contact_revision_20261003/candidate_source/logs/rl_games/LocalInsertion/contact_revision_1024_retry1_control_legacy_dense/nn/last_LocalInsertion_ep_120_rew_36.079346.pth'
+fps step: 2607 fps step and policy inference: 2585 fps total: 2372 epoch: 121/121 frames: 2768896
+saving next best rewards:  [36.089832]
+=> saving checkpoint '/root/autodl-tmp/insertion/contact_revision_20261003/candidate_source/logs/rl_games/LocalInsertion/contact_revision_1024_retry1_control_legacy_dense/nn/LocalInsertion.pth'
+=> saving checkpoint '/root/autodl-tmp/insertion/contact_revision_20261003/candidate_source/logs/rl_games/LocalInsertion/contact_revision_1024_retry1_control_legacy_dense/nn/last_LocalInsertion_ep_121_rew__36.089832_.pth'
+MAX EPOCHS NUM!
+2026-10-03T07:26:34Z [474,722ms] [Warning] [omni.usd] Unexpected reference count of 2 for UsdStage 'anon:0x10984b70:World0.usd' while being closed in UsdContext (this may indicate it is still resident in memory).

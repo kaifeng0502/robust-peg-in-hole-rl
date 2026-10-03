@@ -11,6 +11,9 @@ from isaaclab_tasks.direct.factory import factory_utils
 from isaaclab_tasks.direct.factory.factory_env import FactoryEnv
 
 from .env_cfg import LocalInsertionRLEnvCfg, SpiralBaselineEnvCfg
+from .evaluation_metrics import EvaluationCriteria
+from .reward_contract import advance_terminal_hold
+from .contact_contract import relative_z_target, entry_potentials
 
 
 PHASE_APPROACH = 0
@@ -195,73 +198,222 @@ class LocalInsertionRLEnv(RandomizedPegInsertEnv):
     cfg: LocalInsertionRLEnvCfg
 
     def __init__(self, cfg: LocalInsertionRLEnvCfg, render_mode: str | None = None, **kwargs):
+        if cfg.action_contract not in {"absolute_residual_v1", "relative_z_v1"}:
+            raise ValueError(f"Unknown action contract: {cfg.action_contract}")
+        if not 0.0 < cfg.relative_z_step_m <= cfg.hold.max_z_error_m:
+            raise ValueError("Relative Z step must be positive and within the impedance bound")
+        if cfg.reward.dense_profile not in {"legacy", "entry_v1"}:
+            raise ValueError(f"Unknown dense reward profile: {cfg.reward.dense_profile}")
+        if cfg.reward.dense_profile == "entry_v1":
+            values = (cfg.reward.alignment_sigma_m, cfg.reward.coarse_alignment_sigma_m,
+                      cfg.reward.approach_sigma_m, cfg.reward.entry_depth_m)
+            if any(not math.isfinite(v) or v <= 0 for v in values):
+                raise ValueError("Entry shaping scales must be finite and positive")
+        if cfg.controller_mode not in {"residual", "zero_residual", "spiral"}:
+            raise ValueError(f"Unknown controller mode: {cfg.controller_mode}")
+        if cfg.spiral.approach_duration_s <= 0.0:
+            raise ValueError("Spiral approach duration must be positive")
+        if min(cfg.hold.max_xy_error_m, cfg.hold.max_z_error_m) <= 0.0:
+            raise ValueError("Position-error bounds must be positive")
+        if cfg.reward.success_contract not in {"legacy", "terminal_hold_v2"}:
+            raise ValueError(f"Unknown reward success contract: {cfg.reward.success_contract}")
+        if cfg.reward.success_contract == "terminal_hold_v2":
+            self.required_training_hold_samples = EvaluationCriteria(
+                dt_s=cfg.sim.dt * cfg.decimation,
+                hold_duration_s=cfg.reward.hold_duration_s,
+            ).required_hold_samples
+            if not math.isfinite(cfg.reward.terminal_hold_bonus) or cfg.reward.terminal_hold_bonus < 0.0:
+                raise ValueError("Terminal hold bonus must be finite and nonnegative")
         super().__init__(cfg, render_mode, **kwargs)
+        self.previous_xy_error = torch.zeros(self.num_envs, device=self.device)
+        self.relative_z_command = torch.zeros(self.num_envs, device=self.device)
         self.previous_depth = torch.zeros(self.num_envs, device=self.device)
         self.previous_rl_action = torch.zeros((self.num_envs, self.cfg.action_space), device=self.device)
         self.success_latched = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
         self.success_hold_pos = torch.zeros((self.num_envs, 3), device=self.device)
         self.success_hold_quat = torch.zeros((self.num_envs, 4), device=self.device)
-        self._compute_intermediate_values(self.physics_dt)
-        _, self.previous_depth[:], _ = self.insertion_geometry()
+        self.search_time = torch.zeros(self.num_envs, device=self.device)
+        self.search_start = torch.zeros((self.num_envs, 3), device=self.device)
+        self.search_insert_xy = torch.zeros((self.num_envs, 2), device=self.device)
+        self.search_engaged = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
+        self.evaluation_interval_success = torch.ones(self.num_envs, dtype=torch.bool, device=self.device)
+        self.evaluation_interval_ever_success = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
+        self.evaluation_interval_peak_force = torch.zeros(self.num_envs, device=self.device)
+        self.evaluation_task_reward = torch.zeros(self.num_envs, device=self.device)
+        if cfg.reward.success_contract == "terminal_hold_v2":
+            self.training_hold_samples = torch.zeros(self.num_envs, dtype=torch.long, device=self.device)
+            self.training_ever_geometry_success = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
+            self.training_ever_held_success = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
+        if not hasattr(self, "held_pos") or self.last_update_timestamp < self._robot._data._sim_timestamp:
+            self._compute_intermediate_values(self.physics_dt)
+        self.previous_xy_error[:], self.previous_depth[:], _ = self.insertion_geometry()
+        self.relative_z_command[:] = self.fingertip_midpoint_pos[:, 2]
 
     def _reset_idx(self, env_ids):
         super()._reset_idx(env_ids)
+        # Manual benchmark resets must clear the history without relying on an
+        # earlier timeout. Factory normally clears these during the next step.
+        self._reset_buffers(env_ids)
         if hasattr(self, "previous_depth"):
-            _, depth, _ = self.insertion_geometry()
+            xy, depth, _ = self.insertion_geometry()
+            self.previous_xy_error[env_ids] = xy[env_ids]
+            self.relative_z_command[env_ids] = self.fingertip_midpoint_pos[env_ids, 2]
             self.previous_depth[env_ids] = depth[env_ids]
             self.previous_rl_action[env_ids] = 0.0
             self.success_latched[env_ids] = False
             self.success_hold_pos[env_ids] = 0.0
             self.success_hold_quat[env_ids] = 0.0
+            self.search_time[env_ids] = 0.0
+            self.search_start[env_ids] = self.fingertip_midpoint_pos[env_ids]
+            self.search_insert_xy[env_ids] = self.fingertip_midpoint_pos[env_ids, :2]
+            self.search_engaged[env_ids] = False
+            self.evaluation_interval_success[env_ids] = False
+            self.evaluation_interval_ever_success[env_ids] = False
+            self.evaluation_interval_peak_force[env_ids] = 0.0
+            self.evaluation_task_reward[env_ids] = 0.0
+        if hasattr(self, "training_hold_samples"):
+            self.training_hold_samples[env_ids] = 0
+            self.training_ever_geometry_success[env_ids] = False
+            self.training_ever_held_success[env_ids] = False
+
+    def _pre_physics_step(self, action):
+        if self.cfg.controller_mode != "residual":
+            action = torch.zeros_like(action)
+        super()._pre_physics_step(action)
+        if self.cfg.action_contract == "relative_z_v1":
+            # Anchor once, after action EMA, and hold for all eight substeps.
+            self.relative_z_command[:] = relative_z_target(
+                self.fingertip_midpoint_pos[:, 2], self.actions[:, 2], self.cfg.relative_z_step_m
+            )
+        self.evaluation_interval_success[:] = True
+        self.evaluation_interval_ever_success[:] = False
+        self.evaluation_interval_peak_force[:] = 0.0
+
+    def evaluation_success_geometry(self):
+        """Reject both insufficient depth and excessive penetration below the socket."""
+        xy_error, depth, _ = self.insertion_geometry()
+        geometry = self.cfg.evaluation_geometry
+        return (xy_error <= geometry.xy_tolerance_m) & (
+            torch.abs(depth - self.cfg_task.fixed_asset_cfg.height) <= geometry.depth_tolerance_m
+        )
+
+    def _sample_evaluation_geometry(self):
+        success = self.evaluation_success_geometry()
+        self.evaluation_interval_success &= success
+        self.evaluation_interval_ever_success |= success
+
+    def _spiral_target(self, fixed_action_frame):
+        """Search from the same pre-insertion pose and nominal grasp as PPO."""
+        cfg = self.cfg.spiral
+        entrance = fixed_action_frame.clone()
+        entrance[:, 2] += self.cfg.nominal_tool_to_peg_base_m
+        alpha = torch.clamp(self.search_time / cfg.approach_duration_s, 0.0, 1.0)
+        target = self.search_start + alpha[:, None] * (entrance - self.search_start)
+        searching = self.search_time >= cfg.approach_duration_s
+        elapsed = torch.clamp(self.search_time - cfg.approach_duration_s, min=0.0)
+        radius = torch.clamp(elapsed * cfg.radial_speed_m_s, max=cfg.max_radius_m)
+        angle = 2.0 * math.pi * cfg.turns_per_second * elapsed
+        target[searching] = entrance[searching]
+        target[searching, 0] += radius[searching] * torch.cos(angle[searching])
+        target[searching, 1] += radius[searching] * torch.sin(angle[searching])
+        target[searching, 2] -= cfg.preload_m
+        _, depth, _ = self.insertion_geometry()
+        newly_engaged = searching & (depth > cfg.engage_depth_m) & ~self.search_engaged
+        self.search_insert_xy[newly_engaged] = self.fingertip_midpoint_pos[newly_engaged, :2]
+        self.search_engaged |= newly_engaged
+        target[self.search_engaged, :2] = self.search_insert_xy[self.search_engaged]
+        target[self.search_engaged, 2] = (
+            entrance[self.search_engaged, 2] - self.cfg.nominal_insertion_depth_m
+        )
+        roll = torch.full_like(self.search_time, math.pi)
+        zero = torch.zeros_like(self.search_time)
+        self.search_time += self.physics_dt
+        return target, torch_utils.quat_from_euler_xyz(roll, zero, zero)
 
     def _apply_action(self):
         """Interpret actions as bounded residuals around an absolute insertion target."""
         if self.last_update_timestamp < self._robot._data._sim_timestamp:
             self._compute_intermediate_values(dt=self.physics_dt)
 
+        self._sample_evaluation_geometry()
         fixed_action_frame = self.fixed_pos_obs_frame + self.init_fixed_pos_obs_noise
         current_success = self._get_curr_successes(self.cfg_task.success_threshold)
-        newly_success = current_success & ~self.success_latched
+        newly_success = current_success & ~self.success_latched & self.cfg.hold.enabled
         if torch.any(newly_success):
             self.success_hold_pos[newly_success] = self.fingertip_midpoint_pos[newly_success]
             # Apply a small downward hold margin so contact compliance does not
             # let a barely successful peg climb back above the success plane.
-            self.success_hold_pos[newly_success, 2] -= 0.0015
+            self.success_hold_pos[newly_success, 2] -= self.cfg.hold.downward_margin_m
             self.success_hold_quat[newly_success] = self.fingertip_midpoint_quat[newly_success]
-        self.success_latched |= current_success
+        self.success_latched |= newly_success
         target_pos = fixed_action_frame.clone()
         target_pos[:, 2] += self.cfg.nominal_tool_to_peg_base_m - self.cfg.nominal_insertion_depth_m
         target_pos[:, :2] += self.actions[:, :2] * self.cfg.residual_xy_span_m
         target_pos[:, 2] += self.actions[:, 2] * self.cfg.residual_z_span_m
-
-        bounds = torch.tensor(self.cfg.ctrl.pos_action_bounds, device=self.device)
-        target_pos = fixed_action_frame + torch.clamp(target_pos - fixed_action_frame, -bounds, bounds)
-        # Bound instantaneous impedance error, especially in Z at contact. The
-        # absolute target remains fixed while the robot converges toward it.
-        max_error = torch.tensor([0.004, 0.004, 0.003], device=self.device)
-        target_pos = self.fingertip_midpoint_pos + torch.clamp(
-            target_pos - self.fingertip_midpoint_pos, -max_error, max_error
-        )
+        if self.cfg.action_contract == "relative_z_v1":
+            target_pos[:, 2] = self.relative_z_command
 
         target_roll = math.pi + self.actions[:, 3] * self.cfg.residual_roll_pitch_span_rad
         target_pitch = self.actions[:, 4] * self.cfg.residual_roll_pitch_span_rad
         target_yaw = self.actions[:, 5] * self.cfg.residual_yaw_span_rad
         target_quat = torch_utils.quat_from_euler_xyz(target_roll, target_pitch, target_yaw)
+        if self.cfg.controller_mode == "spiral":
+            target_pos, target_quat = self._spiral_target(fixed_action_frame)
         # Once the peg reaches the success geometry, latch the current pose so
         # subsequent policy noise cannot pull it back out before episode end.
         if torch.any(self.success_latched):
             target_pos[self.success_latched] = self.success_hold_pos[self.success_latched]
             target_quat[self.success_latched] = self.success_hold_quat[self.success_latched]
+        # Apply bounds AFTER every controller/hold target override. Otherwise a
+        # displaced peg can receive an unbounded spring command during hold.
+        bounds = torch.tensor(self.cfg.ctrl.pos_action_bounds, device=self.device)
+        target_pos = fixed_action_frame + torch.clamp(target_pos - fixed_action_frame, -bounds, bounds)
+        hold = self.cfg.hold
+        max_error = torch.tensor(
+            [hold.max_xy_error_m, hold.max_xy_error_m, hold.max_z_error_m], device=self.device
+        )
+        target_pos = self.fingertip_midpoint_pos + torch.clamp(
+            target_pos - self.fingertip_midpoint_pos, -max_error, max_error
+        )
         self.generate_ctrl_signals(target_pos, target_quat, 0.0)
+        self.evaluation_interval_peak_force = torch.maximum(
+            self.evaluation_interval_peak_force,
+            torch.linalg.vector_norm(self.applied_wrench[:, :3], dim=1),
+        )
 
     def _get_rewards(self):
+        # _get_dones has already refreshed kinematics at the final substep.
+        # Refreshing again here would erase the finite-difference velocities.
+        self._sample_evaluation_geometry()
         xy_error, depth, _ = self.insertion_geometry()
-        curr_success = self._get_curr_successes(self.cfg_task.success_threshold)
+        cfg = self.cfg.reward
+        terminal_hold_v2 = cfg.success_contract == "terminal_hold_v2"
+        curr_success = (
+            self.evaluation_success_geometry()
+            if terminal_hold_v2
+            else self._get_curr_successes(self.cfg_task.success_threshold)
+        )
         curr_engaged = self._get_curr_successes(self.cfg_task.engage_threshold)
-        first_success = torch.logical_and(curr_success, torch.logical_not(self.ep_succeeded.bool()))
+        if terminal_hold_v2:
+            hold_state = advance_terminal_hold(
+                self.training_hold_samples,
+                self.training_ever_geometry_success,
+                self.training_ever_held_success,
+                self.evaluation_interval_success,
+                self.evaluation_interval_ever_success,
+                curr_success,
+                self.required_training_hold_samples,
+            )
+            self.training_hold_samples[:] = hold_state.consecutive_samples
+            self.training_ever_geometry_success[:] = hold_state.ever_geometry_success
+            self.training_ever_held_success[:] = hold_state.ever_held_success
+            first_success = hold_state.first_held_success
+            per_step_success = self.evaluation_interval_success & curr_success
+        else:
+            first_success = torch.logical_and(curr_success, torch.logical_not(self.ep_succeeded.bool()))
+            per_step_success = curr_success
         factory_terms, _ = self._get_factory_rew_dict(curr_success)
 
-        cfg = self.cfg.reward
         alignment = torch.exp(-torch.square(xy_error / cfg.alignment_sigma_m))
         keypoint = (
             factory_terms["kp_baseline"]
@@ -290,16 +442,56 @@ class LocalInsertionRLEnv(RandomizedPegInsertEnv):
             "depth": cfg.depth_scale * depth_score,
             "engaged": cfg.engage_scale * curr_engaged.float(),
             "first_success": cfg.first_success_scale * first_success.float(),
-            "success_hold": cfg.success_hold_scale * curr_success.float(),
+            "success_hold": cfg.success_hold_scale * per_step_success.float(),
             "action_cost": -cfg.action_scale * action_cost,
             "action_rate_cost": -cfg.action_rate_scale * action_rate_cost,
             "commanded_wrench_cost": -cfg.commanded_wrench_scale * wrench_cost,
         }
+        if getattr(cfg, "dense_profile", "legacy") == "entry_v1":
+            now_alignment, now_entry = entry_potentials(
+                xy_error, depth, cfg.alignment_sigma_m, cfg.coarse_alignment_sigma_m,
+                cfg.approach_sigma_m, cfg.entry_depth_m,
+            )
+            previous_alignment, previous_entry = entry_potentials(
+                self.previous_xy_error, self.previous_depth, cfg.alignment_sigma_m,
+                cfg.coarse_alignment_sigma_m, cfg.approach_sigma_m, cfg.entry_depth_m,
+            )
+            reward_terms["alignment"] = cfg.alignment_scale * now_alignment
+            # Stop paying the same approach state on every stalled interval.
+            reward_terms["approach"] = torch.zeros_like(depth)
+            reward_terms["alignment_progress"] = cfg.alignment_progress_scale * (now_alignment - previous_alignment)
+            reward_terms["entry_progress"] = cfg.entry_progress_scale * (now_entry - previous_entry)
+        if terminal_hold_v2:
+            reward_terms["terminal_hold"] = cfg.terminal_hold_bonus * (
+                hold_state.held_success & self.reset_time_outs
+            ).float()
+        if getattr(self, "capture_diagnostics", False):
+            self.diagnostic_reward_terms = reward_terms
         reward = torch.zeros_like(depth)
         for term in reward_terms.values():
             reward += term
+        # Baselines have no residual-policy action penalty. Preserve a separate
+        # task return so their moving scripted targets are not called zero-cost.
+        self.evaluation_task_reward = reward - reward_terms["action_cost"] - reward_terms["action_rate_cost"]
 
-        self._log_factory_metrics(reward_terms, curr_success)
+        if terminal_hold_v2:
+            # Episode metrics are emitted only at timeout. Do not carry the
+            # prior episode dictionary into every subsequent RL-Games step.
+            self.extras.pop("episode", None)
+            completed = self.reset_time_outs
+            if torch.any(completed):
+                self.extras["episode"] = {
+                    "terminal_hold_v2/terminal_held_success": hold_state.held_success[completed].float().mean(),
+                    "terminal_hold_v2/ever_geometry_success": self.training_ever_geometry_success[completed].float().mean(),
+                    "terminal_hold_v2/final_geometry_success": curr_success[completed].float().mean(),
+                    "terminal_hold_v2/ever_held_success": self.training_ever_held_success[completed].float().mean(),
+                }
+            for name, term in reward_terms.items():
+                self.extras[f"logs_rew_{name}"] = term.mean()
+        else:
+            self._log_factory_metrics(reward_terms, curr_success)
+        if hasattr(self, "previous_xy_error"):
+            self.previous_xy_error[:] = xy_error
         self.previous_depth[:] = depth
         self.previous_rl_action[:] = self.actions
         self.prev_actions = self.actions.clone()

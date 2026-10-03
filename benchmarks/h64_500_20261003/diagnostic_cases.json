@@ -1,0 +1,24 @@
+{
+  "case_set_id": "1b2747ece15d3d558754a91acdd028787b5415f1466e7ef15e531ceb607b1214",
+  "cases": [
+    {
+      "case_id": "case_000000",
+      "seed": 120965577
+    },
+    {
+      "case_id": "case_000002",
+      "seed": 1455299991
+    },
+    {
+      "case_id": "case_000010",
+      "seed": 78635797
+    },
+    {
+      "case_id": "case_000028",
+      "seed": 1940825805
+    }
+  ],
+  "distribution": "challenge_v2",
+  "schema_version": 1,
+  "seed": 20261003
+}

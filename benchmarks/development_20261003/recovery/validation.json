@@ -1,0 +1,49 @@
+{
+  "validated_utc": "2026-10-03T05:57:09.046868+00:00",
+  "artifact_validation_passed": true,
+  "workers": {
+    "legacy_continuation": {
+      "checkpoint_sha256": "eab619e78c684bdea4decbfb5c516335a2e92568b0b71a13199c10abb1a4650c",
+      "agent_config_sha256": "62f67206ed82b91e771be5d27ae238ee92524df18417137c21fc507a389ed54d",
+      "cases": 64,
+      "params_directory": "/root/autodl-tmp/insertion/candidate_held_v2/logs/rl_games/LocalInsertion/held_v2_pilot_20261003_legacy_continuation/params",
+      "worker_exit_code": null,
+      "reported_wall_time_includes_pause": true
+    },
+    "held_v2": {
+      "checkpoint_sha256": "d4961ec728b94c70a63a301b10b48dcc28ccfee802e0829e63023f5232617d0d",
+      "agent_config_sha256": "d462f8b3337a2ee9c209ce3d492d531b4973b26c2be713e9a76da1f0b2f412d7",
+      "cases": 64,
+      "params_directory": "/root/autodl-tmp/insertion/candidate_held_v2/logs/rl_games/LocalInsertion/held_v2_pilot_20261003_held_v2/params",
+      "worker_exit_code": null,
+      "reported_wall_time_includes_pause": true
+    }
+  },
+  "verified_prefixes": [
+    {
+      "arm": "legacy_continuation",
+      "path": "/root/autodl-tmp/insertion/results/held_v2_pilot_20261003/legacy_continuation/trials.jsonl",
+      "size": 88850,
+      "sha256": "0b437982cbd7b33c6d12596620a3fe0c6a05f229c68795ea0398151c276af9e9"
+    },
+    {
+      "arm": "legacy_continuation",
+      "path": "/root/autodl-tmp/insertion/results/held_v2_pilot_20261003/legacy_continuation/trajectories.jsonl",
+      "size": 2207061,
+      "sha256": "f2229ba4eca0d69c669e63108e391b66fdb11d85ce610fd0cf683d00b6279ab1"
+    },
+    {
+      "arm": "held_v2",
+      "path": "/root/autodl-tmp/insertion/results/held_v2_pilot_20261003/held_v2/trials.jsonl",
+      "size": 85602,
+      "sha256": "7af79db5bc3050838e136ab7c31e8a5635379f5913a50b5cd2b1a6126d813bd0"
+    },
+    {
+      "arm": "held_v2",
+      "path": "/root/autodl-tmp/insertion/results/held_v2_pilot_20261003/held_v2/trajectories.jsonl",
+      "size": 2151962,
+      "sha256": "b1ea55e8874ce672d9a880781f4d35c1d668d386d9f06227cc255508657f5fe8"
+    }
+  ],
+  "original_worker_exit_codes_observable": false
+}

@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "mode": "throughput",
+  "variant": "reference",
+  "wall_time_s": 200.7346840603277,
+  "measurement_start_unix_s": 1791003887.0199442,
+  "measurement_end_unix_s": 1791004087.754642,
+  "measurement_start_monotonic_s": 8195224.318925078,
+  "measurement_end_monotonic_s": 8195425.053613405,
+  "vector_steps": 450,
+  "environment_transitions": 460800,
+  "environment_transitions_per_s": 2295.5674160501017,
+  "mean_vector_step_ms": 446.0770756896171,
+  "policy_physics_substeps": 3600,
+  "completed_episodes": 3072,
+  "includes_reset_physics": true,
+  "code_revision": "970a5a6fcb8daacd08cccf66c85532ebbd07b4b08328b28df66299261ba713e6",
+  "action_sha256": "b0f099bc481283a880a8e0f2191a5155b7a7d0010e798f20bdf71739119e1548",
+  "cpu_regions": null,
+  "interpretation": "No-profiler synchronized-boundary wall time, including reset and fixed lightweight GPU validity checks; no PPO updates."
+}

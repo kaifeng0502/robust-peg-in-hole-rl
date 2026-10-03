@@ -1,0 +1,57 @@
+{
+  "source_sha256": "d4961ec728b94c70a63a301b10b48dcc28ccfee802e0829e63023f5232617d0d",
+  "migrated_sha256": "aad8bbe296c0df30690fc925fa24f39f304a04c425f20d58c96914433d1a9784",
+  "changed_model_rows": {
+    "a2c_network.mu.weight": 2,
+    "a2c_network.mu.bias": 2
+  },
+  "paired_recorded_observations": 600,
+  "other_mean_outputs_bitwise_equal": true,
+  "all_sigma_outputs_bitwise_equal": true,
+  "new_mean_z": -0.5,
+  "old_z_mean_range": [
+    -1.1724534034729004,
+    0.974269449710846
+  ],
+  "inverted_legacy_mapping": [
+    {
+      "seed": 78635797,
+      "unlatched_controls": 150,
+      "relative_command_min": -0.9999995430310566,
+      "relative_command_max": -0.9999995430310566,
+      "saturated_down_controls": 150,
+      "degenerate_endpoints_controls": 150
+    },
+    {
+      "seed": 120965577,
+      "unlatched_controls": 23,
+      "relative_command_min": -0.9999995430310566,
+      "relative_command_max": -0.9999995430310566,
+      "saturated_down_controls": 23,
+      "degenerate_endpoints_controls": 20
+    },
+    {
+      "seed": 1455299991,
+      "unlatched_controls": 150,
+      "relative_command_min": -0.9999995430310566,
+      "relative_command_max": -0.9999995430310566,
+      "saturated_down_controls": 150,
+      "degenerate_endpoints_controls": 150
+    },
+    {
+      "seed": 1940825805,
+      "unlatched_controls": 150,
+      "relative_command_min": -0.9999995430310566,
+      "relative_command_max": -0.9999995430310566,
+      "saturated_down_controls": 150,
+      "degenerate_endpoints_controls": 113
+    }
+  ],
+  "optimizer_Z_mu_moments_cleared": true,
+  "training_samples_added": 0,
+  "limits": [
+    "Paired observations are recorded legacy states, not new closed-loop states.",
+    "Z head initialization changes the policy. Closed-loop XY can change as states and previous-Z observations change.",
+    "Sigma network and shared Adam step retained; optimizer migration is partial, not fresh training."
+  ]
+}

@@ -34,7 +34,7 @@ params:
     normalize_input: true
     normalize_value: true
     value_bootstrap: true
-    num_actors: 128
+    num_actors: 1024
     reward_shaper: {scale_value: 1.0}
     normalize_advantage: true
     gamma: 0.99

@@ -1,0 +1,21 @@
+[
+  "/root/autodl-tmp/insertion/env/bin/python",
+  "scripts/train_rl.py",
+  "--task",
+  "Isaac-LocalInsertion-RL-Direct-v0",
+  "--num_envs",
+  "1024",
+  "--seed",
+  "42",
+  "--headless",
+  "--checkpoint",
+  "/root/autodl-tmp/insertion/results/held_v2_pilot_20261003/training/held_v2/nn/last_LocalInsertion_ep_113_rew__968.4925_.pth",
+  "--max_iterations",
+  "121",
+  "env.episode_length_s=10.066666666666666",
+  "env.action_contract=relative_z_v1",
+  "env.reward.success_contract=terminal_hold_v2",
+  "env.reward.dense_profile=entry_v1",
+  "agent.params.config.horizon_length=128",
+  "+agent.params.config.full_experiment_name=contact_revision_1024_retry1_candidate_entry_dense"
+]

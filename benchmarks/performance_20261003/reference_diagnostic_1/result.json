@@ -1,0 +1,146 @@
+{
+  "passed": true,
+  "mode": "diagnostic",
+  "variant": "reference",
+  "wall_time_s": 195.3945697452873,
+  "measurement_start_unix_s": 1790998181.5200696,
+  "measurement_end_unix_s": 1790998376.9146504,
+  "measurement_start_monotonic_s": 8189518.81904682,
+  "measurement_end_monotonic_s": 8189714.213620129,
+  "vector_steps": 450,
+  "environment_transitions": 57600,
+  "environment_transitions_per_s": 294.7881308835055,
+  "mean_vector_step_ms": 434.2101549895273,
+  "policy_physics_substeps": 3600,
+  "completed_episodes": 384,
+  "includes_reset_physics": true,
+  "code_revision": "970a5a6fcb8daacd08cccf66c85532ebbd07b4b08328b28df66299261ba713e6",
+  "action_sha256": "28b5427e27d5071e30cdb5dc205c2de879dd1d3efd773e8f33612bf4c1993c10",
+  "cpu_regions": {
+    "measurement": "cpu_wall_time",
+    "unit": "seconds",
+    "probe_inserts_cuda_synchronization": false,
+    "note": "Host-observed method latency, not GPU kernel time. Inclusive times overlap for nested calls. Root wall time sums root calls and may overlap across threads.",
+    "completed_calls": 32805,
+    "active_calls": 0,
+    "root_calls": 16209,
+    "root_wall_s": 190.93919554259628,
+    "regions": {
+      "action_preparation": {
+        "count": 450,
+        "errors": 0,
+        "inclusive_s": 0.21859557926654816,
+        "exclusive_s": 0.21859557926654816
+      },
+      "insertion_geometry": {
+        "count": 4503,
+        "errors": 0,
+        "inclusive_s": 12.656127236783504,
+        "exclusive_s": 12.656127236783504
+      },
+      "control_torque": {
+        "count": 3693,
+        "errors": 0,
+        "inclusive_s": 16.332392435520887,
+        "exclusive_s": 16.332392435520887
+      },
+      "control_signals": {
+        "count": 3693,
+        "errors": 0,
+        "inclusive_s": 18.298446205444634,
+        "exclusive_s": 1.9660537699237466
+      },
+      "apply_action": {
+        "count": 3600,
+        "errors": 0,
+        "inclusive_s": 63.55039900820702,
+        "exclusive_s": 23.47423140425235
+      },
+      "scene_write": {
+        "count": 3804,
+        "errors": 0,
+        "inclusive_s": 9.534845434129238,
+        "exclusive_s": 9.534845434129238
+      },
+      "sim_step": {
+        "count": 3801,
+        "errors": 0,
+        "inclusive_s": 96.93632168974727,
+        "exclusive_s": 96.93632168974727
+      },
+      "scene_update": {
+        "count": 3801,
+        "errors": 0,
+        "inclusive_s": 3.0764421382918954,
+        "exclusive_s": 3.0764421382918954
+      },
+      "kinematics": {
+        "count": 3801,
+        "errors": 0,
+        "inclusive_s": 15.614958026446402,
+        "exclusive_s": 15.614958026446402
+      },
+      "done_checks": {
+        "count": 450,
+        "errors": 0,
+        "inclusive_s": 2.1249022940173745,
+        "exclusive_s": 0.1816627522930503
+      },
+      "reward": {
+        "count": 450,
+        "errors": 0,
+        "inclusive_s": 11.817640101537108,
+        "exclusive_s": 9.22781000379473
+      },
+      "observations": {
+        "count": 450,
+        "errors": 0,
+        "inclusive_s": 0.13033992983400822,
+        "exclusive_s": 0.13033992983400822
+      },
+      "friction_reset": {
+        "count": 3,
+        "errors": 0,
+        "inclusive_s": 0.01430558506399393,
+        "exclusive_s": 0.01430558506399393
+      },
+      "reset_sim_step": {
+        "count": 201,
+        "errors": 0,
+        "inclusive_s": 7.457146887667477,
+        "exclusive_s": 0.28650688473135233
+      },
+      "reset_ik": {
+        "count": 3,
+        "errors": 0,
+        "inclusive_s": 4.018712682649493,
+        "exclusive_s": 0.6400847090408206
+      },
+      "gripper_close": {
+        "count": 93,
+        "errors": 0,
+        "inclusive_s": 1.1149107869714499,
+        "exclusive_s": 0.441267067566514
+      },
+      "randomized_reset": {
+        "count": 3,
+        "errors": 0,
+        "inclusive_s": 9.211975551210344,
+        "exclusive_s": 0.17600834369659424
+      },
+      "reset": {
+        "count": 3,
+        "errors": 0,
+        "inclusive_s": 9.445840338245034,
+        "exclusive_s": 0.03045482002198696
+      },
+      "sim_forward": {
+        "count": 3,
+        "errors": 0,
+        "inclusive_s": 0.0007877321913838387,
+        "exclusive_s": 0.0007877321913838387
+      }
+    }
+  },
+  "interpretation": "Diagnostic run includes instrumentation overhead; CPU region times include enqueue/wait time, not isolated GPU duration. Nested inclusive times must not be added. Trace records visible PyTorch CUDA work; PhysX kernels may require a system profiler."
+}
