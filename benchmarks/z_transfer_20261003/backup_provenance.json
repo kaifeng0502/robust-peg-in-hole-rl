@@ -1,0 +1,10 @@
+{
+  "archive_sha256": "3195272c5451ba209701e7b9a1f63bd5c4bdb5bcdf9655a3a94b95bfc3473c99",
+  "archive_name": "short_training_completed.tar.gz",
+  "verified_files": 27,
+  "archive_bytes": 7248281,
+  "models_backed_up_locally_and_remotely": true,
+  "initial_checkpoint_sha256": "aad8bbe296c0df30690fc925fa24f39f304a04c425f20d58c96914433d1a9784",
+  "final_checkpoint_sha256": "a72172d19b503293dc58d7ca3dbcc595bf71871c948fccdbc27ad07332a01bc9",
+  "archive_status_note": "Archived status is the frozen remote_complete_awaiting_local_audit snapshot; current completion is separately recorded."
+}

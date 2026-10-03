@@ -1,0 +1,17 @@
+{
+  "complete": false,
+  "phase": "remote_complete_awaiting_local_audit",
+  "supervisor_pid": 41771,
+  "started_utc": "2026-10-03T11:06:17.452005+00:00",
+  "max_new_transitions": 1048576,
+  "num_envs": 1024,
+  "source_fingerprint": "1d0ecd6cdd7fb7f79fe864bd2275cb857058039c192ad176b1b02d22293aa67f",
+  "initial_checkpoint_sha256": "aad8bbe296c0df30690fc925fa24f39f304a04c425f20d58c96914433d1a9784",
+  "pid": 42675,
+  "phase_started_utc": "2026-10-03T11:14:53.475575+00:00",
+  "training_exit": 0,
+  "training_elapsed_s": 515.8943695984781,
+  "four_case_postcheck_exit": 0,
+  "four_case_postcheck_elapsed_s": 222.0940339975059,
+  "completed_utc": "2026-10-03T11:18:35.575853+00:00"
+}

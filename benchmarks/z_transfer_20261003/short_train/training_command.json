@@ -1,0 +1,21 @@
+[
+  "/root/autodl-tmp/insertion/env/bin/python",
+  "scripts/train_rl.py",
+  "--task",
+  "Isaac-LocalInsertion-RL-Direct-v0",
+  "--num_envs",
+  "1024",
+  "--seed",
+  "42",
+  "--headless",
+  "--checkpoint",
+  "/root/autodl-tmp/insertion/z_transfer_20261003/z_calibrated_epoch113.pth",
+  "--max_iterations",
+  "121",
+  "env.episode_length_s=10.066666666666666",
+  "env.action_contract=relative_z_v1",
+  "env.reward.success_contract=terminal_hold_v2",
+  "env.reward.dense_profile=legacy",
+  "agent.params.config.horizon_length=128",
+  "+agent.params.config.full_experiment_name=z_calibrated_1024_8rollouts_20261003"
+]

@@ -5,6 +5,21 @@ development manifest is shared by the nominal, spiral, and PPO references and
 by subsequent candidate checkpoints. Reusing these cases for selection makes
 their success rates development measurements, not unseen-test estimates.
 
+## Completed Z-output calibration follow-up
+
+The [four-case calibration and short continuation](../benchmarks/z_transfer_20261003/README.md)
+reinitialize only the original policy's Z mean-output row and its optimizer
+moments. The calibrated policy passes a predeclared four-case behavior gate,
+then completes one fixed 1,024-environment, eight-rollout continuation with
+1,048,576 new transitions. The identical four-case postcheck remains 1/4 held
+success, with no paired gains or losses. Approach direction stays correct;
+one misalignment error improves, another worsens, and the depth failure reaches
+16.483 mm versus 1.303 mm before continuation and 22.471 mm with the original
+absolute interface. No new candidate is adopted, no 64-case check is queued,
+and no further training budget is launched. Checkpoints, TensorBoard, configs
+and raw diagnostics are backed up with verified hashes; independent audits
+confirm sample counts, physics settings and matched initial states.
+
 ## Completed contact-interface and reward pilot
 
 After the completed pilot, per-substep replay confirmed that all legal Z actions
@@ -28,7 +43,7 @@ it does not isolate the action change from training or prove convergence.
 CPU tests and two complete nominal 1,024-environment runtime episodes passed.
 The first training process aborted in native simulation initialization before
 sampling; its evidence is retained. An identical-configuration retry entered
-PPO sampling and updates normally. The [complete matched evaluation](../benchmarks/contact_revision_20261003/pilot_results/README.md) records 0/64 successes for both arms. Over 99.7% of Z actions are positive (upwards under the new interface), with mean final depth about -27.8 mm. The direct warm-start transfer failed; neither candidate is adopted, and no budget extension is started. Independent audits verify every trace and both training budgets. Calibrate the changed Z output and test the actual initialized policy before any future reward comparison.
+PPO sampling and updates normally. The [complete matched evaluation](../benchmarks/contact_revision_20261003/pilot_results/README.md) records 0/64 successes for both arms. Over 99.7% of Z actions are positive (upwards under the new interface), with mean final depth about -27.8 mm. The direct warm-start transfer failed; neither candidate is adopted, and no budget extension is started. Independent audits verify every trace and both training budgets. The subsequent calibration follow-up above tests the actual initialized policy before any further reward comparison.
 
 ## Completed pilot
 

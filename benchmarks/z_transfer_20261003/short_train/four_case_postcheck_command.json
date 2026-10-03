@@ -1,0 +1,17 @@
+[
+  "/root/autodl-tmp/insertion/env/bin/python",
+  "scripts/diagnose_insertion.py",
+  "--method",
+  "ppo",
+  "--headless",
+  "--action-contract",
+  "relative_z_v1",
+  "--cases",
+  "/root/autodl-tmp/insertion/z_transfer_20261003/diagnostic_cases.json",
+  "--checkpoint",
+  "/root/autodl-tmp/insertion/z_transfer_20261003/source/logs/rl_games/LocalInsertion/z_calibrated_1024_8rollouts_20261003/nn/last_LocalInsertion_ep_121_rew__628.9747_.pth",
+  "--agent-config",
+  "/root/autodl-tmp/insertion/z_transfer_20261003/source/logs/rl_games/LocalInsertion/z_calibrated_1024_8rollouts_20261003/params/agent.yaml",
+  "--output",
+  "/root/autodl-tmp/insertion/z_transfer_20261003/post_train_four"
+]

@@ -1,0 +1,9 @@
+{
+  "initial_frame": 1851392,
+  "final_frame": 2899968,
+  "new_transitions": 1048576,
+  "initial_epoch": 113,
+  "final_epoch": 121,
+  "checkpoint": "/root/autodl-tmp/insertion/z_transfer_20261003/source/logs/rl_games/LocalInsertion/z_calibrated_1024_8rollouts_20261003/nn/last_LocalInsertion_ep_121_rew__628.9747_.pth",
+  "checkpoint_sha256": "a72172d19b503293dc58d7ca3dbcc595bf71871c948fccdbc27ad07332a01bc9"
+}
