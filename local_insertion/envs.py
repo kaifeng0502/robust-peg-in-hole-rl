@@ -11,6 +11,8 @@ from isaaclab_tasks.direct.factory import factory_utils
 from isaaclab_tasks.direct.factory.factory_env import FactoryEnv
 
 from .env_cfg import LocalInsertionRLEnvCfg, SpiralBaselineEnvCfg
+from .evaluation_metrics import EvaluationCriteria
+from .reward_contract import advance_terminal_hold
 
 
 PHASE_APPROACH = 0
@@ -201,6 +203,15 @@ class LocalInsertionRLEnv(RandomizedPegInsertEnv):
             raise ValueError("Spiral approach duration must be positive")
         if min(cfg.hold.max_xy_error_m, cfg.hold.max_z_error_m) <= 0.0:
             raise ValueError("Position-error bounds must be positive")
+        if cfg.reward.success_contract not in {"legacy", "terminal_hold_v2"}:
+            raise ValueError(f"Unknown reward success contract: {cfg.reward.success_contract}")
+        if cfg.reward.success_contract == "terminal_hold_v2":
+            self.required_training_hold_samples = EvaluationCriteria(
+                dt_s=cfg.sim.dt * cfg.decimation,
+                hold_duration_s=cfg.reward.hold_duration_s,
+            ).required_hold_samples
+            if not math.isfinite(cfg.reward.terminal_hold_bonus) or cfg.reward.terminal_hold_bonus < 0.0:
+                raise ValueError("Terminal hold bonus must be finite and nonnegative")
         super().__init__(cfg, render_mode, **kwargs)
         self.previous_depth = torch.zeros(self.num_envs, device=self.device)
         self.previous_rl_action = torch.zeros((self.num_envs, self.cfg.action_space), device=self.device)
@@ -215,6 +226,10 @@ class LocalInsertionRLEnv(RandomizedPegInsertEnv):
         self.evaluation_interval_ever_success = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
         self.evaluation_interval_peak_force = torch.zeros(self.num_envs, device=self.device)
         self.evaluation_task_reward = torch.zeros(self.num_envs, device=self.device)
+        if cfg.reward.success_contract == "terminal_hold_v2":
+            self.training_hold_samples = torch.zeros(self.num_envs, dtype=torch.long, device=self.device)
+            self.training_ever_geometry_success = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
+            self.training_ever_held_success = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
         if not hasattr(self, "held_pos") or self.last_update_timestamp < self._robot._data._sim_timestamp:
             self._compute_intermediate_values(self.physics_dt)
         _, self.previous_depth[:], _ = self.insertion_geometry()
@@ -239,6 +254,10 @@ class LocalInsertionRLEnv(RandomizedPegInsertEnv):
             self.evaluation_interval_ever_success[env_ids] = False
             self.evaluation_interval_peak_force[env_ids] = 0.0
             self.evaluation_task_reward[env_ids] = 0.0
+        if hasattr(self, "training_hold_samples"):
+            self.training_hold_samples[env_ids] = 0
+            self.training_ever_geometry_success[env_ids] = False
+            self.training_ever_held_success[env_ids] = False
 
     def _pre_physics_step(self, action):
         if self.cfg.controller_mode != "residual":
@@ -343,12 +362,34 @@ class LocalInsertionRLEnv(RandomizedPegInsertEnv):
         # Refreshing again here would erase the finite-difference velocities.
         self._sample_evaluation_geometry()
         xy_error, depth, _ = self.insertion_geometry()
-        curr_success = self._get_curr_successes(self.cfg_task.success_threshold)
+        cfg = self.cfg.reward
+        terminal_hold_v2 = cfg.success_contract == "terminal_hold_v2"
+        curr_success = (
+            self.evaluation_success_geometry()
+            if terminal_hold_v2
+            else self._get_curr_successes(self.cfg_task.success_threshold)
+        )
         curr_engaged = self._get_curr_successes(self.cfg_task.engage_threshold)
-        first_success = torch.logical_and(curr_success, torch.logical_not(self.ep_succeeded.bool()))
+        if terminal_hold_v2:
+            hold_state = advance_terminal_hold(
+                self.training_hold_samples,
+                self.training_ever_geometry_success,
+                self.training_ever_held_success,
+                self.evaluation_interval_success,
+                self.evaluation_interval_ever_success,
+                curr_success,
+                self.required_training_hold_samples,
+            )
+            self.training_hold_samples[:] = hold_state.consecutive_samples
+            self.training_ever_geometry_success[:] = hold_state.ever_geometry_success
+            self.training_ever_held_success[:] = hold_state.ever_held_success
+            first_success = hold_state.first_held_success
+            per_step_success = self.evaluation_interval_success & curr_success
+        else:
+            first_success = torch.logical_and(curr_success, torch.logical_not(self.ep_succeeded.bool()))
+            per_step_success = curr_success
         factory_terms, _ = self._get_factory_rew_dict(curr_success)
 
-        cfg = self.cfg.reward
         alignment = torch.exp(-torch.square(xy_error / cfg.alignment_sigma_m))
         keypoint = (
             factory_terms["kp_baseline"]
@@ -377,11 +418,15 @@ class LocalInsertionRLEnv(RandomizedPegInsertEnv):
             "depth": cfg.depth_scale * depth_score,
             "engaged": cfg.engage_scale * curr_engaged.float(),
             "first_success": cfg.first_success_scale * first_success.float(),
-            "success_hold": cfg.success_hold_scale * curr_success.float(),
+            "success_hold": cfg.success_hold_scale * per_step_success.float(),
             "action_cost": -cfg.action_scale * action_cost,
             "action_rate_cost": -cfg.action_rate_scale * action_rate_cost,
             "commanded_wrench_cost": -cfg.commanded_wrench_scale * wrench_cost,
         }
+        if terminal_hold_v2:
+            reward_terms["terminal_hold"] = cfg.terminal_hold_bonus * (
+                hold_state.held_success & self.reset_time_outs
+            ).float()
         reward = torch.zeros_like(depth)
         for term in reward_terms.values():
             reward += term
@@ -389,7 +434,22 @@ class LocalInsertionRLEnv(RandomizedPegInsertEnv):
         # task return so their moving scripted targets are not called zero-cost.
         self.evaluation_task_reward = reward - reward_terms["action_cost"] - reward_terms["action_rate_cost"]
 
-        self._log_factory_metrics(reward_terms, curr_success)
+        if terminal_hold_v2:
+            # Episode metrics are emitted only at timeout. Do not carry the
+            # prior episode dictionary into every subsequent RL-Games step.
+            self.extras.pop("episode", None)
+            completed = self.reset_time_outs
+            if torch.any(completed):
+                self.extras["episode"] = {
+                    "terminal_hold_v2/terminal_held_success": hold_state.held_success[completed].float().mean(),
+                    "terminal_hold_v2/ever_geometry_success": self.training_ever_geometry_success[completed].float().mean(),
+                    "terminal_hold_v2/final_geometry_success": curr_success[completed].float().mean(),
+                    "terminal_hold_v2/ever_held_success": self.training_ever_held_success[completed].float().mean(),
+                }
+            for name, term in reward_terms.items():
+                self.extras[f"logs_rew_{name}"] = term.mean()
+        else:
+            self._log_factory_metrics(reward_terms, curr_success)
         self.previous_depth[:] = depth
         self.previous_rl_action[:] = self.actions
         self.prev_actions = self.actions.clone()

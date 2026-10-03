@@ -6,6 +6,8 @@ The implemented system starts at a pre-insertion pose and handles the local cont
 
 The unified evaluation pipeline has passed GPU integration: all three methods completed the same eight cases, with matching recorded initial states and a one-second terminal hold criterion. Zero residual succeeded in 2/8 cases, spiral search in 4/8, and the recovered PPO checkpoint in 3/8. This small integration sample does not establish a PPO advantage or a 95% success rate. See the [raw evidence and analysis](benchmarks/gpu_integration_20261002/README.md) and [evaluation runbook](docs/EVALUATION.md). The same per-case success results were reproduced after migration to an RTX 4090 D; see the [AutoDL replication](benchmarks/gpu_integration_20261003_autodl/README.md) and [runtime runbook](docs/AUTODL.md).
 
+The next development stage uses 64 separate cases to diagnose the current controllers. A [predeclared continuation experiment](docs/DEVELOPMENT.md) compares legacy training reward with a terminal-hold reward profile under equal additional training budgets. The default controller and reward remain unchanged; candidate policies are evaluated through a frozen reference checkout. These experiments are pending, and the final 500-case holdout remains unused.
+
 ## System architecture
 
 ```mermaid

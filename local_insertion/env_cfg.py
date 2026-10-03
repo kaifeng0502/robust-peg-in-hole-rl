@@ -53,6 +53,10 @@ class EvaluationGeometryCfg:
 
 @configclass
 class LocalRewardCfg:
+    # The historical training objective remains the default for replay.
+    success_contract: str = "legacy"
+    hold_duration_s: float = 1.0
+    terminal_hold_bonus: float = 100.0
     keypoint_scale: float = 1.0
     alignment_scale: float = 0.5
     approach_scale: float = 1.5
