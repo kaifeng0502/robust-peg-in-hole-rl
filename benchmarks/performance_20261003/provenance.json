@@ -25,7 +25,13 @@
     "tools/performance/test_profile_environment.py": "16d74f786d64338ce1d65dfbc47ec3c46682feea2f340a698a8e19458a977926",
     "tools/performance/test_performance_probe.py": "1a006b109076bc1607f694380cfe329ac014dc145534196fc4a1c6f866822283",
     "tools/performance/test_target_updates.py": "2bbe38fdc60e894e3b39737ae083f8d36f12949238275382e05e60b7e20d51a8",
-    "benchmarks/performance_20261003/tool_versions/profile_environment_v1.py": "56e3b1c6f2d57b5179022697f1ab11476f70d7bb60aa0669aca7c432fa476936"
+    "benchmarks/performance_20261003/tool_versions/profile_environment_v1.py": "56e3b1c6f2d57b5179022697f1ab11476f70d7bb60aa0669aca7c432fa476936",
+    "benchmarks/performance_20261003/controller_inverse_reuse_2/result.json": "bab2b82d0f0c567fe876b60bff67335be570f49b73d6c6a8378fc1fe8d3b6c76",
+    "benchmarks/performance_20261003/controller_inverse_reuse_2/metadata.json": "551bc1f0d65c165c3062b0597ae3f5019d088b7c8c1077a4f8e70aa4728a78c0",
+    "benchmarks/performance_20261003/controller_inverse_reuse_2/cpu_tests.txt": "64760d6474288ccaa9c5e464bc52d304079d9ea24c05e0027866b57c7b8b0f5d",
+    "benchmarks/performance_20261003/tool_versions/inverse_reuse.py": "a5da63aaaa954b4060f3befdf83bb5b1db0897eb2cf98d22ec940a98d04bd8ec",
+    "benchmarks/performance_20261003/tool_versions/benchmark_controller.py": "6ad409034fc7684a31f016cd9f06aeafc2c1001983325841280f00ccfe610c74",
+    "benchmarks/performance_20261003/tool_versions/test_inverse_reuse.py": "10939fbca4c9ec4b1333fe405a584b5f55d9e2bc9b31b5f6361b977ae2d46c6d"
   },
   "path_base": "repository root"
 }

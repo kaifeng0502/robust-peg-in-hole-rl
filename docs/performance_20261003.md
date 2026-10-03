@@ -78,6 +78,28 @@ records.
 
 ## Diagnostic observations and limitations
 
+A separate [controller microbenchmark](../benchmarks/performance_20261003/controller_inverse_reuse_2/result.json)
+tested reuse of the mass-matrix inverse within the same control invocation.
+The candidate reduces three inverse calls to two, without caching across physics
+substeps. On one frozen real 128-environment state, eight alternating ABBAABBA
+blocks of 100 calls gave median times of **2.2906 ms** for the original and
+**2.1304 ms** for the candidate: **6.99% less controller wall time**. The four
+original blocks ranged from 2.2779 to 2.3296 ms; candidate blocks ranged from
+2.1254 to 2.1541 ms. Outputs were bitwise equal, inputs and configuration remained
+unchanged, and all eight CPU numerical/source checks passed. The exact probe and
+candidate source are archived in the benchmark's `tool_versions` directory.
+Its CPU checks can be reproduced against the pinned Isaac Lab checkout:
+
+```bash
+ISAACLAB_PATH=/absolute/path/to/IsaacLab python -m unittest discover \
+  -s benchmarks/performance_20261003/tool_versions -p test_inverse_reuse.py -v
+```
+
+This screen neither advances PhysX during timing nor proves an environment-step
+speedup, trajectory equivalence, or PPO improvement. The candidate is not enabled
+in the project controller; its modest local benefit must not be presented as a
+7% reduction in full training time.
+
 The separate [instrumented run](../benchmarks/performance_20261003/reference_diagnostic_1/result.json)
 took 195.39 seconds. Host-observed region totals included 96.94 seconds in
 `sim_step`, 63.55 seconds in `apply_action` (23.47 exclusive), 16.33 seconds in

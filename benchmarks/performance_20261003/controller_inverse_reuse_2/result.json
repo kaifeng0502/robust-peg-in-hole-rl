@@ -1,0 +1,97 @@
+{
+  "passed": true,
+  "finished_utc": "2026-10-03T04:36:31.026837+00:00",
+  "block_order": "ABBAABBA",
+  "labels": {
+    "A": "reference",
+    "B": "inverse_reuse"
+  },
+  "blocks": [
+    {
+      "index": 0,
+      "variant": "reference",
+      "calls": 100,
+      "wall_s": 0.22935195546597242,
+      "wall_ms_per_call": 2.2935195546597242,
+      "cuda_stream_elapsed_ms_per_call": 2.292450256347656
+    },
+    {
+      "index": 1,
+      "variant": "inverse_reuse",
+      "calls": 100,
+      "wall_s": 0.21304916124790907,
+      "wall_ms_per_call": 2.1304916124790907,
+      "cuda_stream_elapsed_ms_per_call": 2.129444427490234
+    },
+    {
+      "index": 2,
+      "variant": "inverse_reuse",
+      "calls": 100,
+      "wall_s": 0.21253930311650038,
+      "wall_ms_per_call": 2.1253930311650038,
+      "cuda_stream_elapsed_ms_per_call": 2.124434509277344
+    },
+    {
+      "index": 3,
+      "variant": "reference",
+      "calls": 100,
+      "wall_s": 0.22778567764908075,
+      "wall_ms_per_call": 2.2778567764908075,
+      "cuda_stream_elapsed_ms_per_call": 2.276808319091797
+    },
+    {
+      "index": 4,
+      "variant": "reference",
+      "calls": 100,
+      "wall_s": 0.22875859588384628,
+      "wall_ms_per_call": 2.287585958838463,
+      "cuda_stream_elapsed_ms_per_call": 2.286471710205078
+    },
+    {
+      "index": 5,
+      "variant": "inverse_reuse",
+      "calls": 100,
+      "wall_s": 0.21302122715860605,
+      "wall_ms_per_call": 2.1302122715860605,
+      "cuda_stream_elapsed_ms_per_call": 2.129263610839844
+    },
+    {
+      "index": 6,
+      "variant": "inverse_reuse",
+      "calls": 100,
+      "wall_s": 0.215405753813684,
+      "wall_ms_per_call": 2.15405753813684,
+      "cuda_stream_elapsed_ms_per_call": 2.152943420410156
+    },
+    {
+      "index": 7,
+      "variant": "reference",
+      "calls": 100,
+      "wall_s": 0.23296471033245325,
+      "wall_ms_per_call": 2.3296471033245325,
+      "cuda_stream_elapsed_ms_per_call": 2.3286454772949217
+    }
+  ],
+  "summary": {
+    "reference": {
+      "median_wall_ms_per_call": 2.2905527567490935,
+      "min_wall_ms_per_call": 2.2778567764908075,
+      "max_wall_ms_per_call": 2.3296471033245325
+    },
+    "inverse_reuse": {
+      "median_wall_ms_per_call": 2.1303519420325756,
+      "min_wall_ms_per_call": 2.1253930311650038,
+      "max_wall_ms_per_call": 2.15405753813684
+    }
+  },
+  "median_controller_speedup": 1.075199224858438,
+  "median_controller_wall_reduction_percent": 6.993980568423397,
+  "checks": {
+    "torque_wrench_bitwise_equal": true,
+    "inputs_unchanged": true,
+    "configuration_unchanged": true,
+    "finite_inputs_outputs": true,
+    "thread_settings_unchanged": true
+  },
+  "interpretation": "Controller only, one frozen state. CUDA event elapsed time includes stream idle gaps; it is not a sum of kernel time. This is not an environment-step or PPO speedup."
+}
