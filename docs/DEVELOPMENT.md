@@ -68,6 +68,9 @@ accumulator at every step, emitted terminal metrics, and clearing state after
 automatic reset. Its result is an integration check, not a randomized success
 estimate.
 
+The [2026-10-03 runtime evidence](../benchmarks/held_v2_contract_20261003/README.md)
+records this check and all 102 regression tests passing on AutoDL.
+
 `scripts/run_development_pilot.py` waits for this runtime check and the complete
 three-method reference comparison, verifies traces, runs the two fixed-budget
 continuations, verifies saved epoch/frame counts, evaluates the fixed final

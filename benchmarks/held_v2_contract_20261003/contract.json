@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "num_envs": 2,
+  "episodes": [
+    {
+      "episode": 0,
+      "steps": 150,
+      "terminal_metrics": {
+        "terminal_held_success": 1.0,
+        "ever_geometry_success": 1.0,
+        "final_geometry_success": 1.0,
+        "ever_held_success": 1.0
+      },
+      "terminal_bonus_mean": 100.0
+    },
+    {
+      "episode": 1,
+      "steps": 150,
+      "terminal_metrics": {
+        "terminal_held_success": 1.0,
+        "ever_geometry_success": 1.0,
+        "final_geometry_success": 1.0,
+        "ever_held_success": 1.0
+      },
+      "terminal_bonus_mean": 100.0
+    }
+  ],
+  "max_episode_length": 151,
+  "required_hold_samples": 15,
+  "code_revision": "970a5a6fcb8daacd08cccf66c85532ebbd07b4b08328b28df66299261ba713e6",
+  "runtime_versions": {
+    "python": "3.11.13",
+    "torch": "2.7.0+cu128",
+    "cuda": "12.8",
+    "isaaclab": "0.45.9",
+    "isaacsim": "5.0.0.0",
+    "rl-games": "1.6.1",
+    "gymnasium": "1.2.0",
+    "factory_source_sha256": "52d843bc0dac4c3661ecc0e9c84bfafcfa73d11623337b8c9a74032e1ecf6869",
+    "direct_env_source_sha256": "8d4c64aef3a4b9e258fb069211c5cae1293d7b5b742ce3b5c523dceaa298317c",
+    "device": "cuda:0",
+    "gpu": "NVIDIA GeForce RTX 4090 D"
+  },
+  "note": "Nominal runtime contract check, not randomized performance evidence."
+}
