@@ -1,0 +1,293 @@
+{
+  "experiment": "relative_z_entry_1024_pilot",
+  "source_fingerprint": "1d0ecd6cdd7fb7f79fe864bd2275cb857058039c192ad176b1b02d22293aa67f",
+  "starting_checkpoint": "/root/autodl-tmp/insertion/results/held_v2_pilot_20261003/training/held_v2/nn/last_LocalInsertion_ep_113_rew__968.4925_.pth",
+  "starting_checkpoint_sha256": "d4961ec728b94c70a63a301b10b48dcc28ccfee802e0829e63023f5232617d0d",
+  "starting_epoch": 113,
+  "final_epoch": 121,
+  "new_rollouts_per_arm": 8,
+  "num_envs": 1024,
+  "horizon_length": 128,
+  "new_transitions_per_arm": 1048576,
+  "total_new_training_transitions": 2097152,
+  "seed": 42,
+  "action_contract": "relative_z_v1",
+  "success_contract": "terminal_hold_v2",
+  "arms": {
+    "control_legacy_dense": "legacy",
+    "candidate_entry_dense": "entry_v1"
+  },
+  "evaluation_case_set": {
+    "case_set_id": "cb64e7a09fab0a4756a2f80a96c41d4721dd9d8f02fc0415687a97beb7e64fd9",
+    "cases": [
+      {
+        "case_id": "case_000000",
+        "seed": 120965577
+      },
+      {
+        "case_id": "case_000001",
+        "seed": 21187555
+      },
+      {
+        "case_id": "case_000002",
+        "seed": 1455299991
+      },
+      {
+        "case_id": "case_000003",
+        "seed": 615921975
+      },
+      {
+        "case_id": "case_000004",
+        "seed": 2137984594
+      },
+      {
+        "case_id": "case_000005",
+        "seed": 1238856619
+      },
+      {
+        "case_id": "case_000006",
+        "seed": 458917771
+      },
+      {
+        "case_id": "case_000007",
+        "seed": 1663042551
+      },
+      {
+        "case_id": "case_000008",
+        "seed": 1280681836
+      },
+      {
+        "case_id": "case_000009",
+        "seed": 218509817
+      },
+      {
+        "case_id": "case_000010",
+        "seed": 78635797
+      },
+      {
+        "case_id": "case_000011",
+        "seed": 2044727720
+      },
+      {
+        "case_id": "case_000012",
+        "seed": 1618094106
+      },
+      {
+        "case_id": "case_000013",
+        "seed": 533282075
+      },
+      {
+        "case_id": "case_000014",
+        "seed": 545850437
+      },
+      {
+        "case_id": "case_000015",
+        "seed": 243538780
+      },
+      {
+        "case_id": "case_000016",
+        "seed": 967211986
+      },
+      {
+        "case_id": "case_000017",
+        "seed": 2108824319
+      },
+      {
+        "case_id": "case_000018",
+        "seed": 617627598
+      },
+      {
+        "case_id": "case_000019",
+        "seed": 992491907
+      },
+      {
+        "case_id": "case_000020",
+        "seed": 1305291916
+      },
+      {
+        "case_id": "case_000021",
+        "seed": 1463058351
+      },
+      {
+        "case_id": "case_000022",
+        "seed": 1429586835
+      },
+      {
+        "case_id": "case_000023",
+        "seed": 153799848
+      },
+      {
+        "case_id": "case_000024",
+        "seed": 1082408603
+      },
+      {
+        "case_id": "case_000025",
+        "seed": 789545759
+      },
+      {
+        "case_id": "case_000026",
+        "seed": 166642250
+      },
+      {
+        "case_id": "case_000027",
+        "seed": 1374445383
+      },
+      {
+        "case_id": "case_000028",
+        "seed": 1940825805
+      },
+      {
+        "case_id": "case_000029",
+        "seed": 1546051256
+      },
+      {
+        "case_id": "case_000030",
+        "seed": 135798431
+      },
+      {
+        "case_id": "case_000031",
+        "seed": 816359821
+      },
+      {
+        "case_id": "case_000032",
+        "seed": 366821102
+      },
+      {
+        "case_id": "case_000033",
+        "seed": 1389841231
+      },
+      {
+        "case_id": "case_000034",
+        "seed": 1244555032
+      },
+      {
+        "case_id": "case_000035",
+        "seed": 1293085270
+      },
+      {
+        "case_id": "case_000036",
+        "seed": 1970739226
+      },
+      {
+        "case_id": "case_000037",
+        "seed": 922820250
+      },
+      {
+        "case_id": "case_000038",
+        "seed": 538928811
+      },
+      {
+        "case_id": "case_000039",
+        "seed": 1346200071
+      },
+      {
+        "case_id": "case_000040",
+        "seed": 1743463360
+      },
+      {
+        "case_id": "case_000041",
+        "seed": 630163751
+      },
+      {
+        "case_id": "case_000042",
+        "seed": 1323959745
+      },
+      {
+        "case_id": "case_000043",
+        "seed": 850476525
+      },
+      {
+        "case_id": "case_000044",
+        "seed": 1341466314
+      },
+      {
+        "case_id": "case_000045",
+        "seed": 1067951426
+      },
+      {
+        "case_id": "case_000046",
+        "seed": 785708211
+      },
+      {
+        "case_id": "case_000047",
+        "seed": 516077980
+      },
+      {
+        "case_id": "case_000048",
+        "seed": 164964197
+      },
+      {
+        "case_id": "case_000049",
+        "seed": 338280928
+      },
+      {
+        "case_id": "case_000050",
+        "seed": 760502586
+      },
+      {
+        "case_id": "case_000051",
+        "seed": 1821873583
+      },
+      {
+        "case_id": "case_000052",
+        "seed": 36309549
+      },
+      {
+        "case_id": "case_000053",
+        "seed": 1321821459
+      },
+      {
+        "case_id": "case_000054",
+        "seed": 133542620
+      },
+      {
+        "case_id": "case_000055",
+        "seed": 969500500
+      },
+      {
+        "case_id": "case_000056",
+        "seed": 1029402810
+      },
+      {
+        "case_id": "case_000057",
+        "seed": 393518697
+      },
+      {
+        "case_id": "case_000058",
+        "seed": 2147080601
+      },
+      {
+        "case_id": "case_000059",
+        "seed": 177098820
+      },
+      {
+        "case_id": "case_000060",
+        "seed": 1769241775
+      },
+      {
+        "case_id": "case_000061",
+        "seed": 2120326695
+      },
+      {
+        "case_id": "case_000062",
+        "seed": 1054719126
+      },
+      {
+        "case_id": "case_000063",
+        "seed": 1422024199
+      }
+    ],
+    "distribution": "challenge_v2",
+    "schema_version": 1,
+    "seed": 20261003
+  },
+  "checkpoint_selection": "fixed final epoch121 regardless of training reward",
+  "evaluation_reward": "shared legacy dense and legacy success reward; strict external held-success metric",
+  "limits": [
+    "Warm-start transfer: action Z semantics change from old checkpoint; not continuation under identical control.",
+    "Both arms inherit identical model/normalizers/optimizer; only dense reward profile differs.",
+    "One seed and short budget are a development screen, not evidence of 95% generalization.",
+    "First PPO rollout checks memory and counts within the eight-rollout budget.",
+    "No automatic budget extension; sealed500 remain untouched."
+  ]
+}

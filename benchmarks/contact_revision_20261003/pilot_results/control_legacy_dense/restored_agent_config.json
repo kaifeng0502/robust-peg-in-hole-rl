@@ -1,0 +1,92 @@
+{
+  "params": {
+    "algo": {
+      "name": "a2c_continuous"
+    },
+    "config": {
+      "bounds_loss_coef": 0.0001,
+      "clip_value": true,
+      "critic_coef": 2,
+      "device": "cuda:0",
+      "device_name": "cuda:0",
+      "e_clip": 0.2,
+      "entropy_coef": 0.002,
+      "env_name": "rlgpu",
+      "full_experiment_name": "contact_revision_1024_retry1_control_legacy_dense",
+      "gamma": 0.99,
+      "grad_norm": 1.0,
+      "horizon_length": 128,
+      "kl_threshold": 0.01,
+      "learning_rate": 0.0003,
+      "lr_schedule": "adaptive",
+      "max_epochs": 121,
+      "mini_epochs": 4,
+      "minibatch_size": 2048,
+      "mixed_precision": true,
+      "multi_gpu": false,
+      "name": "LocalInsertion",
+      "normalize_advantage": true,
+      "normalize_input": true,
+      "normalize_value": true,
+      "num_actors": 1,
+      "player": {
+        "deterministic": true
+      },
+      "ppo": true,
+      "print_stats": true,
+      "reward_shaper": {
+        "scale_value": 1.0
+      },
+      "save_best_after": 5,
+      "save_frequency": 5,
+      "schedule_type": "standard",
+      "score_to_win": 1000000000.0,
+      "tau": 0.95,
+      "train_dir": "/root/autodl-tmp/insertion/contact_revision_20261003/candidate_source/logs/rl_games/LocalInsertion",
+      "truncate_grads": true,
+      "value_bootstrap": true
+    },
+    "env": {
+      "clip_actions": 1.0
+    },
+    "load_checkpoint": true,
+    "load_path": "/root/autodl-tmp/insertion/contact_revision_20261003/candidate_source/logs/rl_games/LocalInsertion/contact_revision_1024_retry1_control_legacy_dense/nn/last_LocalInsertion_ep_121_rew__36.089832_.pth",
+    "model": {
+      "name": "continuous_a2c_logstd"
+    },
+    "network": {
+      "mlp": {
+        "activation": "elu",
+        "d2rl": false,
+        "initializer": {
+          "name": "default"
+        },
+        "regularizer": {
+          "name": "None"
+        },
+        "units": [
+          256,
+          256,
+          128
+        ]
+      },
+      "name": "actor_critic",
+      "separate": false,
+      "space": {
+        "continuous": {
+          "fixed_sigma": false,
+          "mu_activation": "None",
+          "mu_init": {
+            "name": "default"
+          },
+          "sigma_activation": "None",
+          "sigma_init": {
+            "name": "const_initializer",
+            "val": -0.5
+          }
+        }
+      }
+    },
+    "seed": 42
+  }
+}

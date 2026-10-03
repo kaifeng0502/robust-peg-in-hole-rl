@@ -1,0 +1,17 @@
+{
+  "complete": false,
+  "started_utc": "2026-10-03T07:18:39.115354+00:00",
+  "phase": "remote_complete_awaiting_local_audit",
+  "phase_started_utc": "2026-10-03T07:34:39.155022+00:00",
+  "processes": {
+    "evaluate_control_legacy_dense": 33932,
+    "evaluate_candidate_entry_dense": 33933
+  },
+  "exit_codes": {
+    "evaluate_control_legacy_dense": 0,
+    "evaluate_candidate_entry_dense": 0
+  },
+  "phase_elapsed_s": 3808.418852464296,
+  "local_audit_complete": false,
+  "completed_utc": "2026-10-03T08:38:08.724408+00:00"
+}

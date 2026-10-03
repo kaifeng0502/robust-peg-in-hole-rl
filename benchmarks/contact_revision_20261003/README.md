@@ -45,5 +45,5 @@ Only the dense reward profile differs. This isolates that reward change under
 the revised interface; it does not isolate the action change from training.
 The first native training startup aborted before sampling with
 `malloc(): invalid size (unsorted)`; a fresh identical-config retry retains the
-failure evidence. Training and64-case comparison results are pending. Final500
+failure evidence. The [completed 64-case comparison](pilot_results/README.md) records 0/64 for both transferred policies. Both predominantly lift away from the entrance; neither candidate is adopted. Final500
 cases remain sealed. No100-rollout extension is authorized by this experiment.

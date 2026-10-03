@@ -1,0 +1,7 @@
+{
+  "full_archive_sha256": "8721df38e5284198798fba798ad841d5fe5b1a0a77488332e5272d85dce3e794",
+  "full_archive_files": 41,
+  "training_snapshot_sha256": "010ec4485907207ed0f3d693e7b7ea0423474fb95a4855de6a371fd79e5a46a0",
+  "checkpoint_files": "Retained in verified local and remote backups; not committed as model binaries. SHA256 values are in training_budget.json.",
+  "raw_remote_status": "status.json is the immutable remote-complete snapshot before independent local audit; see local_completion.json for final audit/publication status."
+}

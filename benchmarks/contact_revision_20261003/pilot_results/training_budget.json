@@ -1,0 +1,18 @@
+{
+  "control_legacy_dense": {
+    "checkpoint": "/root/autodl-tmp/insertion/contact_revision_20261003/candidate_source/logs/rl_games/LocalInsertion/contact_revision_1024_retry1_control_legacy_dense/nn/last_LocalInsertion_ep_121_rew__36.089832_.pth",
+    "sha256": "632d4eba595efb342c72f0e097536eae6080c7aa37d6ee1886a96fd93a3ffa56",
+    "epoch": 121,
+    "added_transitions": 1048576,
+    "inherited_frame": 1851392,
+    "final_frame": 2899968
+  },
+  "candidate_entry_dense": {
+    "checkpoint": "/root/autodl-tmp/insertion/contact_revision_20261003/candidate_source/logs/rl_games/LocalInsertion/contact_revision_1024_retry1_candidate_entry_dense/nn/last_LocalInsertion_ep_121_rew__39.99135_.pth",
+    "sha256": "f0f05c4f1a640ddebbcbd5c00df8574f2f5896287e4d25620913d63dadf4e8d8",
+    "epoch": 121,
+    "added_transitions": 1048576,
+    "inherited_frame": 1851392,
+    "final_frame": 2899968
+  }
+}

@@ -5,7 +5,7 @@ development manifest is shared by the nominal, spiral, and PPO references and
 by subsequent candidate checkpoints. Reusing these cases for selection makes
 their success rates development measurements, not unseen-test estimates.
 
-## Active contact-interface and reward pilot
+## Completed contact-interface and reward pilot
 
 After the completed pilot, per-substep replay confirmed that all legal Z actions
 mapped to the same downwards impedance target throughout two failed cases.
@@ -28,7 +28,7 @@ it does not isolate the action change from training or prove convergence.
 CPU tests and two complete nominal 1,024-environment runtime episodes passed.
 The first training process aborted in native simulation initialization before
 sampling; its evidence is retained. An identical-configuration retry entered
-PPO sampling and updates normally. Final policy evaluation remains pending.
+PPO sampling and updates normally. The [complete matched evaluation](../benchmarks/contact_revision_20261003/pilot_results/README.md) records 0/64 successes for both arms. Over 99.7% of Z actions are positive (upwards under the new interface), with mean final depth about -27.8 mm. The direct warm-start transfer failed; neither candidate is adopted, and no budget extension is started. Independent audits verify every trace and both training budgets. Calibrate the changed Z output and test the actual initialized policy before any future reward comparison.
 
 ## Completed pilot
 
