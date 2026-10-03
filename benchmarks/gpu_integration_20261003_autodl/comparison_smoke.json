@@ -1,0 +1,120 @@
+{
+  "case_set_id": "2b5f0460f2465750d4bbe12c1e0d852f1375200e5a12309352b96d384123f69e",
+  "code_revision": "79982d405e09d041563079dc4dce49f948b93fe763e87751a4b085592b635a29",
+  "comparison_valid": true,
+  "criteria": {
+    "depth_tolerance_m": 0.001,
+    "dt_s": 0.06666666666666667,
+    "hold_duration_s": 1.0,
+    "xy_tolerance_m": 0.0025
+  },
+  "initial_state_atol": 1e-06,
+  "initial_state_rtol": 0.0,
+  "methods": {
+    "ppo": {
+      "checkpoint_sha256": "9811f2bfa13dab366531324fbab5bb758a7e031753a6378b5d318ad99d843721",
+      "ever_success_count": 4,
+      "ever_success_rate": 0.5,
+      "failure_counts": {
+        "insufficient_hold": 1,
+        "misalignment": 4
+      },
+      "final_success_count": 4,
+      "final_success_rate": 0.5,
+      "force_note": "Commanded force magnitude, not sensor-measured contact force.",
+      "had_hold_anytime_count": 3,
+      "had_hold_anytime_rate": 0.375,
+      "held_success_count": 3,
+      "held_success_rate": 0.375,
+      "held_successes": 3,
+      "max_peak_commanded_force_n": 2.6485490798950195,
+      "mean_episode_reward": 537.0459003243595,
+      "mean_max_depth_m": 0.01240215403959155,
+      "mean_peak_commanded_force_n": 2.405525356531143,
+      "mean_success_time_s": 4.5777777777777775,
+      "mean_task_episode_reward": 539.1576741803437,
+      "median_success_time_s": 4.333333333333333,
+      "success_rate": 0.375,
+      "success_rate_ci95": [
+        0.13684428582359742,
+        0.6942576053973726
+      ],
+      "trials": 8
+    },
+    "spiral": {
+      "checkpoint_sha256": null,
+      "ever_success_count": 4,
+      "ever_success_rate": 0.5,
+      "failure_counts": {
+        "insufficient_depth": 3,
+        "misalignment": 1
+      },
+      "final_success_count": 4,
+      "final_success_rate": 0.5,
+      "force_note": "Commanded force magnitude, not sensor-measured contact force.",
+      "had_hold_anytime_count": 4,
+      "had_hold_anytime_rate": 0.5,
+      "held_success_count": 4,
+      "held_success_rate": 0.5,
+      "held_successes": 4,
+      "max_peak_commanded_force_n": 3.2110342979431152,
+      "mean_episode_reward": 496.1660004607402,
+      "mean_max_depth_m": 0.01284778956323862,
+      "mean_peak_commanded_force_n": 2.5884188264608383,
+      "mean_success_time_s": 6.316666666666666,
+      "mean_task_episode_reward": 496.1660004607402,
+      "median_success_time_s": 5.800000000000001,
+      "success_rate": 0.5,
+      "success_rate_ci95": [
+        0.21521606221387762,
+        0.7847839377861223
+      ],
+      "trials": 8
+    },
+    "zero_residual": {
+      "checkpoint_sha256": null,
+      "ever_success_count": 2,
+      "ever_success_rate": 0.25,
+      "failure_counts": {
+        "insufficient_depth": 2,
+        "misalignment": 4
+      },
+      "final_success_count": 2,
+      "final_success_rate": 0.25,
+      "force_note": "Commanded force magnitude, not sensor-measured contact force.",
+      "had_hold_anytime_count": 2,
+      "had_hold_anytime_rate": 0.25,
+      "held_success_count": 2,
+      "held_success_rate": 0.25,
+      "held_successes": 2,
+      "max_peak_commanded_force_n": 2.6733591556549072,
+      "mean_episode_reward": 487.9222234580666,
+      "mean_max_depth_m": 0.009245865046977997,
+      "mean_peak_commanded_force_n": 2.4139357805252075,
+      "mean_success_time_s": 3.5666666666666664,
+      "mean_task_episode_reward": 487.9222234580666,
+      "median_success_time_s": 3.5666666666666664,
+      "success_rate": 0.25,
+      "success_rate_ci95": [
+        0.07147921275210906,
+        0.5907245696898311
+      ],
+      "trials": 8
+    }
+  },
+  "protocol_id": "291cd80773ce1f755e6da57e82a7ea8981d270bf8fb74d2ca02a48275b935d11",
+  "runtime_versions": {
+    "cuda": "12.8",
+    "device": "cuda:0",
+    "direct_env_source_sha256": "8d4c64aef3a4b9e258fb069211c5cae1293d7b5b742ce3b5c523dceaa298317c",
+    "factory_source_sha256": "52d843bc0dac4c3661ecc0e9c84bfafcfa73d11623337b8c9a74032e1ecf6869",
+    "gpu": "NVIDIA GeForce RTX 4090 D",
+    "gymnasium": "1.2.0",
+    "isaaclab": "0.45.9",
+    "isaacsim": "5.0.0.0",
+    "python": "3.11.13",
+    "rl-games": "1.6.1",
+    "torch": "2.7.0+cu128"
+  },
+  "schema_version": 1
+}

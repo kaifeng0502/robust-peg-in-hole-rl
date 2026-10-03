@@ -1,0 +1,11 @@
+{
+  "recorded_utc": "2026-10-03T00:01:00.205020+00:00",
+  "stage": "after_all_three_evaluations",
+  "fresh_process_cuda_passed": true,
+  "torch": "2.7.0+cu128",
+  "gpu": "NVIDIA GeForce RTX 4090 D",
+  "cuda_arange_1024_sum": 523776,
+  "nvml_query_succeeded": true,
+  "driver_version": "595.71.05",
+  "remaining_evaluator_or_smoke_processes": 0
+}
