@@ -1,0 +1,13 @@
+{
+  "audit_results.py": "2fa03782e2e6c03104dce09f042099fb8b891f7077b76cce609c4b79a2212592",
+  "audit_training.py": "18c6db46232eed217cde186dd5e5d2a5ce2b217aa28c2cf0921885b492546b10",
+  "evaluation_audit.json": "4b4b4a68693c4f48d2c0ff81b5dc10f43a4cc4a2d7ed92ef6810c3d407b8c8e3",
+  "final_four_summary.json": "2deafe09497d7dd5798bd3192f6f7ab5b3bf008bd1b3297f2b337d2d088c2167",
+  "final_four_trials.json": "4c951e1afd380bacc57cfd3806c456d0e8c37e70083a81aaff336cd89882ad35",
+  "four_case_replays.tar.gz": "d7e8cc58ae06dec0f01ef45b0c0f27a68add241c2cd032e7845928dcad91f6ac",
+  "remote_artifact_sha256.txt": "d17654fc5099f8fce5ac6239c7143f347fcb39b8abc7facc0b9bc6a07e6140f9",
+  "status_remote_pending_audit.json": "bed4e484e2ef721514d0e9440e3531e14d2087abbc928abe884e8e4f128990aa",
+  "training_audit.json": "790cabc980eea575a4264fc6d3d374c08e48139b338e57879623f9a0666e29be",
+  "training_backup.tar.gz": "d8422cca57a2dd50979ec11c735808f5ae7042ff7d0c8ee27a17043eae689e8a",
+  "training_budget.json": "0f594c41995da2f816092f8e52b0c2987934534d2ce28e85908f3dacfede9565"
+}

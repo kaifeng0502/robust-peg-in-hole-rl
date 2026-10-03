@@ -1,0 +1,9 @@
+{
+  "initial_epoch": 133,
+  "final_epoch": 621,
+  "initial_frame": 3686400,
+  "final_frame": 35667968,
+  "added_transitions": 31981568,
+  "checkpoint": "/root/autodl-tmp/insertion/h64_500_20261003/source_save100/logs/rl_games/LocalInsertion/calibrated_ppo_h64_500_save100_20261003/nn/last_LocalInsertion_ep_621_rew__1142.1602_.pth",
+  "checkpoint_sha256": "b4b9e428af688f73c1c845d5b4088e7f6ea54ce6fddb86f7b08386f1ba347524"
+}

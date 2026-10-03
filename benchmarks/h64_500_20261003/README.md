@@ -1,8 +1,9 @@
 # Calibrated PPO continuation: 64-step rollouts, 500 new iterations
 
-Status: launched; results pending. The previous calibration and eight-rollout
-screen are documented in `../z_transfer_20261003`. This experiment continues
-that calibrated epoch-121 model; it does not reinitialize Z again.
+Status: completed and independently audited. The previous calibration and
+eight-rollout screen are documented in `../z_transfer_20261003`. This
+experiment continued that calibrated epoch-121 model; it did not reinitialize
+Z again.
 
 | Setting | Value |
 |---|---|
@@ -36,9 +37,40 @@ only the four existing diagnostic cases. No 64-case evaluation is queued; the
 final 500-case holdout remains sealed. These four cases cannot establish a
 generalization success rate. The paid instance is not shut down automatically.
 
-The stage is isolated from all preceding experiments. Actual model provenance,
-training throughput, curve interpretation and final behavior require completion
-and independent audit; launch alone is not validation of the outcome.
+The final checkpoint is absolute epoch 621, frame 35,667,968, SHA-256
+`b4b9e428af688f73c1c845d5b4088e7f6ea54ce6fddb86f7b08386f1ba347524`.
+CPU-only audit loaded all six saved checkpoints (epochs 200, 300, 400, 500,
+600 and 621), checked frames, finite weights, model shapes, source checkpoint,
+saved configuration and TensorBoard. Each of the 500 logical new rollouts
+contains 1,024 × 64 = 65,536 transitions; retained new transitions total
+32,768,000. Post-resume median logged total throughput was 2,104
+transitions/s. The full elapsed wall clock includes a user-requested pause
+and is not an active-training speed measurement.
+
+The training TensorBoard series ended with a 98.05% terminal-held-success
+fraction (last ten reported points averaged 98.37%). This describes sampled
+training episodes, not performance on held-out initial states. The fixed
+epoch-621 checkpoint was evaluated only on the four previously selected
+diagnostic cases. It held success on **2/4**. The matched epoch-300 checkpoint
+had **3/4**: two cases remained successful, case `000010` remained misaligned,
+and case `000028` regressed from a 24.92 mm insertion and 1 s hold to a 5.15
+mm final XY error with no insertion. There were zero paired gains and one
+paired loss. All four initial states matched exactly; each replay had 150
+control intervals and 1,200 physical substeps. Successful cases met the
+final 15-interval continuous-hold criterion. These four reused cases cannot estimate generalization or
+support a 95% success claim. The final 500-case holdout remains sealed.
+
+The full training backup, TensorBoard file, two log segments and both raw
+four-case replays are in `results/` archives. `training_audit.json` and
+`evaluation_audit.json` record the independent checks; `audit_training.py`
+and `audit_results.py` reproduce them after extraction into the same
+directory. `files_sha256.json` verifies the published files, while
+`remote_artifact_sha256.txt` records the 22 remote file hashes, all of which
+matched the local backup. The force field is
+commanded impedance wrench, not sensor-measured contact force. The epoch-621
+checkpoint is retained as an experimental result; its four-case regression
+does not justify replacing the epoch-300 checkpoint or expanding training
+without a separate decision.
 
 ## User-requested saving-frequency change
 
