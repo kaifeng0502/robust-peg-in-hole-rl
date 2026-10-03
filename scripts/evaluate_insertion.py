@@ -39,6 +39,7 @@ def parse_args(argv=None):
     parser.add_argument("--agent-config", type=Path, help="Original RL-Games YAML saved by the training run.")
     parser.add_argument("--horizon-s", type=float, default=10.0)
     parser.add_argument("--hold-s", type=float, default=1.0)
+    parser.add_argument("--action-contract", choices=["absolute_residual_v1", "relative_z_v1"], default="absolute_residual_v1")
     parser.add_argument("--device", default="cuda:0")
     parser.add_argument("--headless", action="store_true")
     args = parser.parse_args(argv)
@@ -310,6 +311,7 @@ def main(argv=None):
 
         cfg = LocalInsertionRLEnvCfg()
         cfg.scene.num_envs = 1
+        cfg.action_contract = args.action_contract
         cfg.sim.device = args.device
         cfg.seed = cases["cases"][0]["seed"]
         cfg.controller_mode = "residual" if args.method == "ppo" else args.method

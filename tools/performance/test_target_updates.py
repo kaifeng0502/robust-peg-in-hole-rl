@@ -53,7 +53,7 @@ class FakeEnv:
             hold=SimpleNamespace(enabled=hold, downward_margin_m=0.0003,
                                  max_xy_error_m=0.004, max_z_error_m=0.006),
             ctrl=SimpleNamespace(pos_action_bounds=[0.025, 0.025, 0.025]),
-            controller_mode=mode, nominal_tool_to_peg_base_m=0.05,
+            controller_mode=mode, action_contract="absolute_residual_v1", nominal_tool_to_peg_base_m=0.05,
             nominal_insertion_depth_m=0.017, residual_xy_span_m=0.015,
             residual_z_span_m=0.006, residual_roll_pitch_span_rad=0.1,
             residual_yaw_span_rad=0.2,

@@ -15,6 +15,8 @@ from isaaclab.app import AppLauncher  # noqa: E402
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--output", type=Path, required=True)
+parser.add_argument("--action-contract", choices=["absolute_residual_v1", "relative_z_v1"], default="relative_z_v1")
+parser.add_argument("--dense-profile", choices=["legacy", "entry_v1"], default="entry_v1")
 AppLauncher.add_app_launcher_args(parser)
 args = parser.parse_args()
 if args.output.exists():
@@ -32,7 +34,10 @@ from local_insertion.evaluation_metrics import EpisodeMetrics, EvaluationCriteri
 def main():
     code_revision = source_fingerprint()
     cfg = LocalInsertionRLEnvCfg()
-    cfg.scene.num_envs = 2
+    cfg.scene.num_envs = 1024
+    count = cfg.scene.num_envs
+    cfg.action_contract = args.action_contract
+    cfg.reward.dense_profile = args.dense_profile
     cfg.sim.device = args.device
     cfg.seed = 42
     cfg.episode_length_s = 10.066666666666666
@@ -65,17 +70,32 @@ def main():
 
         base._get_rewards = capture_rewards
         obs, _ = env.reset(seed=42)
-        actions = torch.zeros((2, 6), device=base.device)
+        actions = torch.zeros((count, 6), device=base.device)
         episodes = []
         for episode in range(2):
-            metrics = [EpisodeMetrics(criteria, base.cfg_task.fixed_asset_cfg.height) for _ in range(2)]
+            metrics = [EpisodeMetrics(criteria, base.cfg_task.fixed_asset_cfg.height) for _ in range(count)]
             for step in range(1, 151):
                 if not simulation_app.is_running():
                     raise RuntimeError("Simulation closed during training contract check")
+                if cfg.action_contract == "relative_z_v1":
+                    # Explicitly exercise upward/downward authority, then insert.
+                    actions[:, 2] = -1.0
+                    if step == 1:
+                        actions[:count//2, 2] = 1.0
+                    if step == 2:
+                        actions[:, 2] = 1.0
+                    if step == 3:
+                        actions[:, 2] = -1.0
+                start_z = base.fingertip_midpoint_pos[:, 2].clone()
                 with torch.no_grad():
                     obs, reward, terminated, truncated, _ = env.step(actions)
                 assert torch.isfinite(obs["policy"]).all() and torch.isfinite(reward).all()
-                assert observed["episode_step"] == [step, step]
+                assert observed["episode_step"] == [step] * count
+                if step == 1 and cfg.action_contract == "relative_z_v1":
+                    command_delta = base.relative_z_command - start_z
+                    assert torch.all(command_delta[:count//2] > 0)
+                    assert torch.all(command_delta[count//2:] < 0)
+                    assert torch.all(command_delta.abs() <= cfg.hold.max_z_error_m + 1e-7)
                 assert torch.all((terminated | truncated) == (step == 150))
                 for index, accumulator in enumerate(metrics):
                     accumulator.update(
@@ -89,10 +109,10 @@ def main():
                     assert observed["terminal_bonus"] == 0.0
             rows = [accumulator.result() for accumulator in metrics]
             expected = {
-                "terminal_held_success": sum(row["held_success"] for row in rows) / 2,
-                "ever_geometry_success": sum(row["ever_success"] for row in rows) / 2,
-                "final_geometry_success": sum(row["final_success"] for row in rows) / 2,
-                "ever_held_success": sum(row["had_hold_anytime"] for row in rows) / 2,
+                "terminal_held_success": sum(row["held_success"] for row in rows) / count,
+                "ever_geometry_success": sum(row["ever_success"] for row in rows) / count,
+                "final_geometry_success": sum(row["final_success"] for row in rows) / count,
+                "ever_held_success": sum(row["had_hold_anytime"] for row in rows) / count,
             }
             for key, value in expected.items():
                 assert observed["metrics"][f"terminal_hold_v2/{key}"] == value
@@ -110,7 +130,7 @@ def main():
         )
         assert source_fingerprint() == code_revision, "Source changed during runtime check"
         result = {
-            "passed": True, "num_envs": 2, "episodes": episodes,
+            "passed": True, "num_envs": count, "action_contract": cfg.action_contract, "dense_profile": cfg.reward.dense_profile, "episodes": episodes,
             "max_episode_length": base.max_episode_length,
             "required_hold_samples": 15,
             "code_revision": code_revision,

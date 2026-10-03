@@ -5,6 +5,31 @@ development manifest is shared by the nominal, spiral, and PPO references and
 by subsequent candidate checkpoints. Reusing these cases for selection makes
 their success rates development measurements, not unseen-test estimates.
 
+## Active contact-interface and reward pilot
+
+After the completed pilot, per-substep replay confirmed that all legal Z actions
+mapped to the same downwards impedance target throughout two failed cases.
+See [diagnostic evidence and limitations](../benchmarks/contact_revision_20261003/README.md).
+The revised interface anchors a relative Z target once per control interval,
+allowing explicit lift and lower commands without changing XY, rotations,
+observations, physical timing, impedance bounds or success criteria.
+
+All new training uses 1,024 environments. The new two-arm experiment transfers
+the same epoch-113 model, normalizers and optimizer to `relative_z_v1`; both use
+`terminal_hold_v2`. Only the dense reward differs: `legacy` versus `entry_v1`.
+Each arm adds eight 128-step rollouts, exactly 1,048,576 transitions, and selects
+its fixed final epoch-121 checkpoint. No automatic budget extension is allowed.
+The first rollout also checks actual PPO memory and counts within this budget.
+Both models then use the same 64 development cases, revised action semantics,
+common legacy evaluation reward and strict external terminal-hold criterion.
+This comparison isolates the dense reward treatment under the revised control;
+it does not isolate the action change from training or prove convergence.
+
+CPU tests and two complete nominal 1,024-environment runtime episodes passed.
+The first training process aborted in native simulation initialization before
+sampling; its evidence is retained. An identical-configuration retry entered
+PPO sampling and updates normally. Final policy evaluation remains pending.
+
 ## Completed pilot
 
 The [full 2026-10-03 evidence](../benchmarks/development_20261003/README.md)
@@ -14,7 +39,7 @@ continuation 39 and terminal-hold continuation 40. The reward treatment gains
 three cases and loses two relative to its equal-budget control. This small
 observed gain does not establish PPO superiority or 95% success. Remaining
 candidate failures are 19 misalignment and 5 insufficient-depth cases; none of
-its failures reached success geometry. Additional training has not started.
+its failures reached success geometry. That completed pilot added no further training beyond its declared budget.
 The report records the training-budget decision, limitations, local trace
 reconstruction and preserved recovery evidence.
 

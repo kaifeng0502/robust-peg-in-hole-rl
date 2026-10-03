@@ -1,0 +1,70 @@
+{
+  "cases": [
+    {
+      "case_id": "case_000000",
+      "held_success": true,
+      "failure_category": null,
+      "initial_state_exact": true,
+      "max_trace_difference": {
+        "xy_error_m": 0.0,
+        "depth_m": 0.0,
+        "reward": 0.0,
+        "commanded_force_n": 0.0
+      },
+      "unlatched_substeps": 182,
+      "z_all_actions_same_substeps": 154,
+      "z_degenerate_fraction": 0.8461538461538461,
+      "target_reconstruction_max_error": 0.0
+    },
+    {
+      "case_id": "case_000002",
+      "held_success": false,
+      "failure_category": "misalignment",
+      "initial_state_exact": true,
+      "max_trace_difference": {
+        "xy_error_m": 0.0004532267339527607,
+        "depth_m": 4.2825937271118164e-05,
+        "reward": 0.07721900939941406,
+        "commanded_force_n": 0.10740268230438232
+      },
+      "unlatched_substeps": 1200,
+      "z_all_actions_same_substeps": 1200,
+      "z_degenerate_fraction": 1.0,
+      "target_reconstruction_max_error": 0.0
+    },
+    {
+      "case_id": "case_000010",
+      "held_success": false,
+      "failure_category": "misalignment",
+      "initial_state_exact": true,
+      "max_trace_difference": {
+        "xy_error_m": 0.0008614859543740749,
+        "depth_m": 3.203004598617554e-05,
+        "reward": 0.1629311442375183,
+        "commanded_force_n": 0.15887296199798584
+      },
+      "unlatched_substeps": 1200,
+      "z_all_actions_same_substeps": 1200,
+      "z_degenerate_fraction": 1.0,
+      "target_reconstruction_max_error": 0.0
+    },
+    {
+      "case_id": "case_000028",
+      "held_success": false,
+      "failure_category": "insufficient_depth",
+      "initial_state_exact": true,
+      "max_trace_difference": {
+        "xy_error_m": 0.0007896808674558997,
+        "depth_m": 0.008284114301204681,
+        "reward": 4.1172144412994385,
+        "commanded_force_n": 0.6940889954566956
+      },
+      "unlatched_substeps": 1200,
+      "z_all_actions_same_substeps": 902,
+      "z_degenerate_fraction": 0.7516666666666667,
+      "target_reconstruction_max_error": 0.0
+    }
+  ],
+  "diagnostic_archive_sha256": "e35b5d9817173b03b8cd7997fbda67053c7adaa6021114e144b02ae303ed7a05",
+  "note": "Selected development cases; commanded targets/wrenches, not measured contact force. Diagnostic replay is not a throughput measurement."
+}

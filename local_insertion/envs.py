@@ -13,6 +13,7 @@ from isaaclab_tasks.direct.factory.factory_env import FactoryEnv
 from .env_cfg import LocalInsertionRLEnvCfg, SpiralBaselineEnvCfg
 from .evaluation_metrics import EvaluationCriteria
 from .reward_contract import advance_terminal_hold
+from .contact_contract import relative_z_target, entry_potentials
 
 
 PHASE_APPROACH = 0
@@ -197,6 +198,17 @@ class LocalInsertionRLEnv(RandomizedPegInsertEnv):
     cfg: LocalInsertionRLEnvCfg
 
     def __init__(self, cfg: LocalInsertionRLEnvCfg, render_mode: str | None = None, **kwargs):
+        if cfg.action_contract not in {"absolute_residual_v1", "relative_z_v1"}:
+            raise ValueError(f"Unknown action contract: {cfg.action_contract}")
+        if not 0.0 < cfg.relative_z_step_m <= cfg.hold.max_z_error_m:
+            raise ValueError("Relative Z step must be positive and within the impedance bound")
+        if cfg.reward.dense_profile not in {"legacy", "entry_v1"}:
+            raise ValueError(f"Unknown dense reward profile: {cfg.reward.dense_profile}")
+        if cfg.reward.dense_profile == "entry_v1":
+            values = (cfg.reward.alignment_sigma_m, cfg.reward.coarse_alignment_sigma_m,
+                      cfg.reward.approach_sigma_m, cfg.reward.entry_depth_m)
+            if any(not math.isfinite(v) or v <= 0 for v in values):
+                raise ValueError("Entry shaping scales must be finite and positive")
         if cfg.controller_mode not in {"residual", "zero_residual", "spiral"}:
             raise ValueError(f"Unknown controller mode: {cfg.controller_mode}")
         if cfg.spiral.approach_duration_s <= 0.0:
@@ -213,6 +225,8 @@ class LocalInsertionRLEnv(RandomizedPegInsertEnv):
             if not math.isfinite(cfg.reward.terminal_hold_bonus) or cfg.reward.terminal_hold_bonus < 0.0:
                 raise ValueError("Terminal hold bonus must be finite and nonnegative")
         super().__init__(cfg, render_mode, **kwargs)
+        self.previous_xy_error = torch.zeros(self.num_envs, device=self.device)
+        self.relative_z_command = torch.zeros(self.num_envs, device=self.device)
         self.previous_depth = torch.zeros(self.num_envs, device=self.device)
         self.previous_rl_action = torch.zeros((self.num_envs, self.cfg.action_space), device=self.device)
         self.success_latched = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
@@ -232,7 +246,8 @@ class LocalInsertionRLEnv(RandomizedPegInsertEnv):
             self.training_ever_held_success = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
         if not hasattr(self, "held_pos") or self.last_update_timestamp < self._robot._data._sim_timestamp:
             self._compute_intermediate_values(self.physics_dt)
-        _, self.previous_depth[:], _ = self.insertion_geometry()
+        self.previous_xy_error[:], self.previous_depth[:], _ = self.insertion_geometry()
+        self.relative_z_command[:] = self.fingertip_midpoint_pos[:, 2]
 
     def _reset_idx(self, env_ids):
         super()._reset_idx(env_ids)
@@ -240,7 +255,9 @@ class LocalInsertionRLEnv(RandomizedPegInsertEnv):
         # earlier timeout. Factory normally clears these during the next step.
         self._reset_buffers(env_ids)
         if hasattr(self, "previous_depth"):
-            _, depth, _ = self.insertion_geometry()
+            xy, depth, _ = self.insertion_geometry()
+            self.previous_xy_error[env_ids] = xy[env_ids]
+            self.relative_z_command[env_ids] = self.fingertip_midpoint_pos[env_ids, 2]
             self.previous_depth[env_ids] = depth[env_ids]
             self.previous_rl_action[env_ids] = 0.0
             self.success_latched[env_ids] = False
@@ -263,6 +280,11 @@ class LocalInsertionRLEnv(RandomizedPegInsertEnv):
         if self.cfg.controller_mode != "residual":
             action = torch.zeros_like(action)
         super()._pre_physics_step(action)
+        if self.cfg.action_contract == "relative_z_v1":
+            # Anchor once, after action EMA, and hold for all eight substeps.
+            self.relative_z_command[:] = relative_z_target(
+                self.fingertip_midpoint_pos[:, 2], self.actions[:, 2], self.cfg.relative_z_step_m
+            )
         self.evaluation_interval_success[:] = True
         self.evaluation_interval_ever_success[:] = False
         self.evaluation_interval_peak_force[:] = 0.0
@@ -328,6 +350,8 @@ class LocalInsertionRLEnv(RandomizedPegInsertEnv):
         target_pos[:, 2] += self.cfg.nominal_tool_to_peg_base_m - self.cfg.nominal_insertion_depth_m
         target_pos[:, :2] += self.actions[:, :2] * self.cfg.residual_xy_span_m
         target_pos[:, 2] += self.actions[:, 2] * self.cfg.residual_z_span_m
+        if self.cfg.action_contract == "relative_z_v1":
+            target_pos[:, 2] = self.relative_z_command
 
         target_roll = math.pi + self.actions[:, 3] * self.cfg.residual_roll_pitch_span_rad
         target_pitch = self.actions[:, 4] * self.cfg.residual_roll_pitch_span_rad
@@ -423,10 +447,26 @@ class LocalInsertionRLEnv(RandomizedPegInsertEnv):
             "action_rate_cost": -cfg.action_rate_scale * action_rate_cost,
             "commanded_wrench_cost": -cfg.commanded_wrench_scale * wrench_cost,
         }
+        if getattr(cfg, "dense_profile", "legacy") == "entry_v1":
+            now_alignment, now_entry = entry_potentials(
+                xy_error, depth, cfg.alignment_sigma_m, cfg.coarse_alignment_sigma_m,
+                cfg.approach_sigma_m, cfg.entry_depth_m,
+            )
+            previous_alignment, previous_entry = entry_potentials(
+                self.previous_xy_error, self.previous_depth, cfg.alignment_sigma_m,
+                cfg.coarse_alignment_sigma_m, cfg.approach_sigma_m, cfg.entry_depth_m,
+            )
+            reward_terms["alignment"] = cfg.alignment_scale * now_alignment
+            # Stop paying the same approach state on every stalled interval.
+            reward_terms["approach"] = torch.zeros_like(depth)
+            reward_terms["alignment_progress"] = cfg.alignment_progress_scale * (now_alignment - previous_alignment)
+            reward_terms["entry_progress"] = cfg.entry_progress_scale * (now_entry - previous_entry)
         if terminal_hold_v2:
             reward_terms["terminal_hold"] = cfg.terminal_hold_bonus * (
                 hold_state.held_success & self.reset_time_outs
             ).float()
+        if getattr(self, "capture_diagnostics", False):
+            self.diagnostic_reward_terms = reward_terms
         reward = torch.zeros_like(depth)
         for term in reward_terms.values():
             reward += term
@@ -450,6 +490,8 @@ class LocalInsertionRLEnv(RandomizedPegInsertEnv):
                 self.extras[f"logs_rew_{name}"] = term.mean()
         else:
             self._log_factory_metrics(reward_terms, curr_success)
+        if hasattr(self, "previous_xy_error"):
+            self.previous_xy_error[:] = xy_error
         self.previous_depth[:] = depth
         self.previous_rl_action[:] = self.actions
         self.prev_actions = self.actions.clone()

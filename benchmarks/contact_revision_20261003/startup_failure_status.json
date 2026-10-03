@@ -1,0 +1,14 @@
+{
+  "complete": false,
+  "started_utc": "2026-10-03T07:16:37.885359+00:00",
+  "phase": "failed",
+  "phase_started_utc": "2026-10-03T07:16:37.885735+00:00",
+  "processes": {
+    "control_legacy_dense": 31823
+  },
+  "exit_codes": {
+    "control_legacy_dense": -6
+  },
+  "phase_elapsed_s": 30.329212334938347,
+  "error": "RuntimeError: training_control_legacy_dense child failure: {'control_legacy_dense': -6}"
+}

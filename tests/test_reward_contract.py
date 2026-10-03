@@ -141,6 +141,8 @@ class ProductionRewardContractTest(unittest.TestCase):
         )
         env.xy = torch.zeros(count)
         env.depth = torch.full((count,), 0.025)
+        env.previous_xy_error = env.xy.clone()
+        env.relative_z_command = torch.zeros(count)
         env.previous_depth = env.depth.clone()
         env.actions = torch.zeros((count, 6))
         env.previous_rl_action = env.actions.clone()

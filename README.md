@@ -10,6 +10,8 @@ The complete [64-case development comparison](benchmarks/development_20261003/RE
 
 [Environment stepping measurements](docs/performance_20261003.md) on the RTX 4090 D found 3.64–4.49× higher sampling throughput with 512 rather than 128 parallel environments, preserving the physics and controller configuration. A single 1,024-environment run reached 2,295.6 transitions/s. These measure simulation capacity; equal-budget PPO training speed and learning quality at the larger batch size have not been established.
 
+The [contact diagnostic and candidate contract](benchmarks/contact_revision_20261003/README.md) records a Z-action limitation throughout two replayed misalignment cases. An opt-in `relative_z_v1` interface restores explicit lift/lower commands, and the separate `entry_v1` dense reward adds coarse alignment and entry progress. CPU tests and two nominal 1,024-environment runtime episodes pass. A bounded two-arm PPO transfer pilot is running; randomized policy outcomes are pending. Historical action/reward defaults remain available for replay, while all new training uses 1,024 environments.
+
 ## System architecture
 
 ```mermaid
@@ -111,15 +113,25 @@ python scripts/evaluate_insertion.py \
   --output /workspace/results/evaluation_v1/zero_smoke
 ```
 
-Train the residual PPO policy:
+Train the residual PPO policy (all new training runs require 1,024 environments; set the intended iteration budget explicitly):
 
 ```bash
 python scripts/train_rl.py \
   --task Isaac-LocalInsertion-RL-Direct-v0 \
-  --num_envs 128 --seed 42 --headless
+  --num_envs 1024 --seed 42 --headless --max_iterations 8
 ```
 
-Evaluate a checkpoint with its saved training configuration:
+The revised candidate additionally uses `env.action_contract=relative_z_v1`,
+`env.reward.success_contract=terminal_hold_v2`, `env.reward.dense_profile=entry_v1`,
+and `env.episode_length_s=10.066666666666666` (150 scored intervals under Factory's
+timeout convention). The matched control uses `dense_profile=legacy` with the
+same other settings. These change the Z action semantics: an old checkpoint is
+a warm start, not an unchanged policy. Eight rollouts from scratch are a smoke
+budget, not a claim of convergence; the declared pilot adds eight to epoch 113.
+
+Evaluate a checkpoint with its saved training configuration. Use
+`--action-contract relative_z_v1` for the revised interface; the default below
+replays historical absolute-residual checkpoints:
 
 ```bash
 python scripts/evaluate_insertion.py \
@@ -144,17 +156,17 @@ Disable one randomization source through Hydra overrides:
 ```bash
 # Pose variation only
 python scripts/train_rl.py \
-  --task Isaac-LocalInsertion-RL-Direct-v0 --num_envs 128 --seed 42 --headless \
+  --task Isaac-LocalInsertion-RL-Direct-v0 --num_envs 1024 --seed 42 --headless \
   env.randomization.friction_enabled=false
 
 # Friction variation only
 python scripts/train_rl.py \
-  --task Isaac-LocalInsertion-RL-Direct-v0 --num_envs 128 --seed 42 --headless \
+  --task Isaac-LocalInsertion-RL-Direct-v0 --num_envs 1024 --seed 42 --headless \
   env.randomization.pose_enabled=false
 
 # Nominal condition
 python scripts/train_rl.py \
-  --task Isaac-LocalInsertion-RL-Direct-v0 --num_envs 128 --seed 42 --headless \
+  --task Isaac-LocalInsertion-RL-Direct-v0 --num_envs 1024 --seed 42 --headless \
   env.randomization.pose_enabled=false env.randomization.friction_enabled=false
 ```
 
