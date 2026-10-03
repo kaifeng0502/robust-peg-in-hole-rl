@@ -1,0 +1,19 @@
+{
+  "previous": {
+    "phase": "target_constants_full_step_screen",
+    "complete": false,
+    "processes": {
+      "target_constants_full_1": 25409
+    },
+    "phase_started_unix_s": 1791003193.2670736,
+    "output": "/root/autodl-tmp/insertion/results/performance_20261003/target_constants_full_1",
+    "previous_completed_phase": "target_constants_micro_complete",
+    "performance_work_complete": false,
+    "scope": "One 128-environment no-profiler full-step screen, then decide whether further validation is justified. Do not autoqueue long captures for timing inside reference variability."
+  },
+  "num_envs": 1024,
+  "variant": "reference",
+  "training": false,
+  "memory_sampling_interval_s": 5,
+  "started_unix_s": 1791003787.7511396
+}

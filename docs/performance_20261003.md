@@ -3,9 +3,11 @@
 Increasing a single process from 128 to 512 environments raised measured
 sampling throughput from **290.5–323.4 to 1,175.6–1,304.0 transitions/s** on an
 RTX 4090 D. The two baseline/capacity measurement pairs gave **3.64× and 4.49×**
-throughput. These are synthetic stepping measurements, not PPO training-speed
-or learning-quality results. The original controller remains in use; the
-experimental `target_updates` patch has no demonstrated speed benefit.
+throughput. A later single 1,024-environment capacity run reached **2,295.6
+transitions/s** with the original controller. These are synthetic stepping
+measurements, not PPO training-speed or learning-quality results. The original
+controller remains in use; the experimental `target_updates` patch has no
+demonstrated speed benefit.
 
 ## Measurement contract
 
@@ -17,7 +19,7 @@ runs have no profiler. Actions are reproducible uniform replay in [-0.2, 0.2],
 generated with a private CPU RNG; seed 42 is shared across measurements.
 
 The recorded environment configuration differs only in `scene.num_envs`
-between the 128- and 512-environment reference runs. Physics remains at
+between the 128-, 512- and 1,024-environment reference runs. Physics remains at
 1/120 second with decimation 8 and 192 position-solver iterations. Each scored
 episode has 150 control intervals, or 10 seconds; the hold-duration setting
 remains one second. Controller, gains, observations, actions, reward profile,
@@ -39,9 +41,10 @@ continued to reserve approximately 9 GB of VRAM.
 | [Capacity 1](../benchmarks/performance_20261003/reference_capacity_512/result.json) | 512 | 230,400 | 195.99 | 1,175.60 |
 | [Reference 2](../benchmarks/performance_20261003/reference_single_2/result.json) | 128 | 57,600 | 198.25 | 290.55 |
 | [Capacity 2](../benchmarks/performance_20261003/reference_capacity_512_repeat/result.json) | 512 | 230,400 | 176.68 | 1,304.05 |
+| [Capacity 1,024 — single run](../benchmarks/performance_20261003/reference_capacity_1024/result.json) | 1,024 | 460,800 | 200.73 | 2,295.57 |
 | [Target updates](../benchmarks/performance_20261003/target_single_1/result.json) | 128 | 57,600 | 195.18 | 295.11 |
 
-All runs completed the expected 384 or 1,536 environment episodes with finite
+All runs completed the expected 384, 1,536 or 3,072 environment episodes with finite
 observations/rewards. Their 3,600 policy physics substeps exclude additional
 reset substeps, whose time is included in the wall-clock measurement.
 
@@ -51,13 +54,32 @@ sampling time, a 72.5–77.7% reduction. This is a throughput conversion, not a
 direct measurement of end-to-end training under an equal sample budget.
 Only two reference/capacity pairs were collected, sequentially and without
 randomized ordering; the ranges are observed variation, not confidence bounds.
+These pairs concern 128 versus 512 environments. The subsequent 1,024-environment
+result is a single additional capacity measurement, without a fresh paired
+baseline or repeat. It establishes that this workload completed at the recorded
+rate; it is not a measured PPO speedup or proof of equal learning dynamics.
 
-The first reference used measurement-script hash `56e3b1c6…`; later runs used
-`b59e41a7…`, which adds variant selection and provenance recording. Both repeat
-runs use the same latter script, removing the script-version mismatch from the
-second pair. The archived v1 and current v2 sources retain the same reference
-workload and timed loop; their hashes and the exact result/configuration files
-are listed in the [provenance manifest](../benchmarks/performance_20261003/provenance.json).
+During the 1,024-environment run, 62 device-wide memory samples at five-second
+intervals reached **14,379 MiB out of 24,564 MiB**, including an initial
+**9,073 MiB** already occupied by paused experiment contexts. Usage returned to
+9,073 MiB in the final sample. These are sampled device totals, not the worker's
+isolated allocation, a guaranteed peak, or a PPO training-memory measurement.
+The [memory summary](../benchmarks/performance_20261003/capacity_1024_memory_summary.json)
+and [raw samples](../benchmarks/performance_20261003/capacity_1024_gpu_memory.csv)
+preserve the distinction; short peaks between samples may be missed.
+
+The first reference used measurement-script hash `56e3b1c6…`; the remaining
+128/512 reference runs used `b59e41a7…`, which adds variant selection and
+provenance recording. Both repeat runs use the latter script, removing the
+script-version mismatch from the second pair. The 1,024-capacity and constant-only
+full-step screens used v3 (`1bb1d544…`), adding isolated candidate selection,
+diagnostic routing and checks outside the timed loop. The original reference
+workload is retained; an independent local check confirms identical warm-up and
+measured-loop ASTs between v2 and v3. Exact source versions, hashes and result
+files are listed in the [provenance manifest](../benchmarks/performance_20261003/provenance.json).
+The [local verification record](../benchmarks/performance_20261003/reference_capacity_1024/verification.json)
+also checks configuration differences, runtime settings, episode/transition
+arithmetic, the rate calculation and sampled-memory summary against the raw files.
 The action hash is repeatable within each environment count but
 differs across counts because the action tensor has a different shape. Initial
 randomization trajectories are not matched across batch sizes.
@@ -112,6 +134,17 @@ does not advance physics or establish full-trajectory equivalence. This candidat
 also remains outside the active project controller. The two local percentages
 refer to nested regions in separate probes and must not be added.
 
+A subsequent [constant-only full-step screen](../benchmarks/performance_20261003/target_constants_full_1/result.json)
+completed 57,600 transitions and 384 episodes in **157.954 seconds**
+(**364.66 transitions/s**) at 128 environments. Its configuration, runtime and
+Torch settings match the earlier 128-environment reference records. This is
+an initial screening result: a fresh matched reference, repeated measurements
+and trajectory-equivalence checks are still deferred. Earlier reference times
+cannot establish a causal gain for this later run, so the result does not
+justify adopting the candidate or quoting an end-to-end training acceleration.
+The [exact configuration](../benchmarks/performance_20261003/target_constants_full_1/metadata.json)
+and [raw log](../benchmarks/performance_20261003/target_constants_full_1.log.txt) are retained.
+
 The separate [instrumented run](../benchmarks/performance_20261003/reference_diagnostic_1/result.json)
 took 195.39 seconds. Host-observed region totals included 96.94 seconds in
 `sim_step`, 63.55 seconds in `apply_action` (23.47 exclusive), 16.33 seconds in
@@ -129,10 +162,13 @@ width, shared Kit-cache and shutdown-stage warnings are also retained in the
 evidence; the logs are not described as error-free. Finite states and correct
 episode counts alone do not establish contact-physics or trajectory equivalence.
 
-The 512-environment setting is a supported capacity option for subsequent
-controlled work. It does not accelerate one case by 3.64–4.49×, nor does it prove
+The 512-environment setting has two capacity observations; 1,024 environments
+has one. Both are options for subsequent controlled work, with the weaker
+evidence for 1,024 stated explicitly. Increasing the batch does not accelerate
+one case by the aggregate-throughput ratio, nor does it prove
 equal sample efficiency, policy quality or PPO learning dynamics: retaining the
-same rollout length would quadruple samples per update. No formal training
+same rollout length would multiply samples per update by four or eight relative
+to 128 environments. No formal training
 budget, checkpoint, reward, controller or final evaluation protocol was changed
 by these measurements. The final 500-case holdout remains sealed. Any later
 training configuration must state its sample budget explicitly and measure

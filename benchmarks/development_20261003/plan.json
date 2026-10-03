@@ -1,0 +1,39 @@
+{
+  "experiment_id": "held_v2_pilot_20261003",
+  "purpose": "Bounded development experiment; not a final performance claim",
+  "development_manifest": "configs/evaluation_development.json",
+  "development_case_set_id": "cb64e7a09fab0a4756a2f80a96c41d4721dd9d8f02fc0415687a97beb7e64fd9",
+  "evaluation_source_commit": "c15f16b",
+  "checkpoint_sha256": "9811f2bfa13dab366531324fbab5bb758a7e031753a6378b5d318ad99d843721",
+  "starting_checkpoint_epoch": 93,
+  "training_seed": 42,
+  "num_envs": 128,
+  "rollout_steps": 128,
+  "additional_epochs": 20,
+  "stop_epoch": 113,
+  "additional_transitions_per_arm": 327680,
+  "training_episode_length_s": 10.066666666666666,
+  "scored_control_steps": 150,
+  "arms": [
+    {
+      "name": "legacy_continuation",
+      "success_contract": "legacy"
+    },
+    {
+      "name": "held_v2",
+      "success_contract": "terminal_hold_v2",
+      "hold_duration_s": 1.0,
+      "terminal_hold_bonus": 100.0
+    }
+  ],
+  "checkpoint_selection": "Evaluate each arm's final epoch 113 checkpoint, regardless of training reward. Retain the original checkpoint as a reference.",
+  "evaluation": "Use the frozen c15f16b evaluator with its unchanged legacy reward, physical controller, observations, 10 s horizon and final 1 s hold criterion for all checkpoints.",
+  "decision": "Compare held-success counts and paired case changes on the 64 development cases. Treat equal or lower candidate success as no demonstrated improvement. Report forces and common-success completion times. Do not open the final holdout during this pilot.",
+  "limitations": [
+    "One training seed and a short pilot budget do not establish training stability or a 95% success rate.",
+    "Both arms restore the same model, normalizers and optimizer state; this is continuation, not training from scratch.",
+    "The original training environment snapshot is missing. These arms explicitly use the current declared environment.",
+    "Both arms align timeout to 150 scored intervals; the historical default trained for 149 intervals. Only the reward profile differs between the two new arms.",
+    "Old cumulative checkpoint frame counters omit some earlier curriculum provenance; report added transitions separately, not as total sample efficiency from scratch."
+  ]
+}

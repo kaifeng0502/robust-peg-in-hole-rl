@@ -5,6 +5,19 @@ development manifest is shared by the nominal, spiral, and PPO references and
 by subsequent candidate checkpoints. Reusing these cases for selection makes
 their success rates development measurements, not unseen-test estimates.
 
+## Completed pilot
+
+The [full 2026-10-03 evidence](../benchmarks/development_20261003/README.md)
+contains all five matched 64-case runs and both completed training arms. Held
+success counts are zero residual 14, spiral 44, recovered PPO 37, legacy
+continuation 39 and terminal-hold continuation 40. The reward treatment gains
+three cases and loses two relative to its equal-budget control. This small
+observed gain does not establish PPO superiority or 95% success. Remaining
+candidate failures are 19 misalignment and 5 insufficient-depth cases; none of
+its failures reached success geometry. Additional training has not started.
+The report records the training-budget decision, limitations, local trace
+reconstruction and preserved recovery evidence.
+
 ## Initial diagnosis
 
 The eight migration cases motivate two hypotheses. Four PPO failures remained

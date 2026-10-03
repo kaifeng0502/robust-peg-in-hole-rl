@@ -1,0 +1,259 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "path": "candidate_comparison.json",
+      "sha256": "988f09cbb43b5165bf3272d5f1027ac5b6ce663b3353137254e368c49842371e",
+      "bytes": 37594
+    },
+    {
+      "path": "evaluate_held_v2.txt",
+      "sha256": "5c699ab0ff52ffaaf26ddb0bae7bbcc44be37224a345d526510e9c2758e28447",
+      "bytes": 10039
+    },
+    {
+      "path": "evaluate_legacy_continuation.txt",
+      "sha256": "e9a9df842b3f040e2ff0da5a0d093a1ec58d31d3fe4e7f85ac2ba9255e34bb91",
+      "bytes": 10210
+    },
+    {
+      "path": "held_v2/metadata.json",
+      "sha256": "1360e2bbff11a2cc6f1a71f2abbea108948c6af856d2ee76f74705eb92885b2a",
+      "bytes": 26261
+    },
+    {
+      "path": "held_v2/restored_agent_config.json",
+      "sha256": "5d0d96d7f987d21a6228358bc693910a37331f5e522132615521d2f8a6ce64ca",
+      "bytes": 2308
+    },
+    {
+      "path": "held_v2/summary.json",
+      "sha256": "e478e59277c10150a80503376b0b6bee65d5d72d9a6fbaeaec9d731f2552eaac",
+      "bytes": 831
+    },
+    {
+      "path": "held_v2/trajectories.jsonl",
+      "sha256": "f731711d055af86b498bb3d7bb3615037e7609e06a6c0ea98ec3c7478fcee7f5",
+      "bytes": 4819618
+    },
+    {
+      "path": "held_v2/trials.json",
+      "sha256": "f41e15b699e7555c67ffaba26cf166ae17b2499b56c2215d73732331194886f0",
+      "bytes": 281984
+    },
+    {
+      "path": "held_v2/trials.jsonl",
+      "sha256": "038faf406d32ac0ddacc08c7baff9e76d406039da50371be49def61437107258",
+      "bytes": 195389
+    },
+    {
+      "path": "independent_trace_audit.json",
+      "sha256": "a9e707bb2d428a1e8129eb8a8f8659a3ff46c9205037d61dc44f1b5d1f1d72eb",
+      "bytes": 6523
+    },
+    {
+      "path": "legacy_continuation/metadata.json",
+      "sha256": "81768d66642b6cb86a056dd0d089598969ba51dab90695175676f2eebc014d1b",
+      "bytes": 26261
+    },
+    {
+      "path": "legacy_continuation/restored_agent_config.json",
+      "sha256": "efad14966ae1aced81fcb934f4140944e443203dbbe8d2a9a5d641443eba5480",
+      "bytes": 2332
+    },
+    {
+      "path": "legacy_continuation/summary.json",
+      "sha256": "26feecd4f09cccdf0f21b06615f9fbf42073988416ccad1fcf6cd16481152a62",
+      "bytes": 857
+    },
+    {
+      "path": "legacy_continuation/trajectories.jsonl",
+      "sha256": "e11d701fe7f4b03c66ff97e80c57e90c84728fd4cd1ff07e941a002420588b42",
+      "bytes": 4850807
+    },
+    {
+      "path": "legacy_continuation/trials.json",
+      "sha256": "87342c17c7843dbc81ffa5e03e6e9a82f4857e6a7379082717c66327149f2e09",
+      "bytes": 282418
+    },
+    {
+      "path": "legacy_continuation/trials.jsonl",
+      "sha256": "dcc70d800300bc96680c2adf742adc48d00fb302ef79c6f4f48a709c10865575",
+      "bytes": 195823
+    },
+    {
+      "path": "local_verified_comparison.json",
+      "sha256": "070bce833c5494a2ee0998911a9dbe4adea01ea6a8f5d9f4ee77bfb87b938a2c",
+      "bytes": 38674
+    },
+    {
+      "path": "plan.json",
+      "sha256": "dfd3075be479c3a8e8597bc955a145a4e3301f6d9c6a6c852d382e8aca4076d8",
+      "bytes": 2265
+    },
+    {
+      "path": "recovered/metadata.json",
+      "sha256": "1580914a5304e227b467942c57754187d9d7149e20578502cf410022c1f4a92b",
+      "bytes": 26260
+    },
+    {
+      "path": "recovered/restored_agent_config.json",
+      "sha256": "37aa0806bd65a21f23fe77b472b37b87b3240f673405b210ec81178255114356",
+      "bytes": 2227
+    },
+    {
+      "path": "recovered/summary.json",
+      "sha256": "555d0cb7817849f6956d5226309df8daab8d20a550c866bdc1858ed95294b1a0",
+      "bytes": 879
+    },
+    {
+      "path": "recovered/trajectories.jsonl",
+      "sha256": "0771298dfe1753e91e1e2a7e27da09565f73edcb829347263ba533f79d234bf1",
+      "bytes": 4825911
+    },
+    {
+      "path": "recovered/trials.json",
+      "sha256": "026817ca219e5963731122f399091fdae01ca1b7f12a9eb5cc391dffb2c348d8",
+      "bytes": 282114
+    },
+    {
+      "path": "recovered/trials.jsonl",
+      "sha256": "916c47f17ab4ebe5effac1cfe16f6d7d5d75ad09753ac65c3466f7ca88d77aee",
+      "bytes": 195519
+    },
+    {
+      "path": "recovery/remote_completed_status.json",
+      "sha256": "8a1897f790c29b14504476f5221c238bdf1ad53d2c18bdb30d29d0d17e6c8e8d",
+      "bytes": 8407
+    },
+    {
+      "path": "recovery/resume.json",
+      "sha256": "55ca6f3a10aaf7b644f88e2d5539fca4b312124a5902cf7006bcad9ae35611cb",
+      "bytes": 495
+    },
+    {
+      "path": "recovery/transfer.json",
+      "sha256": "43aa9b85abc96e6ffa3c60d4e5a19c6f8bb1fdd23a1ed5d270b3c51dd818289e",
+      "bytes": 5202
+    },
+    {
+      "path": "recovery/validation.json",
+      "sha256": "e5c91ce678b6538fe2fd136b0b5b666ccbca30ccd997767149f6cc12a97292d2",
+      "bytes": 2142
+    },
+    {
+      "path": "reference_diagnosis.json",
+      "sha256": "33431ebc86db8fa262602e7d59c193f7c460a332b629a43c80554d0182468a33",
+      "bytes": 221118
+    },
+    {
+      "path": "spiral/metadata.json",
+      "sha256": "6cdbc0cb4e35dfe2ec78155ca902b04342afabf60b148996fd5ab2da5bf56eb8",
+      "bytes": 26139
+    },
+    {
+      "path": "spiral/summary.json",
+      "sha256": "1bed6995054990f0cdc6a05a71ea000640674b693e4132e053c5f799529f5ea5",
+      "bytes": 866
+    },
+    {
+      "path": "spiral/trajectories.jsonl",
+      "sha256": "5e371910afec4345161ab6964bd12278af7cd07fd5fe225e579d0c6763d5c867",
+      "bytes": 3947795
+    },
+    {
+      "path": "spiral/trials.json",
+      "sha256": "72307e586c1e687baed58bfd10269b482b7db94faf17167fe9d9b2a7152fa9a0",
+      "bytes": 282561
+    },
+    {
+      "path": "spiral/trials.jsonl",
+      "sha256": "43ebc8df3bbcfc40b682128e5ec9e48fdf32d370591bdfd1d8601db024040351",
+      "bytes": 195966
+    },
+    {
+      "path": "train_held_v2.txt",
+      "sha256": "3858867a3659f6e4027e81febe47407d36a1b7f67badfae35c039cff257bdd4e",
+      "bytes": 9834
+    },
+    {
+      "path": "train_legacy_continuation.txt",
+      "sha256": "f23a02a0e857fc1021080dbd7183da287010683b5831033f0cb9f551ae35178d",
+      "bytes": 9883
+    },
+    {
+      "path": "training/held_v2/summaries/events.out.tfevents.1790993972.autodl-container-30634997bd-121b7093",
+      "sha256": "ce028f6e0ce35847a18ae1ee8b45d476dbbd776fa0f64f22b32e1fef6d619883",
+      "bytes": 75057
+    },
+    {
+      "path": "training/legacy_continuation/summaries/events.out.tfevents.1790993971.autodl-container-30634997bd-121b7093",
+      "sha256": "35e8c24b4cfc056b0b336c50793659d9382ed603d3645e1c22aab91e5da34c57",
+      "bytes": 72096
+    },
+    {
+      "path": "training_budget.json",
+      "sha256": "3f15bb9c25294a23d777da4af0e41015526fd1f6f9d5fc7de302edb691c2952c",
+      "bytes": 833
+    },
+    {
+      "path": "training_configs/held_v2/agent.yaml",
+      "sha256": "d462f8b3337a2ee9c209ce3d492d531b4973b26c2be713e9a76da1f0b2f412d7",
+      "bytes": 1678
+    },
+    {
+      "path": "training_configs/held_v2/env.yaml",
+      "sha256": "103b2099fbbbd42f8173ab857de399cf7d1b10275afdf1e43fd08da602dba1ec",
+      "bytes": 13773
+    },
+    {
+      "path": "training_configs/legacy_continuation/agent.yaml",
+      "sha256": "62f67206ed82b91e771be5d27ae238ee92524df18417137c21fc507a389ed54d",
+      "bytes": 1690
+    },
+    {
+      "path": "training_configs/legacy_continuation/env.yaml",
+      "sha256": "7901c9c7ced575efbfddda99766c3d0de8a720ab3342b155146926309b47e22d",
+      "bytes": 13763
+    },
+    {
+      "path": "training_contract.json",
+      "sha256": "56cfe43ebb08a99b48b72018415d9a4f520c9bd11e29253d2a583541e551315d",
+      "bytes": 1299
+    },
+    {
+      "path": "zero_residual/metadata.json",
+      "sha256": "16311810abbd73539a545ce543f184e5b3c4c1de8271a17afc0b47c87217f6c5",
+      "bytes": 26145
+    },
+    {
+      "path": "zero_residual/summary.json",
+      "sha256": "a6cfc70173863ed6fd0b868b2d1575e1ce6a1e8a502fadf4f0afa200e0e5ed5f",
+      "bytes": 852
+    },
+    {
+      "path": "zero_residual/trajectories.jsonl",
+      "sha256": "70c61046169907fc31f53452e137b1132cfc596286c40edac071efe78f43f961",
+      "bytes": 3959745
+    },
+    {
+      "path": "zero_residual/trials.json",
+      "sha256": "d735bf6436db736d0bd1bb691b73f86360ad387adb3f2b44301fc1b31b79767b",
+      "bytes": 282074
+    },
+    {
+      "path": "zero_residual/trials.jsonl",
+      "sha256": "186f32c97d5edb90cfcdbf80c6f38b6114458d4cd860eeacc42f03320d4cfc52",
+      "bytes": 195479
+    }
+  ],
+  "source_archives": {
+    "completed_evaluation": "7a48733469762eeebba9d6606991afe5429ad3f505ebef194661623c36dc3ee6",
+    "completed_training": "833835bdb97d7cb7b9925c255b76f47ff0e27fa46228564648ca530ca730be10"
+  },
+  "notes": [
+    "Raw artifact bytes are preserved. Evaluation logs have .txt names for repository retention.",
+    "Checkpoint files remain in the retained full training backup, identified by hashes in training_budget.json.",
+    "JSON comparison run_directory paths describe their original runtime."
+  ]
+}

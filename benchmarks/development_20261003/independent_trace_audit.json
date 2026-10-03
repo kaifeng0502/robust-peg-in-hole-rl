@@ -1,0 +1,206 @@
+{
+  "method": "Independent direct control-trace reconstruction; no calls to project verification/metric helpers. Recorded interval flags cannot independently reconstruct unrecorded 120Hz geometry.",
+  "all_checks_passed": true,
+  "protocol_id": "866b607a992ecbedac16468a93be824aa152c2741c23fd62cf5f03ce464f5a74",
+  "code_revision": "79982d405e09d041563079dc4dce49f948b93fe763e87751a4b085592b635a29",
+  "case_set_id": "cb64e7a09fab0a4756a2f80a96c41d4721dd9d8f02fc0415687a97beb7e64fd9",
+  "results": {
+    "zero_residual": {
+      "verified_control_rows": 9600,
+      "held_successes": 14,
+      "failure_categories": {
+        "insufficient_depth": 17,
+        "misalignment": 33
+      },
+      "mean_commanded_peak_force_n": 2.340582834556699,
+      "max_commanded_peak_force_n": 3.467843770980835,
+      "mean_task_reward": 406.58036789858306,
+      "mean_success_time_s": 2.6285714285714286
+    },
+    "spiral": {
+      "verified_control_rows": 9600,
+      "held_successes": 44,
+      "failure_categories": {
+        "misalignment": 15,
+        "insufficient_depth": 4,
+        "insufficient_hold": 1
+      },
+      "mean_commanded_peak_force_n": 2.403975622728467,
+      "max_commanded_peak_force_n": 3.4136617183685303,
+      "mean_task_reward": 653.6363227733054,
+      "mean_success_time_s": 5.421212121212121
+    },
+    "recovered": {
+      "verified_control_rows": 9600,
+      "held_successes": 37,
+      "failure_categories": {
+        "misalignment": 20,
+        "insufficient_depth": 6,
+        "insufficient_hold": 1
+      },
+      "mean_commanded_peak_force_n": 2.389726271852851,
+      "max_commanded_peak_force_n": 3.6230952739715576,
+      "mean_task_reward": 686.0491549768049,
+      "mean_success_time_s": 4.61081081081081
+    },
+    "legacy_continuation": {
+      "verified_control_rows": 9600,
+      "held_successes": 39,
+      "failure_categories": {
+        "misalignment": 19,
+        "insufficient_depth": 6
+      },
+      "mean_commanded_peak_force_n": 2.305676272138953,
+      "max_commanded_peak_force_n": 3.6579666137695312,
+      "mean_task_reward": 697.2939445956144,
+      "mean_success_time_s": 4.1521367521367525
+    },
+    "held_v2": {
+      "verified_control_rows": 9600,
+      "held_successes": 40,
+      "failure_categories": {
+        "misalignment": 19,
+        "insufficient_depth": 5
+      },
+      "mean_commanded_peak_force_n": 2.311437513679266,
+      "max_commanded_peak_force_n": 3.6452813148498535,
+      "mean_task_reward": 716.9815590217477,
+      "mean_success_time_s": 4.245
+    }
+  },
+  "paired": {
+    "held_v2_vs_legacy_continuation": {
+      "wins": [
+        "case_000008",
+        "case_000019",
+        "case_000049"
+      ],
+      "losses": [
+        "case_000028",
+        "case_000034"
+      ],
+      "both_success": 37,
+      "both_failure": 22,
+      "paired_net_success_pp": 1.5625,
+      "exact_two_sided_discordance_p_exploratory": 1.0,
+      "max_initial_state_absolute_difference": 0.0,
+      "mean_paired_success_time_delta_s": -0.005405405405405434,
+      "mean_peak_commanded_force_delta_n": 0.005761241540312767
+    },
+    "held_v2_vs_recovered": {
+      "wins": [
+        "case_000008",
+        "case_000011",
+        "case_000031",
+        "case_000047"
+      ],
+      "losses": [
+        "case_000015"
+      ],
+      "both_success": 36,
+      "both_failure": 23,
+      "paired_net_success_pp": 4.6875,
+      "exact_two_sided_discordance_p_exploratory": 0.375,
+      "max_initial_state_absolute_difference": 0.0,
+      "mean_paired_success_time_delta_s": -0.662962962962963,
+      "mean_peak_commanded_force_delta_n": -0.07828875817358494
+    },
+    "legacy_continuation_vs_recovered": {
+      "wins": [
+        "case_000011",
+        "case_000028",
+        "case_000031",
+        "case_000034",
+        "case_000047"
+      ],
+      "losses": [
+        "case_000015",
+        "case_000019",
+        "case_000049"
+      ],
+      "both_success": 34,
+      "both_failure": 22,
+      "paired_net_success_pp": 3.125,
+      "exact_two_sided_discordance_p_exploratory": 0.7265625,
+      "max_initial_state_absolute_difference": 0.0,
+      "mean_paired_success_time_delta_s": -0.4725490196078431,
+      "mean_peak_commanded_force_delta_n": -0.0840499997138977
+    },
+    "held_v2_vs_spiral": {
+      "wins": [
+        "case_000004",
+        "case_000006",
+        "case_000020",
+        "case_000021",
+        "case_000054"
+      ],
+      "losses": [
+        "case_000002",
+        "case_000013",
+        "case_000017",
+        "case_000022",
+        "case_000028",
+        "case_000036",
+        "case_000038",
+        "case_000039",
+        "case_000057"
+      ],
+      "both_success": 35,
+      "both_failure": 15,
+      "paired_net_success_pp": -6.25,
+      "exact_two_sided_discordance_p_exploratory": 0.4239501953125,
+      "max_initial_state_absolute_difference": 0.0,
+      "mean_paired_success_time_delta_s": -0.6247619047619047,
+      "mean_peak_commanded_force_delta_n": -0.09253810904920101
+    },
+    "legacy_continuation_vs_spiral": {
+      "wins": [
+        "case_000004",
+        "case_000006",
+        "case_000020",
+        "case_000021",
+        "case_000034",
+        "case_000054"
+      ],
+      "losses": [
+        "case_000002",
+        "case_000008",
+        "case_000013",
+        "case_000017",
+        "case_000019",
+        "case_000022",
+        "case_000036",
+        "case_000038",
+        "case_000039",
+        "case_000049",
+        "case_000057"
+      ],
+      "both_success": 33,
+      "both_failure": 14,
+      "paired_net_success_pp": -7.8125,
+      "exact_two_sided_discordance_p_exploratory": 0.332305908203125,
+      "max_initial_state_absolute_difference": 0.0,
+      "mean_paired_success_time_delta_s": -0.7797979797979798,
+      "mean_peak_commanded_force_delta_n": -0.09829935058951378
+    }
+  },
+  "training_provenance": {
+    "legacy_continuation": {
+      "agent_config_hash_verified": true,
+      "training_seed": 42,
+      "epoch": 113,
+      "added_transitions": 327680,
+      "checkpoint_metadata_matches_budget": true,
+      "retained_checkpoint_archive_sha_verified": true
+    },
+    "held_v2": {
+      "agent_config_hash_verified": true,
+      "training_seed": 42,
+      "epoch": 113,
+      "added_transitions": 327680,
+      "checkpoint_metadata_matches_budget": true,
+      "retained_checkpoint_archive_sha_verified": true
+    }
+  },
+  "interpretation": "Discordance p values are exploratory, not predeclared acceptance tests or proof of equivalence; one training seed and reused development set."
+}

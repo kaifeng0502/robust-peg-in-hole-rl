@@ -1,0 +1,8 @@
+{
+  "gpu_total_mib": 24564,
+  "baseline_device_used_mib": 9073,
+  "maximum_sampled_device_used_mib": 14379,
+  "sample_count": 62,
+  "sampling_interval_s": 5,
+  "interpretation": "Device-wide sampled memory includes paused evaluation contexts. Short peaks may be missed; this does not measure PPO training memory."
+}

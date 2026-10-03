@@ -1,0 +1,59 @@
+[INFO][AppLauncher]: Using device: cuda:0
+[INFO][AppLauncher]: Loading experience file: /root/autodl-tmp/insertion/IsaacLab/apps/isaaclab.python.headless.kit
+[Warning] [simulation_app.simulation_app] Modules: ['omni.kit_app'] were loaded before SimulationApp was started and might not be loaded correctly.
+[Warning] [simulation_app.simulation_app] Please check to make sure no extra omniverse or pxr modules are imported before the call to SimulationApp(...)
+Loading user config located at: '/root/autodl-tmp/insertion/env/lib/python3.11/site-packages/omni/data/Kit/Isaac-Sim/5.0/user.config.json'
+[Info] [carb] Logging to file: /root/autodl-tmp/insertion/env/lib/python3.11/site-packages/omni/logs/Kit/Isaac-Sim/5.0/kit_20261003_130310.log
+2026-10-03T05:03:10Z [257ms] [Warning] [omni.usd_config.extension] Enable omni.materialx.libs extension to use MaterialX
+2026-10-03T05:03:11Z [858ms] [Warning] [omni.platforminfo.plugin] failed to open the default display.  Can't verify X Server version.
+2026-10-03T05:03:12Z [1,721ms] [Warning] [omni.isaac.dynamic_control] omni.isaac.dynamic_control is deprecated as of Isaac Sim 4.5. No action is needed from end-users.
+Warp CUDA error: Failed to get driver entry point 'cuDeviceGetUuid' (CUDA error 1)
+Warp CUDA error: Function cuDeviceGetUuid_f: a suitable driver entry point was not found
+Warp CUDA error 36: API call is not supported in the installed CUDA driver (in function cuda_init, /builds/omniverse/warp/warp/native/warp.cu:277)
+
+|---------------------------------------------------------------------------------------------|
+| Driver Version: 595.71.05     | Graphics API: Vulkan
+|=============================================================================================|
+| GPU | Name                             | Active | LDA | GPU Memory | Vendor-ID | LUID       |
+|     |                                  |        |     |            | Device-ID | UUID       |
+|     |                                  |        |     |            | Bus-ID    |            |
+|---------------------------------------------------------------------------------------------|
+| 0   | NVIDIA GeForce RTX 4090 D        | Yes: 0 |     | 24810   MB | 10de      | 0          |
+|     |                                  |        |     |            | 2685      | 5b494d0e.. |
+|     |                                  |        |     |            | b2        |            |
+|=============================================================================================|
+| OS: 22.04.5 LTS (Jammy Jellyfish) ubuntu, Version: 22.04.5, Kernel: 5.15.0-78-generic
+| Processor: Intel(R) Xeon(R) Platinum 8352S CPU @ 2.20GHz
+| Bare Metal Cores: 64 | Bare Metal Logical Cores: 128
+| Core Usage Quota: 16
+|---------------------------------------------------------------------------------------------|
+| Total Memory (MB): 63488 | Free Memory: 37714
+| Total Page/Swap (MB): 0 | Free Page/Swap: 0
+|---------------------------------------------------------------------------------------------|
+2026-10-03T05:03:18Z [7,748ms] [Warning] [gpu.foundation.plugin] CPU performance profile is set to powersave. This profile sets the CPU to the lowest frequency reducing performance.
+2026-10-03T05:03:18Z [7,757ms] [Warning] [gpu.foundation.plugin] PCIe link width current (8) and maximum (16) for device 0 don't match.
+2026-10-03T05:03:18Z [7,825ms] [Warning] [omni.kvdb.plugin] Disabling key-value database because another kit process is locking it
+Setting seed: 42
+[INFO]: Base environment:
+	Environment device    : cuda:0
+	Environment seed      : 42
+	Physics step-size     : 0.008333333333333333
+	Rendering step-size   : 0.06666666666666667
+	Environment step-size : 0.06666666666666667
+2026-10-03T05:03:21Z [11,468ms] [Warning] [omni.fabric.plugin] Warning: input prim:attr `/World/envs/env_0:omni:rtx:skip` has no valid data.
+
+[INFO]: Time taken for scene creation : 11.983465 seconds
+[INFO]: Scene manager:  <class InteractiveScene>
+	Number of environments: 1024
+	Environment spacing   : 2.0
+	Source prim name      : /World/envs/env_0
+	Global prim paths     : []
+	Replicate physics     : True
+[INFO]: Starting the simulation. This may take a few seconds. Please wait...
+[INFO]: Time taken for simulation start : 3.721700 seconds
+[INFO]: Completed setting up the environment...
+Setting seed: 42
+Warming up complete episodes
+Warm-up complete; preparing measurement
+{"passed": true, "mode": "throughput", "variant": "reference", "wall_time_s": 200.7346840603277, "measurement_start_unix_s": 1791003887.0199442, "measurement_end_unix_s": 1791004087.754642, "measurement_start_monotonic_s": 8195224.318925078, "measurement_end_monotonic_s": 8195425.053613405, "vector_steps": 450, "environment_transitions": 460800, "environment_transitions_per_s": 2295.5674160501017, "mean_vector_step_ms": 446.0770756896171, "policy_physics_substeps": 3600, "completed_episodes": 3072, "includes_reset_physics": true, "code_revision": "970a5a6fcb8daacd08cccf66c85532ebbd07b4b08328b28df66299261ba713e6", "action_sha256": "b0f099bc481283a880a8e0f2191a5155b7a7d0010e798f20bdf71739119e1548", "interpretation": "No-profiler synchronized-boundary wall time, including reset and fixed lightweight GPU validity checks; no PPO updates."}
+2026-10-03T05:08:08Z [298,525ms] [Warning] [omni.usd] Unexpected reference count of 2 for UsdStage 'anon:0xfcbf960:World0.usd' while being closed in UsdContext (this may indicate it is still resident in memory).

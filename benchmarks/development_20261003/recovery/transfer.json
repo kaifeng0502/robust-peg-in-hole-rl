@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-03T05:07:54.888102+00:00",
+  "boot_id": "6eddae47-4b76-43a3-9847-ed9c9a9df64c",
+  "original_run_directory": "/root/autodl-tmp/insertion/results/held_v2_pilot_20261003",
+  "reference_results": "/root/autodl-tmp/insertion/results/development_v1_parallel_20261003",
+  "candidate_project": "/root/autodl-tmp/insertion/candidate_held_v2",
+  "frozen_project": "/root/autodl-tmp/insertion/baseline_rl",
+  "original_status_sha256": "b01342b8c520a7c8c9177850e28b98a158fa895ae0112cd0b414a317c6f5bedd",
+  "retired_coordinator_identity": {
+    "pid": 11545,
+    "start_ticks": 818045332,
+    "state": "T",
+    "parent_pid": 1,
+    "process_group": 11544,
+    "session": 11544,
+    "cmdline": [
+      "python",
+      "-u",
+      "scripts/run_development_pilot.py",
+      "--runtime-root",
+      "/root/autodl-tmp/insertion",
+      "--reference-results",
+      "/root/autodl-tmp/insertion/results/development_v1_parallel_20261003",
+      "--contract-check",
+      "/root/autodl-tmp/insertion/results/held_v2_training_contract_final_20261003.json",
+      "--output",
+      "/root/autodl-tmp/insertion/results/held_v2_pilot_20261003"
+    ],
+    "cmdline_sha256": "62578da0a11f325f817477ababd7ca4e3b0bebcac7ff31f9321613dbcfe5be7a",
+    "cwd": "/root/autodl-tmp/insertion/candidate_held_v2",
+    "executable": "/root/autodl-tmp/insertion/env/bin/python3.11"
+  },
+  "workers": {
+    "legacy_continuation": {
+      "pid": 15330,
+      "start_ticks": 818678745,
+      "state": "T",
+      "parent_pid": 11545,
+      "process_group": 15330,
+      "session": 15330,
+      "cmdline": [
+        "/root/autodl-tmp/insertion/env/bin/python",
+        "scripts/evaluate_insertion.py",
+        "--method",
+        "ppo",
+        "--headless",
+        "--cases",
+        "/root/autodl-tmp/insertion/baseline_rl/configs/evaluation_development.json",
+        "--checkpoint",
+        "/root/autodl-tmp/insertion/candidate_held_v2/logs/rl_games/LocalInsertion/held_v2_pilot_20261003_legacy_continuation/nn/last_LocalInsertion_ep_113_rew__910.4523_.pth",
+        "--agent-config",
+        "/root/autodl-tmp/insertion/candidate_held_v2/logs/rl_games/LocalInsertion/held_v2_pilot_20261003_legacy_continuation/params/agent.yaml",
+        "--output",
+        "/root/autodl-tmp/insertion/results/held_v2_pilot_20261003/legacy_continuation"
+      ],
+      "cmdline_sha256": "c67fda84c8e99ca164da0443aa377e45b5d84f7b60ac01258b878772abc13763",
+      "cwd": "/root/autodl-tmp/insertion/baseline_rl",
+      "executable": "/root/autodl-tmp/insertion/env/bin/python3.11",
+      "output": "/root/autodl-tmp/insertion/results/held_v2_pilot_20261003/legacy_continuation",
+      "prefixes": [
+        {
+          "path": "/root/autodl-tmp/insertion/results/held_v2_pilot_20261003/legacy_continuation/trials.jsonl",
+          "size": 88850,
+          "sha256": "0b437982cbd7b33c6d12596620a3fe0c6a05f229c68795ea0398151c276af9e9"
+        },
+        {
+          "path": "/root/autodl-tmp/insertion/results/held_v2_pilot_20261003/legacy_continuation/trajectories.jsonl",
+          "size": 2207061,
+          "sha256": "f2229ba4eca0d69c669e63108e391b66fdb11d85ce610fd0cf683d00b6279ab1"
+        }
+      ],
+      "completed_cases": 29
+    },
+    "held_v2": {
+      "pid": 15331,
+      "start_ticks": 818678745,
+      "state": "T",
+      "parent_pid": 11545,
+      "process_group": 15331,
+      "session": 15331,
+      "cmdline": [
+        "/root/autodl-tmp/insertion/env/bin/python",
+        "scripts/evaluate_insertion.py",
+        "--method",
+        "ppo",
+        "--headless",
+        "--cases",
+        "/root/autodl-tmp/insertion/baseline_rl/configs/evaluation_development.json",
+        "--checkpoint",
+        "/root/autodl-tmp/insertion/candidate_held_v2/logs/rl_games/LocalInsertion/held_v2_pilot_20261003_held_v2/nn/last_LocalInsertion_ep_113_rew__968.4925_.pth",
+        "--agent-config",
+        "/root/autodl-tmp/insertion/candidate_held_v2/logs/rl_games/LocalInsertion/held_v2_pilot_20261003_held_v2/params/agent.yaml",
+        "--output",
+        "/root/autodl-tmp/insertion/results/held_v2_pilot_20261003/held_v2"
+      ],
+      "cmdline_sha256": "bbe0ed9e8795aaf8bca35e1161e809a3274c3666c24ff60ccc8f5a8b905dee06",
+      "cwd": "/root/autodl-tmp/insertion/baseline_rl",
+      "executable": "/root/autodl-tmp/insertion/env/bin/python3.11",
+      "output": "/root/autodl-tmp/insertion/results/held_v2_pilot_20261003/held_v2",
+      "prefixes": [
+        {
+          "path": "/root/autodl-tmp/insertion/results/held_v2_pilot_20261003/held_v2/trials.jsonl",
+          "size": 85602,
+          "sha256": "7af79db5bc3050838e136ab7c31e8a5635379f5913a50b5cd2b1a6126d813bd0"
+        },
+        {
+          "path": "/root/autodl-tmp/insertion/results/held_v2_pilot_20261003/held_v2/trajectories.jsonl",
+          "size": 2151962,
+          "sha256": "b1ea55e8874ce672d9a880781f4d35c1d668d386d9f06227cc255508657f5fe8"
+        }
+      ],
+      "completed_cases": 28
+    }
+  },
+  "pre_resume_archive": "/root/autodl-tmp/insertion/results/held_v2_pilot_resume_20261003/pre_resume_original_artifacts.tar.gz",
+  "pre_resume_archive_sha256": "0d51ca6958938e0c2921be0385fd16861c51f529ff5725f19a8cce7e3ca7a1d5"
+}

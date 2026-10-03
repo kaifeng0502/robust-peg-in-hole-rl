@@ -1,5 +1,5 @@
 {
-  "note": "Exact measurement outputs and configuration snapshots. No policy training updates were performed. Raw logs and the large diagnostic trace are retained separately. Paths identify the isolated runtime checkout, not a required installation location. The published tensor test resolves the repository root or explicit INSERTION_PROJECT; this test-only path change does not alter the measured scripts.",
+  "note": "Exact measurement outputs and configuration snapshots. No policy training updates were performed. The 1024-environment capacity log, memory samples and constant-only full-step log are included; other raw logs and the large diagnostic trace are retained separately. Paths identify the isolated runtime checkout, not a required installation location. The published tensor test resolves the repository root or explicit INSERTION_PROJECT; this test-only path change does not alter the measured scripts. The v3 measurement source is preserved under tool_versions/profile_environment_v3.py; its hash matches both the 1024-capacity and constant-only full-step metadata. The supervisor is an exact archival copy, not a general-purpose entry point. Included raw .log files use a .log.txt suffix to preserve their bytes without repository log-file ignore rules.",
   "files": {
     "benchmarks/performance_20261003/reference_capacity_512/result.json": "4da634dfb4bf5bae764121bee51546d3845548ed4b5ce9f3ff2d544d589b212c",
     "benchmarks/performance_20261003/reference_capacity_512/metadata.json": "5101962d1ea7dd46fe42e0460fd44b8a4a9ff146b44664ddc5cb366bc2c4bc26",
@@ -37,7 +37,20 @@
     "benchmarks/performance_20261003/target_constants_micro_1/cpu_tests.txt": "ac47c1e95927aa65f52978996d4f7a7a5f98eac82c4197c1369822d6cb615762",
     "benchmarks/performance_20261003/tool_versions/target_constants.py": "896de41cd904ed35a686f94ba2204d2c016f465e6799ea4f1d4c79ef0f92ddb4",
     "benchmarks/performance_20261003/tool_versions/benchmark_target_constants.py": "e415f9e75f5a644affe593ab4f54bd3060bf8c173688fe0df8df14e0b0c538ce",
-    "benchmarks/performance_20261003/tool_versions/test_target_constants.py": "2960742162662380d21ae7b2d4990e391e63592737a3e6bda99281f0d138f7e7"
+    "benchmarks/performance_20261003/tool_versions/test_target_constants.py": "2960742162662380d21ae7b2d4990e391e63592737a3e6bda99281f0d138f7e7",
+    "benchmarks/performance_20261003/reference_capacity_1024/metadata.json": "32860e704deb6c2860c64181eb269b1d8e378178f04ef7ed03106febf8bc16f8",
+    "benchmarks/performance_20261003/target_constants_full_1/metadata.json": "b4ad5879da2318e61dbda10c6fe7e795eb83105270a5d20972119e39923798d5",
+    "benchmarks/performance_20261003/reference_capacity_1024/result.json": "2e20c332b9a9160ad7e4e80bc2685e1e4bf9e992044519a92310990a010f5a73",
+    "benchmarks/performance_20261003/target_constants_full_1/result.json": "62da25a96036e1c3978659a7ea18135818eb0db83dd7facd45c00358e9c25666",
+    "benchmarks/performance_20261003/capacity_1024_gpu_memory.csv": "1fd459ffbba3fedf9976e319012afefce48e3f174918faef0402a5ed5fdd9ead",
+    "benchmarks/performance_20261003/capacity_1024_memory_summary.json": "87a217e95334c572f9f7679fb200ddda2f943b4c44585f34aeddbb479037f657",
+    "benchmarks/performance_20261003/capacity_1024_plan.json": "e293c52b513d7260929d45dd9f2684454a6e022c99a068e54151d9ee7d58489d",
+    "benchmarks/performance_20261003/tool_versions/run_capacity_1024.py": "76cb58c0c2c3c5646ed84f0877a2f11a8d1d25e9a41cdd33f6ec392066c685ba",
+    "benchmarks/performance_20261003/tool_versions/profile_environment_v3.py": "1bb1d544fff3f78efb2637c152215c91b3f5dec640fe482f4c852cd4e2150fe9",
+    "benchmarks/performance_20261003/reference_capacity_1024/verification.json": "11c3fc2d2396f960d253cf33f8ab0c097cef16468128197c5a5864d95b303ce9",
+    "benchmarks/performance_20261003/reference_capacity_1024.log.txt": "3744b1f67631d410c83a55dcbe7cbf96e438bf17a72a63ef961e623b7445fa76",
+    "benchmarks/performance_20261003/capacity_1024_supervisor.log.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "benchmarks/performance_20261003/target_constants_full_1.log.txt": "cb213f943ef075d09c2432b9f611d0a42c92d4515a9b9a3af70644c75386eed0"
   },
   "path_base": "repository root"
 }
